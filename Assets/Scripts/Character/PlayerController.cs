@@ -6,50 +6,37 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public float speed;
-	public Text countText;
-	public Text winText;
+    public Text deathText;
 
-	private Rigidbody rb;
+    private Rigidbody rb;
 	private int count;
 
 	void Start () {
 		
 		rb = GetComponent<Rigidbody> ();
 		count = 0;
-		SetCountText ();
-		winText.text = "";
+		
 	}
-
-	void FixedUpdate () {
+    void FixedUpdate () {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 
-		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-
-		if (EnergyBarScript.energy < 100)
+		Vector3 movement = new Vector3 (moveHorizontal,0.0f, moveVertical);
+        if (EnergyBarScript.energy < 100)
 			EnergyBarScript.energy++;
-
-		rb.AddForce (movement * speed);
-
-		if (Input.GetButton ("Fire1") && (EnergyBarScript.energy == 100)) {
-			rb.AddForce (rb.velocity.normalized * 10, ForceMode.Impulse);
-			EnergyBarScript.energy = 0;
+		    rb.AddForce (movement * speed);
+		if (Input.GetButton ("Fire1")){
+			rb.AddForce (movement*100);
 
 		}
 	}
-		
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.CompareTag ("PickUp")) {
-			other.gameObject.SetActive(false);
-			count++;
-			SetCountText ();
-		}
-	}
-
-	void SetCountText () {
-		countText.text = "Count: " + count.ToString ();
-		if (count >= 8)
-			winText.text = "You Win!";
-	}
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("deathPlane"))
+        {
+            rb.gameObject.SetActive(false);
+            if(deathText.text=="")
+                deathText.text = "Black Knight WIN";
+        }
+    }
 }
