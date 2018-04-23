@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController2 : MonoBehaviour {
 
 	public float speed;
-	public Text countText;
+	public Text deathText;
 
 	private Rigidbody rb;
 	private int count;
@@ -17,24 +17,30 @@ public class PlayerController2 : MonoBehaviour {
 		movement = new Vector3 (0.0f, 0.0f, 0.0f);
 	}
 
-	void FixedUpdate () {
-		float moveHorizontal = Input.GetAxis ("Fire1");
-		float moveVertical = Input.GetAxis ("Fire1");
+    void FixedUpdate()
+    {
+        float moveHorizontal = Input.GetAxis("horizontal2");
+        float moveVertical = Input.GetAxis("vertical2");
 
-		movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+        movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-		rb.AddForce (movement * speed);
+        rb.AddForce(movement * speed);
+        if (Input.GetButton("Fire3"))
+        {
+            rb.AddForce(movement * 100);
 
-	}
-		
-	void OnCollisionEnter(Collision collision)
-	{
-		foreach (ContactPoint contact in collision.contacts)
-		{
-			countText.text = "Debug: " + contact.normal.ToString ();
+        }
 
-		}
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("deathPlane"))
+        {
+            rb.gameObject.SetActive(false);
+            if (deathText.text == "")
+            deathText.text = "White Knight WIN";
+        }
+    }
 
-	}
 
 }

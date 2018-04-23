@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smash-arena", "Assembly-CSharp.csproj", "{0D4E1ECD-0535-CE97-D8B1-E1379F634781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smash-arena", "Assembly-CSharp-Editor.csproj", "{C0C8E062-CCCA-48AD-3415-A2746A77762B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D4E1ECD-0535-CE97-D8B1-E1379F634781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4E1ECD-0535-CE97-D8B1-E1379F634781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4E1ECD-0535-CE97-D8B1-E1379F634781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4E1ECD-0535-CE97-D8B1-E1379F634781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C8E062-CCCA-48AD-3415-A2746A77762B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C8E062-CCCA-48AD-3415-A2746A77762B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C8E062-CCCA-48AD-3415-A2746A77762B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C8E062-CCCA-48AD-3415-A2746A77762B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

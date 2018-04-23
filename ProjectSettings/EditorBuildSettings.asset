@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/newMenu.unity
+    guid: dc29162fe19239c4fa6d9b160ebf9cae
+  - enabled: 1
+    path: Assets/Scenes/chessScene.unity
+    guid: 22d97703bbed284459262b8ca31e6a3b
