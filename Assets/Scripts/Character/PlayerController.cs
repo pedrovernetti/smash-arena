@@ -10,9 +10,10 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
 	private int count;
+	
+	private AudioClip knock_medium;
 
 	void Start () {
-		
 		rb = GetComponent<Rigidbody> ();
 		count = 0;
 		
@@ -22,11 +23,9 @@ public class PlayerController : MonoBehaviour {
 		float moveVertical = Input.GetAxis ("Vertical");
 
 		Vector3 movement = new Vector3 (moveHorizontal,0.0f, moveVertical);
-        if (EnergyBarScript.energy < 100)
-			EnergyBarScript.energy++;
 		    rb.AddForce (movement * speed);
 		if (Input.GetButton ("Fire1")){
-			rb.AddForce (movement*100);
+			rb.AddForce (movement*10);
 
 		}
 	}
@@ -38,5 +37,11 @@ public class PlayerController : MonoBehaviour {
             if(deathText.text=="")
                 deathText.text = "Black Knight WIN";
         }
+    }
+    void OnCollisionEnter ()
+    {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.clip = knock_medium;
+        audio.Play();
     }
 }
