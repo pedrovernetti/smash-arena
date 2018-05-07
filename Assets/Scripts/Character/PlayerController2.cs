@@ -11,6 +11,8 @@ public class PlayerController2 : MonoBehaviour {
 	private Rigidbody rb;
 	private int count;
 	Vector3 movement;
+	
+	AudioClip knock_medium;
 
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -41,6 +43,11 @@ public class PlayerController2 : MonoBehaviour {
             deathText.text = "White Knight WIN";
         }
     }
-
-
+    void OnCollisionEnter ()
+    {
+        knock_medium.LoadAudioData();
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.clip = knock_medium;
+        audio.Play();
+    }
 }
