@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
 	private int count;
 	
-	private AudioClip knock_medium;
+	AudioClip knock_medium;
 
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 movement = new Vector3 (moveHorizontal,0.0f, moveVertical);
 		    rb.AddForce (movement * speed);
 		if (Input.GetButton ("Fire1")){
-			rb.AddForce (movement*10);
+			rb.AddForce (movement*100);
 
 		}
 	}
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     }
     void OnCollisionEnter ()
     {
+        knock_medium.LoadAudioData();
         AudioSource audio = GetComponent<AudioSource>();
         audio.clip = knock_medium;
         audio.Play();
