@@ -1,5 +1,6 @@
 [Bb]uild/
 [Bb]uilds/
+[Ee]tc/
 [Ll]ibrary/
 [Oo]bj/
 [Pp]ackages/
@@ -30,6 +31,15 @@ ExportedObj/
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
-# Builds
+# Builds/Archives
 *.apk
 *.unitypackage
+*.exe
+*.x86
+*.x64
+*.x86_x64
+*.rar
+*.zip
+*.7z
+
+
