@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class getInput : MonoBehaviour
 {
-
     public EventSystem eventSystem;
     public GameObject selectedObject;
 
