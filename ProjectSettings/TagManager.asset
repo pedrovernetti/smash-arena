@@ -7,6 +7,14 @@ TagManager:
   - PickUp
   - deathPlane
   - ground
+  - mainLightSource
+  - fire
+  - ice
+  - shock
+  - invertedArena
+  - normalArena
+  - invertedArenaBarrier
+  - music
   layers:
   - Default
   - TransparentFX

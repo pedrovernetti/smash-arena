@@ -5,43 +5,55 @@ using UnityEngine.UI;
 
 public class deathPlane : MonoBehaviour
 {
-    public int activePlayersCount;
-    
     public Text deathText;
+    
+    private arena arenaController;
+    
+    private string[] ranking;
+    private int activePlayersCount;
 
-	// Use this for initialization
 	void Start ()
 	{
-		if ((activePlayersCount > 4) || (activePlayersCount < 1))
-		    activePlayersCount = 4;
+	    arenaController = GameObject.Find("arena").GetComponent<arena>();
+	    if (arenaController == null) 
+	        Debug.Log("scene is missing an arena object!");
+		activePlayersCount = global.playersCount;
+		ranking = new string[activePlayersCount];
 	}
 	
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
-	
-	private void showWinnerText()
+	private void setWinner()
 	{
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        string winner;
+        playerController winner;
         for (int i = 0; i < 4; i++)
         {
-            deathText.text = i.ToString();
-            if (players[i].active && !(players[i].GetComponent<playerController>().groundless))
+            if (players[i].active)
             {
-                winner = players[i].GetComponent<playerController>().playerName;
-                deathText.text = winner + "\nWIN";
+                winner = players[i].GetComponent<playerController>();
+	            ranking[0] = winner.playerName;
+                if (players[i].GetComponent<playerController>().isGroundless)
+                {
+                    deathText.text = "DRAW";
+                    arenaController.finish(global.gameResult.DRAW);
+                }
+                else
+                {
+                    deathText.text = winner + "\nWIN";
+                    arenaController.finish(global.gameResult.WIN, winner);
+                }
                 return;
             }
         }
-        deathText.text = "DRAW";
 	}
 	
-	private void setDead( Component controller )
+	private void setDead( playerController controller )
 	{
-	    
+	    ranking[activePlayersCount - 1] = controller.playerName;
+	    if ((controller.playerNumber == 1) && (!global.clashMode))
+	    {
+	        deathText.text = "YOU LOSE";
+	        arenaController.finish(global.gameResult.LOSE);
+	    }
 	}
     
     void OnTriggerEnter( Collider other )
@@ -50,8 +62,8 @@ public class deathPlane : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             activePlayersCount--;
-            if (activePlayersCount == 1) showWinnerText();
-            else setDead(other.gameObject.GetComponent<playerController>());
+            setDead(other.gameObject.GetComponent<playerController>());
+            if (activePlayersCount == 1) setWinner();
         }
     }
 }
