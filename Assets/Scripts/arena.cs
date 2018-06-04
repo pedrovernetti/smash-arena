@@ -16,7 +16,7 @@ public class arena : MonoBehaviour
 	    GameObject arena = GameObject.Find("arenaGround");
 	    GameObject invertedArena = GameObject.Find("invertedArenaGround");
 	    if (arena != null) arena.SetActive(!use);
-	    if (invertedArena != null) arena.SetActive(use);
+	    if (invertedArena != null) invertedArena.SetActive(use);
     }
 	
 	private void normalModeChanges()
@@ -53,7 +53,7 @@ public class arena : MonoBehaviour
         global.setActiveByTag("shock", global.activeness.Random);
 	}
 	
-	public void Start ()
+	public void Start()
 	{
 	    GameObject[] music = global.getByTag("music");
 	    if (music[0] != null) 
@@ -91,7 +91,7 @@ public class arena : MonoBehaviour
 		}
 	}
 	
-	public void finish( global.gameResult result, playerController winner = null)
+	public void finish( global.gameResult result, playerController winner = null )
 	{
         global.ongoingGame = false;
 	    if (result == global.gameResult.WIN)

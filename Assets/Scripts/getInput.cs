@@ -10,16 +10,14 @@ public class getInput : MonoBehaviour
 
     private bool buttonSelected;
 
-    // Use this for initialization
-    void Start()
+    public void Start()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if (Input.GetAxisRaw("Vertical") != 0 && buttonSelected == false)
+        if ((Input.GetAxisRaw("Vertical") != 0) && (!buttonSelected))
         {
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;

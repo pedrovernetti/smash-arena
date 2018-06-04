@@ -12,7 +12,7 @@ public class deathPlane : MonoBehaviour
     private string[] ranking;
     private int activePlayersCount;
 
-	void Start ()
+	public void Start ()
 	{
 	    arenaController = GameObject.Find("arena").GetComponent<arena>();
 	    if (arenaController == null) 
@@ -56,7 +56,7 @@ public class deathPlane : MonoBehaviour
 	    }
 	}
     
-    void OnTriggerEnter( Collider other )
+    public void OnTriggerEnter( Collider other )
     {
         other.gameObject.SetActive(false);
         if (other.CompareTag("Player"))

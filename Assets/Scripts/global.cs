@@ -60,7 +60,7 @@ public static class global
     
     public static bool bossEncounter = false;
     
-    public static arenaMode mode = arenaMode.Normal;
+    public static arenaMode mode = arenaMode.Inverted;
     public static arenaTheme theme = arenaTheme.Chess;
     
     public static int playersCount = 4;
@@ -141,8 +141,9 @@ public static class global
             if (!bossEncounter) bossEncounter = true;
             else 
             {
-                bossEncounter = false;
+                restart();
                 // zerou o jogo... chamar cutscene final.. mais alguma coisa
+                return;
             }
         }
         else theme++;
