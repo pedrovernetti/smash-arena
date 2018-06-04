@@ -25,7 +25,7 @@ public class playerController : MonoBehaviour
         get { return groundless; }
     }
 
-	void Start () 
+	public void Start () 
 	{
 	    if (global.clashMode) playerName = global.playerNames[playerNumber - 1];
 	    if (!((playerNumber > 0) && (playerNumber < 5))) ABCD = 'A';
@@ -37,7 +37,7 @@ public class playerController : MonoBehaviour
 		transform = GetComponent<Transform>();
 	}
 	
-    void FixedUpdate ()
+    public void FixedUpdate ()
     {
         if (global.ongoingGame)
         {
@@ -57,7 +57,7 @@ public class playerController : MonoBehaviour
         }
 	} 
 	
-	void OnCollisionEnter( Collision other ) 
+	public void OnCollisionEnter( Collision other ) 
     {
         if (other.collider.CompareTag("ground"))
         {
@@ -75,7 +75,7 @@ public class playerController : MonoBehaviour
         }
     }
  
-    void OnCollisionExit ( Collision other ) 
+    public void OnCollisionExit ( Collision other ) 
     {
         if (other.collider.CompareTag("ground"))
         {
