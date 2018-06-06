@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
-	void Start() 
+	public void Start() 
 	{
 	}
     
-    void FixedUpdate()
+    public void FixedUpdate()
     {
     }
 }
