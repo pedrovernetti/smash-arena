@@ -23,9 +23,9 @@ public class arena : MonoBehaviour
 	{
 	    useInvertedArenaGround(false);
         setLightingColor(new Color(1.0F, 1.0F, 1.0F, 1.0F));
-        global.setActiveByTag("fire", global.activeness.False);
-        global.setActiveByTag("ice", global.activeness.False);
-        global.setActiveByTag("shock", global.activeness.False);
+        global.setActiveByTag("fire", false);
+        global.setActiveByTag("ice", false);
+        global.setActiveByTag("shock", false);
 	}
 
 	private void invertedModeChanges()
@@ -37,20 +37,25 @@ public class arena : MonoBehaviour
 	{
 	    useInvertedArenaGround(false);
         setLightingColor(new Color(0.72F, 0.92F, 1.0F, 1.0F));
-        global.setActiveByTag("ice", global.activeness.Random);
+        global.setRandomlyActiveByTag("ice");
 	}
 	
 	private void burningModeChanges()
 	{
 	    useInvertedArenaGround(false);
         setLightingColor(new Color(1.0F, 0.89F, 0.7F, 1.0F));
-        global.setActiveByTag("fire", global.activeness.Random);
+        global.setRandomlyActiveByTag("fire");
 	}
 	
 	private void electricModeChanges()
 	{
 	    useInvertedArenaGround(false);
-        global.setActiveByTag("shock", global.activeness.Random);
+        global.setRandomlyActiveByTag("shock");
+	}
+	
+	private void unstableModeChanges()
+	{
+	    useInvertedArenaGround(false);
 	}
 	
 	public void Start()
@@ -69,31 +74,41 @@ public class arena : MonoBehaviour
 		    burningModeChanges();
 		else if (global.mode == global.arenaMode.Electric)
 		    electricModeChanges();
+		else normalModeChanges();
 		    
-		if (global.theme == global.arenaTheme.Chess)
-		{
-		    if (global.bossEncounter)
-		    {
-	            GameObject boss = GameObject.Find("boss");
-	            GameObject player2 = GameObject.Find("player2");
-	            GameObject player3 = GameObject.Find("player3");
-	            GameObject player4 = GameObject.Find("player4");
-	            if (boss != null) boss.SetActive(true);
-	            if (player2 != null) player2.SetActive(false);
-	            if (player3 != null) player3.SetActive(false);
-	            if (player4 != null) player4.SetActive(false);
-	        }
-	        else
-	        {
-	            GameObject boss = GameObject.Find("boss");
-	            if (boss != null) boss.SetActive(false);
-	        }
-		}
+		if (global.bossEncounter)
+	    {
+            GameObject boss = GameObject.Find("boss");
+            GameObject player2 = GameObject.Find("player2");
+            GameObject player3 = GameObject.Find("player3");
+            GameObject player4 = GameObject.Find("player4");
+            if (boss != null) boss.SetActive(true);
+            if (player2 != null) player2.SetActive(false);
+            if (player3 != null) player3.SetActive(false);
+            if (player4 != null) player4.SetActive(false);
+        }
+        else
+        {
+            GameObject boss = GameObject.Find("boss");
+            if (boss != null) boss.SetActive(false);
+        }
 	}
 	
-	public void finish( global.gameResult result, playerController winner = null )
+	public IEnumerator finish( global.gameResult result, playerController winner = null )
 	{
+	    GameObject[] floatingStuff = global.getByTag("floating");
+	    Rigidbody tempBody;
+	    foreach (GameObject x in floatingStuff)
+	    {
+	        tempBody = x.GetComponent<Rigidbody>();
+	        tempBody.useGravity = true;
+	        tempBody.AddForce(Physics.gravity * tempBody.mass * 3);
+	        orbit script = GetComponent<orbit>(); 
+            if (script != null) script.enabled = false;
+	    }
+	        
         global.ongoingGame = false;
+        yield return new WaitForSeconds(4);
 	    if (result == global.gameResult.WIN)
 	    {
 	        if (global.clashMode)

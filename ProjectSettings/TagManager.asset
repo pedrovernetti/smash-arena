@@ -13,8 +13,14 @@ TagManager:
   - shock
   - invertedArena
   - normalArena
-  - invertedArenaBarrier
   - music
+  - fakePlayer
+  - arena
+  - Interact
+  - noUnstableMode
+  - floating
+  - onlyUnstableMode
+  - arenaBase
   layers:
   - Default
   - TransparentFX

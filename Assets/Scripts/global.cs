@@ -12,7 +12,9 @@ public static class global
         Inverted = 2,
         Frozen = 3,
         Burning = 4,
-        Electric = 5
+        Electric = 5,
+        Unstable = 6,
+        Meteors = 7
     };  
     
     public enum arenaTheme : byte
@@ -23,19 +25,19 @@ public static class global
         Chess = 8
     };
     
+    public enum difficultyLevel : byte
+    {
+        Easy = 0,
+        Normal = 1,
+        Hell = 2
+    };
+    
     public enum gameResult : byte
     {
         WIN = 1,
         DRAW = 2,
         LOSE = 4
     }
-    
-    public enum activeness : byte
-    {
-        False = 0,
-        True = 1,
-        Random = 2
-    };
 
     // Configurações
     
@@ -44,6 +46,8 @@ public static class global
     public static bool fullscreen = false;
     
     // Jogo
+    
+    public static difficultyLevel difficulty = difficultyLevel.Normal;
     
     public static bool ongoingGame = false;
     
@@ -58,10 +62,10 @@ public static class global
             0  // Player D
         };
     
-    public static bool bossEncounter = false;
+    public static bool bossEncounter = true;
     
-    public static arenaMode mode = arenaMode.Inverted;
-    public static arenaTheme theme = arenaTheme.Chess;
+    public static arenaMode mode = arenaMode.Normal;
+    public static arenaTheme theme = arenaTheme.Humanoids;
     
     public static int playersCount = 4;
     public static string[] playerNames = new string[] 
@@ -79,15 +83,18 @@ public static class global
         return GameObject.FindGameObjectsWithTag(tag);
     }
     
-    public static void setActiveByTag( string tag, activeness active )
+    public static void setActiveByTag( string tag, bool active )
     {
         GameObject[] stuff = global.getByTag(tag);
-        bool active_bool = ((int)(active) != 0);
         for (int i = stuff.Length - 1; i >= 0; i--)
-        {
-            if (!(active == activeness.Random)) stuff[i].SetActive(active_bool);
-            else stuff[i].SetActive(Random.value > 0.5f);
-        }
+            stuff[i].SetActive(active);
+    }
+    
+    public static void setRandomlyActiveByTag( string tag )
+    {
+        GameObject[] stuff = global.getByTag(tag);
+        for (int i = stuff.Length - 1; i >= 0; i--)
+            stuff[i].SetActive(Random.value > 0.5f);
     }
     
     // Funções de áudio
@@ -118,7 +125,10 @@ public static class global
     public static void loadProperArenaScene()
     {
         string scene = "newMenu";
-        mode = (arenaMode)(Random.Range(1, 5));
+        if (difficulty != difficultyLevel.Hell)
+            mode = (arenaMode)(Random.Range(1, 5));
+        else 
+            mode = (arenaMode)(Random.Range(1, 7));
         if (theme == arenaTheme.Cars) scene = "carsScene";
         else if (theme == arenaTheme.Humanoids) scene = "humanoids";
         else if (theme == arenaTheme.Fantasy) scene = "fantasy";

@@ -18,11 +18,12 @@ public class playerController : MonoBehaviour
 	public AudioClip heavyHit;
 
     private Rigidbody body;
-    private Transform transform;
+    private new Transform transform;
     
     public bool isGroundless
     { 
         get { return groundless; }
+        set { groundless = value;; }
     }
 
 	public void Start () 
@@ -30,11 +31,13 @@ public class playerController : MonoBehaviour
 	    if (global.clashMode) playerName = global.playerNames[playerNumber - 1];
 	    if (!((playerNumber > 0) && (playerNumber < 5))) ABCD = 'A';
 	    else ABCD = (char)('@'+playerNumber);
-	        
-		groundless = false;
-		
+	    
 		body = GetComponent<Rigidbody>();
 		transform = GetComponent<Transform>();
+		
+		groundless = false;
+        body.constraints = RigidbodyConstraints.FreezeRotationX | 
+                           RigidbodyConstraints.FreezeRotationZ;
 	}
 	
     public void FixedUpdate ()
@@ -48,7 +51,7 @@ public class playerController : MonoBehaviour
 		    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);
 		
 		    transform.Rotate(Vector3.up, moveVertical * speed * Time.deltaTime);
-            if (!groundless) // só controla se não estiver sem chão
+            if ((!groundless) && (global.ongoingGame))
             {
 		        body.AddForce (movement * speed);
         		if (Input.GetButton("dash" + ABCD)) 
@@ -80,6 +83,7 @@ public class playerController : MonoBehaviour
         if (other.collider.CompareTag("ground"))
         {
             groundless = true;
+            body.constraints = RigidbodyConstraints.None;
             body.drag = 0;
         }
     }

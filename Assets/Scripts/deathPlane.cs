@@ -27,7 +27,7 @@ public class deathPlane : MonoBehaviour
         playerController winner;
         for (int i = 0; i < 4; i++)
         {
-            if (players[i].active)
+            if (players[i].activeInHierarchy)
             {
                 winner = players[i].GetComponent<playerController>();
 	            ranking[0] = winner.playerName;
