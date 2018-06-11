@@ -8,28 +8,35 @@ public static class global
 {
     public enum arenaMode : byte
     {
-        Normal = 1,
-        Inverted = 2,
-        Frozen = 3,
-        Burning = 4,
-        Electric = 5,
-        Unstable = 6,
-        Meteors = 7
+        Normal = 1,     // nothing special
+        Inverted = 2,   // arena has a hole in its center and walls by the sides
+        Frozen = 3,     // ice objects - briefly slow characters down
+        Burning = 4,    // fire objects - characters go briefly out of control
+        Electric = 5,   // paralyzing shock objects
+        Unstable = 6,   // arena can tilt and fall
+        Meteors = 7,    // stones fall randomly on the arena
+        Teleport = 8,   // teleporter objects
+        Ghost = 9,      // characters almost invisible and randomly non-solid
+        Funny = 10,     // messed physics, messed textures/colors, messed music
+        Shrunken = 11   // characters are half their size
     };  
     
     public enum arenaTheme : byte
     {
-        Cars = 1,
-        Humanoids = 2,
-        Fantasy = 4,
-        Chess = 8
+        Cars = 1,       // characters are cars
+        Humanoids = 2,  // characters are humanoid warriors/soldiers
+        Fantasy = 4,    // characters are fantasy mobile game monsters
+        Chess = 8,      // characters are chess pieces
+        Abstract = 16,  // characters are basic 3d geometric forms
+        Secret = 32     // characters are wizard and bizarre creatures
     };
     
     public enum difficultyLevel : byte
     {
         Easy = 0,
         Normal = 1,
-        Hell = 2
+        Hard = 2,
+        Hell = 4
     };
     
     public enum gameResult : byte
@@ -64,7 +71,7 @@ public static class global
     
     public static bool bossEncounter = true;
     
-    public static arenaMode mode = arenaMode.Normal;
+    public static arenaMode mode = arenaMode.Ghost;
     public static arenaTheme theme = arenaTheme.Humanoids;
     
     public static int playersCount = 4;
