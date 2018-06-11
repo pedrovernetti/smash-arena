@@ -8,7 +8,6 @@ public class cameraController : MonoBehaviour
     private float min;
 
     private new Transform transform;
-    private Rigidbody body;
     private Skybox skybox;
     
 	public void Start() 
@@ -16,7 +15,6 @@ public class cameraController : MonoBehaviour
 		transform = GetComponent<Transform>();
 		max = transform.position.z + 7.0f;
 		min = transform.position.z - 12.0f;
-		body = GetComponent<Rigidbody>();
 		skybox = GetComponent<Skybox>();
 		
 	    if ((global.difficulty == global.difficultyLevel.Hell) &&

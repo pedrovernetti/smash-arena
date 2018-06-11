@@ -72,7 +72,7 @@ public static class global
     public static bool bossEncounter = true;
     
     public static arenaMode mode = arenaMode.Ghost;
-    public static arenaTheme theme = arenaTheme.Humanoids;
+    public static arenaTheme theme = arenaTheme.Chess;
     
     public static int playersCount = 4;
     public static string[] playerNames = new string[] 

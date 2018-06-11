@@ -124,17 +124,6 @@ public class arena : MonoBehaviour
 	
 	public IEnumerator finish( global.gameResult result, playerController winner = null )
 	{
-	    GameObject[] floatingStuff = global.getByTag("floating");
-	    Rigidbody tempBody;
-	    foreach (GameObject x in floatingStuff)
-	    {
-	        tempBody = x.GetComponent<Rigidbody>();
-	        tempBody.useGravity = true;
-	        tempBody.AddForce(Physics.gravity * tempBody.mass * 3);
-	        orbit script = GetComponent<orbit>(); 
-            if (script != null) script.enabled = false;
-	    }
-	        
         global.ongoingGame = false;
         yield return new WaitForSeconds(4);
 	    if (result == global.gameResult.WIN)
