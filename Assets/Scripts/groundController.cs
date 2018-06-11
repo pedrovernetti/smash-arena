@@ -13,7 +13,17 @@ public class groundController : MonoBehaviour
 		body = GetComponent<Rigidbody>();
 		transform = GetComponent<Transform>();
 		
-	    if (global.mode != global.arenaMode.Unstable) body.isKinematic = true;
+	    if (global.mode != global.arenaMode.Unstable)
+	    {
+	        body.isKinematic = true;
+	        
+	        if (global.mode == global.arenaMode.Ghost)
+	        {
+	            if (global.theme == global.arenaTheme.Chess)
+    	            GetComponent<MeshRenderer>().materials[0] = 
+    	                GetComponent<MeshRenderer>().materials[2];
+	        }
+	    }
 	    else body.isKinematic = false;
 	}
 	
