@@ -8,11 +8,12 @@ public class playerController : MonoBehaviour
     public string playerName;
     public int playerNumber;
     private char ABCD;
+    public AI intelligence;
     
 	public float speed;
 	public float dashSpeed;
 	public bool chessStyleControls;
-	private bool groundless; // está "sem chão" ou não
+	private bool groundless;
 	
 	public AudioClip mediumHit;
 	public AudioClip heavyHit;
@@ -34,7 +35,7 @@ public class playerController : MonoBehaviour
 	    
 		body = GetComponent<Rigidbody>();
 		transform = GetComponent<Transform>();
-		
+	        
 		groundless = false;
         body.constraints = RigidbodyConstraints.FreezeRotationX | 
                            RigidbodyConstraints.FreezeRotationZ;

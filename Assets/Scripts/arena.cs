@@ -58,6 +58,30 @@ public class arena : MonoBehaviour
 	    useInvertedArenaGround(false);
 	}
 	
+	private void shrunkenModeChanges()
+	{
+        GameObject[] players = global.getByTag("Player");
+	    foreach (GameObject x in players)
+	    {
+	        x.GetComponent<Transform>().localScale *= 0.5f;
+	        x.GetComponent<Rigidbody>().mass *= 0.5f;
+	    }
+	    useInvertedArenaGround(false);
+	}
+	
+	private void ghostModeChanges()
+	{
+        GameObject[] players = global.getByTag("Player");
+        GameObject[] fakePlayers = global.getByTag("fakePlayer");
+        Shader ghostShader = Shader.Find("Particles/Additive (Soft)");
+	    foreach (GameObject x in players)
+	        x.GetComponent<Renderer>().material.shader = ghostShader;
+	    foreach (GameObject x in fakePlayers)
+	        x.GetComponent<Renderer>().material.shader = ghostShader;
+	    useInvertedArenaGround(false);
+        setLightingColor(new Color(0.5F, 0.5F, 0.5F, 1.0F));
+	}
+	
 	public void Start()
 	{
 	    GameObject[] music = global.getByTag("music");
@@ -74,6 +98,10 @@ public class arena : MonoBehaviour
 		    burningModeChanges();
 		else if (global.mode == global.arenaMode.Electric)
 		    electricModeChanges();
+		else if (global.mode == global.arenaMode.Shrunken)
+		    shrunkenModeChanges();
+		else if (global.mode == global.arenaMode.Ghost)
+		    ghostModeChanges();
 		else normalModeChanges();
 		    
 		if (global.bossEncounter)
