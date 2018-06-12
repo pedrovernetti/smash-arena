@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PickUp
   - deathPlane
   - ground
   - mainLightSource
@@ -21,6 +20,7 @@ TagManager:
   - floating
   - onlyUnstableMode
   - arenaBase
+  - mountain
   layers:
   - Default
   - TransparentFX
