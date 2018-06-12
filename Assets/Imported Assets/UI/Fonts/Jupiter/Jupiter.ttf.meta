@@ -1,20 +1,14 @@
 fileFormatVersion: 2
 guid: 7cb2912222469634ba17a77055919ea8
 TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 2
   fontSize: 16
   forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
+  characterSpacing: 1
+  characterPadding: 0
   includeFontData: 1
-  fontName: ISL_Jupiter
-  fontNames:
-  - ISL_Jupiter
-  fallbackFontReferences: []
+  use2xBehaviour: 0
+  fontNames: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 1
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 

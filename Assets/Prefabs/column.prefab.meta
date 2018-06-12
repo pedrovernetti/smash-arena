@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: 9af63ae32041647c2abe50454e72ef34
-timeCreated: 1528715804
-licenseType: Free
+guid: 7543253cbf672ba47af1722f2dc0406f
+labels:
+- Architecture
+- Environment
+- Marble
+- Prop
+- Pillar
+- Column
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

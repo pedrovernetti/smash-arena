@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: e7dbc9658fbcb413291adf59b7a703f2
-timeCreated: 1528715804
-licenseType: Free
+guid: f10be1d3b1137584cac5ab9145a2f5d8
+labels:
+- Antique
+- Architecture
+- Column
+- Environment
+- Pillar
+- Prop
+- Stone
+- Obelisk
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

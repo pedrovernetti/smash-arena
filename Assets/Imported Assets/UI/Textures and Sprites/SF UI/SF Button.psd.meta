@@ -3,7 +3,6 @@ guid: 9a32a6cc2cb803443983d45d4a513506
 TextureImporter:
   fileIDToRecycleName:
     21300000: SF Button - Hover
-  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,8 +11,6 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
-    mipMapsPreserveCoverage: 0
-    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -23,19 +20,16 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 6
+  generateCubemap: 0
   cubemapConvolution: 0
   seamlessCubemap: 0
   textureFormat: -3
   maxTextureSize: 4096
   textureSettings:
-    serializedVersion: 2
     filterMode: 2
     aniso: 16
     mipBias: -1
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -57,7 +51,6 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -66,7 +59,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -75,7 +67,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: iPhone
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -84,7 +75,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: tvOS
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -93,7 +83,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -102,7 +91,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: Windows Store Apps
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -111,7 +99,6 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 4096
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -133,10 +120,8 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 38, y: 30, z: 38, w: 30}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     outline: []
-    physicsShape: []
   spritePackingTag: SF
   userData: 
   assetBundleName: 
