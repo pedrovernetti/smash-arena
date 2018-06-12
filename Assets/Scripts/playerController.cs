@@ -5,26 +5,39 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
+    // player's data
     public string playerName;
     public int playerNumber;
     private char ABCD;
-    public AI intelligence;
     
-	public float speed;
-	public float dashSpeed;
-	public bool chessStyleControls;
-	private bool groundless;
-	
-	public AudioClip mediumHit;
-	public AudioClip heavyHit;
-
+    // control
     private Rigidbody body;
     private new Transform transform;
+	private float originalMass;
+	public float speed = 80;
+	public float dashSpeed = 200;
+	public bool chessStyleControls = false;
+	private bool groundless; // está "sem chão" ou não
+	private bool dashing;
+	
+	// sounds
+	public AudioClip mediumHit;
+	public AudioClip heavyHit;
     
     public bool isGroundless
     { 
         get { return groundless; }
-        set { groundless = value;; }
+        set { groundless = value; }
+    }
+    
+    public bool isDashing
+    { 
+        get { return dashing; }
+    }
+    
+    public bool isMoving
+    { 
+        get { return (body.velocity.magnitude > 0.01); }
     }
 
 	public void Start () 
@@ -35,7 +48,7 @@ public class playerController : MonoBehaviour
 	    
 		body = GetComponent<Rigidbody>();
 		transform = GetComponent<Transform>();
-	        
+        originalMass = body.mass;		
 		groundless = false;
         body.constraints = RigidbodyConstraints.FreezeRotationX | 
                            RigidbodyConstraints.FreezeRotationZ;
@@ -55,8 +68,12 @@ public class playerController : MonoBehaviour
             if ((!groundless) && (global.ongoingGame))
             {
 		        body.AddForce (movement * speed);
-        		if (Input.GetButton("dash" + ABCD)) 
+        		if (Input.GetButton("dash" + ABCD) && isMoving)
+        		{
         		    body.AddForce(movement * dashSpeed);
+        		    dashing = true;
+        		}
+        		else dashing = false;
         	}
         }
 	} 
@@ -70,10 +87,11 @@ public class playerController : MonoBehaviour
         }
         else if (other.collider.CompareTag("Player"))
         {
-            float magnitude = 
-                    other.relativeVelocity.magnitude * body.velocity.magnitude;
-            AudioClip clip = 
-                    (Input.GetButton("dash" + ABCD)) ? heavyHit : mediumHit;
+            if (other.collider.GetComponent<playerController>().isDashing)
+                body.mass /= 2;
+                
+            float magnitude = (other.relativeVelocity.magnitude * 0.5f) + 0.5f;
+            AudioClip clip = (dashing) ? heavyHit : mediumHit;
             if (clip != null)
                 global.playClipAt(clip, transform.position, magnitude);
         }
@@ -84,8 +102,11 @@ public class playerController : MonoBehaviour
         if (other.collider.CompareTag("ground"))
         {
             groundless = true;
-            body.constraints = RigidbodyConstraints.None;
             body.drag = 0;
+        }
+        else if (other.collider.CompareTag("Player"))
+        {
+            body.mass = originalMass;
         }
     }
 }
