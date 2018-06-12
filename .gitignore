@@ -7,9 +7,6 @@
 [Tt]emp/
 Assets/AssetStoreTools*
 
-# Unity metadata files
-*.meta
-
 # Visual Studio cache directory
 .vs/
 
