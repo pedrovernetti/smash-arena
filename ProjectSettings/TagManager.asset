@@ -21,6 +21,8 @@ TagManager:
   - onlyUnstableMode
   - arenaBase
   - mountain
+  - playerComponent
+  - playerEquip
   layers:
   - Default
   - TransparentFX

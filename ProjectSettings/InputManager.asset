@@ -9,8 +9,8 @@ InputManager:
     m_Name: horizontalD
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 4
-    positiveButton: 6
+    negativeButton: j
+    positiveButton: l
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -25,8 +25,8 @@ InputManager:
     m_Name: horizontalC
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: g
-    positiveButton: j
+    negativeButton: f
+    positiveButton: h
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -73,8 +73,8 @@ InputManager:
     m_Name: verticalD
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 5
-    positiveButton: 8
+    negativeButton: k
+    positiveButton: i
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -89,8 +89,8 @@ InputManager:
     m_Name: verticalC
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: h
-    positiveButton: y
+    negativeButton: g
+    positiveButton: t
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -140,7 +140,7 @@ InputManager:
     negativeButton: 
     positiveButton: .
     altNegativeButton: 
-    altPositiveButton: 0
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -284,23 +284,7 @@ InputManager:
     negativeButton: 
     positiveButton: return
     altNegativeButton: 
-    altPositiveButton: joystick button 0
-    gravity: 1000
-    dead: 0.001
-    sensitivity: 1000
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 0
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: Submit
-    descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: enter
-    altNegativeButton: 
-    altPositiveButton: space
+    altPositiveButton: break
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -336,6 +320,54 @@ InputManager:
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: secretA
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 0
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: secretB
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 1
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: secretC
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: end
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1
     snap: 0
     invert: 0
     type: 0

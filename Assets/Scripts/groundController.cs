@@ -24,7 +24,17 @@ public class groundController : MonoBehaviour
     	                GetComponent<MeshRenderer>().materials[2];
 	        }
 	    }
-	    else body.isKinematic = false;
+	    else 
+	    {
+	        body.isKinematic = false;
+	        if (global.mode == global.arenaMode.Inverted)
+	        {
+	             if (name == "arenaGround") 
+	                gameObject.SetActiveRecursively(false);
+	        }
+	        else if (name == "invertedArenaGround") 
+	            gameObject.SetActiveRecursively(false);
+	    }
 	}
 	
 	private void fall()

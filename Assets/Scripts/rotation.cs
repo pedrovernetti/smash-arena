@@ -16,6 +16,6 @@ public class rotation : MonoBehaviour
     
     public void FixedUpdate()
     {
-        transform.Rotate(xRate, yRate, zRate);
+        if(global.ongoingGame) transform.Rotate(xRate, yRate, zRate);
     }
 }

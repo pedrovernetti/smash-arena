@@ -10,14 +10,9 @@ public class getInput : MonoBehaviour
 
     private bool buttonSelected;
 
-    public void Start()
-    {
-
-    }
-
     public void Update()
     {
-        if ((Input.GetAxisRaw("Vertical") != 0) && (!buttonSelected))
+        if ((Input.GetAxisRaw("verticalA") != 0) && (!buttonSelected))
         {
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;

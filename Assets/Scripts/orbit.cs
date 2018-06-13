@@ -20,8 +20,11 @@ public class orbit : MonoBehaviour
     
     public void FixedUpdate()
     {
-        transform.RotateAround (center.transform.position, 
-                                direction, 
-                                (speed * Time.deltaTime));
+        if (global.ongoingGame)
+        {
+            transform.RotateAround (center.transform.position, 
+                                    direction, 
+                                    (speed * Time.deltaTime));
+        }
     }
 }

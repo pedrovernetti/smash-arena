@@ -17,8 +17,15 @@ public class deathPlane : MonoBehaviour
 	    arenaController = GameObject.Find("arena").GetComponent<arena>();
 	    if (arenaController == null) 
 	        Debug.Log("scene is missing an arena object!");
-		activePlayersCount = global.playersCount;
+		activePlayersCount = (global.bossEncounter) ? 2 : global.playersCount;
 		ranking = new string[activePlayersCount];
+	}
+	
+	public IEnumerator showDeathText( string text, float delay = 4f )
+	{
+        deathText.text = text;
+        yield return new WaitForSeconds(delay);
+        deathText.text = "";
 	}
 	
 	private void setWinner()
@@ -31,14 +38,19 @@ public class deathPlane : MonoBehaviour
             {
                 winner = players[i].GetComponent<playerController>();
 	            ranking[0] = winner.playerName;
-                if (players[i].GetComponent<playerController>().isGroundless)
+                if (winner.isGroundless)
                 {
-                    deathText.text = "DRAW";
+	                StartCoroutine(showDeathText("DRAW"));
                     arenaController.finish(global.gameResult.DRAW);
+                }
+                else if (winner.isCampaignPlayer)
+                {
+	                StartCoroutine(showDeathText("YOU WIN"));
+                    arenaController.finish(global.gameResult.WIN, winner);
                 }
                 else
                 {
-                    deathText.text = winner + "\nWIN";
+	                StartCoroutine(showDeathText(winner.playerName + "\nWINS"));
                     arenaController.finish(global.gameResult.WIN, winner);
                 }
                 return;
@@ -51,9 +63,11 @@ public class deathPlane : MonoBehaviour
 	    ranking[activePlayersCount - 1] = controller.playerName;
 	    if ((controller.playerNumber == 1) && (!global.clashMode))
 	    {
-	        deathText.text = "YOU LOSE";
+	        StartCoroutine(showDeathText("YOU LOSE"));
 	        arenaController.finish(global.gameResult.LOSE);
 	    }
+	    else if (global.clashMode)
+	        StartCoroutine(showDeathText(controller.playerName + "\nDIES", 2f));
 	}
     
     public void OnTriggerEnter( Collider other )

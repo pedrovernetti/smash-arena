@@ -20,9 +20,22 @@ public class playerController : MonoBehaviour
 	private bool groundless; // está "sem chão" ou não
 	private bool dashing;
 	
+    public bool isDashing { get { return dashing; } }    
+    public bool isMoving { get { return (body.velocity.magnitude > 0.01); } }
+	
 	// sounds
 	public AudioClip mediumHit;
 	public AudioClip heavyHit;
+    
+    public bool isCampaignPlayer
+    { 
+        get { return ((!global.clashMode) && (playerNumber == 1)); }
+    }    
+    
+    public bool isActivePlayer
+    { 
+        get { return (playerNumber <= global.playersCount); }
+    }
     
     public bool isGroundless
     { 
@@ -30,18 +43,16 @@ public class playerController : MonoBehaviour
         set { groundless = value; }
     }
     
-    public bool isDashing
-    { 
-        get { return dashing; }
-    }
-    
-    public bool isMoving
-    { 
-        get { return (body.velocity.magnitude > 0.01); }
-    }
-
 	public void Start () 
 	{
+	    if ((playerNumber > global.playersCount) || (playerNumber < 1) ||
+	        (global.bossEncounter && !isCampaignPlayer && (name != "boss")) ||
+	        (!global.bossEncounter && (name == "boss")))
+	    {
+	        gameObject.SetActiveRecursively(false);
+	        return;
+	    }
+	    
 	    if (global.clashMode) playerName = global.playerNames[playerNumber - 1];
 	    if (!((playerNumber > 0) && (playerNumber < 5))) ABCD = 'A';
 	    else ABCD = (char)('@'+playerNumber);
@@ -78,6 +89,27 @@ public class playerController : MonoBehaviour
         }
 	} 
 	
+	public IEnumerator freeze( float factor, float duration )
+	{
+	    float originalDashSpeed = dashSpeed;
+        speed /= factor;
+        dashSpeed = 1;
+        yield return new WaitForSeconds(duration * 0.8f);
+        speed *= factor;
+        yield return new WaitForSeconds(duration * 0.2f);
+        dashSpeed = originalDashSpeed;
+	}
+	
+	public IEnumerator burn( float factor, float duration )
+	{
+        yield return new WaitForSeconds(duration);
+	}
+	
+	public IEnumerator paralyze( float factor, float duration )
+	{
+        yield return new WaitForSeconds(duration);
+	}
+	
 	public void OnCollisionEnter( Collision other ) 
     {
         if (other.collider.CompareTag("ground"))
@@ -94,6 +126,18 @@ public class playerController : MonoBehaviour
             AudioClip clip = (dashing) ? heavyHit : mediumHit;
             if (clip != null)
                 global.playClipAt(clip, transform.position, magnitude);
+        }
+        else if (other.collider.CompareTag("ice"))
+        {
+            StartCoroutine(freeze(3f, 4f));
+        }
+        else if (other.collider.CompareTag("fire"))
+        {
+            StartCoroutine(burn(3f, 4f));
+        }
+        else if (other.collider.CompareTag("shock"))
+        {
+            StartCoroutine(paralyze(3f, 4f));
         }
     }
  

@@ -13,12 +13,13 @@ public static class global
         Frozen = 3,     // ice objects - briefly slow characters down
         Burning = 4,    // fire objects - characters go briefly out of control
         Electric = 5,   // paralyzing shock objects
-        Unstable = 6,   // arena can tilt and fall
-        Meteors = 7,    // stones fall randomly on the arena
-        Teleport = 8,   // teleporter objects
+        Meteors = 6,    // stones fall randomly on the arena
+        Unstable = 7,   // arena can tilt and fall
+        Teleport = 8,   // teleporter objects (like Bomberman holes)
         Ghost = 9,      // characters almost invisible and randomly non-solid
         Funny = 10,     // messed physics, messed textures/colors, messed music
-        Shrunken = 11   // characters are half their size
+        Shrunken = 11,  // characters are half their size
+        Enlarged = 12   // characters are half their size
     };  
     
     public enum arenaTheme : byte
@@ -33,9 +34,9 @@ public static class global
     
     public enum difficultyLevel : byte
     {
-        Easy = 0,
-        Normal = 1,
-        Hard = 2,
+        Easy = 1,
+        Normal = 2,
+        Hard = 3,
         Hell = 4
     };
     
@@ -46,17 +47,31 @@ public static class global
         LOSE = 4
     }
 
-    // Configurações
+    // Settings
     
     public static float audioVolume = 1;
     public static float musicVolume = 0;
     public static bool fullscreen = false;
     
-    // Jogo
+    private static difficultyLevel gameDifficultyLevel = difficultyLevel.Normal;  
+      
+    public static difficultyLevel difficulty
+    {
+        get { return gameDifficultyLevel; }
+        set
+        {
+            gameDifficultyLevel = value;
+            if (gameDifficultyLevel == difficultyLevel.Easy) 
+                allowedArenaModes.Remove(arenaMode.Unstable);
+            else allowedArenaModes.Add(arenaMode.Unstable);
+        }
+    }
     
-    public static difficultyLevel difficulty = difficultyLevel.Normal;
+    // Game
     
     public static bool ongoingGame = false;
+    
+    public static System.DateTime now { get { return System.DateTime.Now; } }
     
     public static bool clashMode = false;
     public static int clashRounds = 5;
@@ -71,8 +86,8 @@ public static class global
     
     public static bool bossEncounter = true;
     
-    public static arenaMode mode = arenaMode.Ghost;
-    public static arenaTheme theme = arenaTheme.Chess;
+    public static arenaMode mode = arenaMode.Burning;
+    public static arenaTheme theme = arenaTheme.Humanoids;
     
     public static int playersCount = 4;
     public static string[] playerNames = new string[] 
@@ -83,7 +98,41 @@ public static class global
             "Player D"
         };
         
-    // Funções para manipulação baseada em tags
+    // Progress and achievements
+    
+    public static SortedDictionary<difficultyLevel,int> finishedCampaigns = 
+        new SortedDictionary<difficultyLevel,int>
+        {
+            { difficultyLevel.Easy,   0 },
+            { difficultyLevel.Normal, 0 },
+            { difficultyLevel.Hard,   0 },
+            { difficultyLevel.Hell,   0 }
+        };
+        
+    public static ArrayList allowedDifficultyLevels = 
+        new ArrayList(
+            new difficultyLevel[] 
+            {
+                difficultyLevel.Easy,
+                difficultyLevel.Normal,
+                difficultyLevel.Hard
+            }
+        );
+        
+    public static ArrayList allowedArenaModes = 
+        new ArrayList(
+            new arenaMode[] 
+            {
+                arenaMode.Normal,
+                arenaMode.Inverted, 
+                arenaMode.Frozen,
+                arenaMode.Burning,
+                arenaMode.Electric,
+                arenaMode.Unstable
+            }
+        );
+        
+    // Functions to manipulate things using tags
     
     public static GameObject[] getByTag( string tag )
     {
@@ -104,17 +153,19 @@ public static class global
             stuff[i].SetActive(Random.value > 0.5f);
     }
     
-    // Funções de áudio
+    // Audio functions
     
     public static void playClipAt( AudioClip clip, Vector3 where, float volume )
     {
         AudioSource.PlayClipAtPoint(clip, where, volume * audioVolume);
     }
     
-    // Funções de controle do jogo
+    // Game control functions
     
     public static void restart()
     {
+        Debug.Log("Reseting the game");
+        
         clashMode = false;
         clashRounds = 5;
         clashRoundsPlayed = 0;
@@ -129,13 +180,23 @@ public static class global
         playersCount = 4;
     }
     
+    public static arenaMode randomArenaMode()
+    {
+        int which = Random.Range(0, (allowedArenaModes.Count - 1));
+        return (arenaMode)(allowedArenaModes[which]);
+    }
+    
+    public static void goToMainMenu()
+    {
+        Debug.Log("Main Menu");
+        bossEncounter = false;
+        SceneManager.LoadScene("mainMenu");
+    }
+    
     public static void loadProperArenaScene()
     {
-        string scene = "newMenu";
-        if (difficulty != difficultyLevel.Hell)
-            mode = (arenaMode)(Random.Range(1, 5));
-        else 
-            mode = (arenaMode)(Random.Range(1, 7));
+        string scene = "mainMenu";
+        mode = randomArenaMode();
         if (theme == arenaTheme.Cars) scene = "carsScene";
         else if (theme == arenaTheme.Humanoids) scene = "humanoids";
         else if (theme == arenaTheme.Fantasy) scene = "fantasy";
@@ -158,13 +219,64 @@ public static class global
             if (!bossEncounter) bossEncounter = true;
             else 
             {
+                beatTheGame();
                 restart();
-                // zerou o jogo... chamar cutscene final.. mais alguma coisa
                 return;
             }
         }
         else theme++;
-        loadProperArenaScene(); // no lugar disso, chamar cutscene baseada no 
-                                // tema recém settado, que aí sim chamará isso
+        // cutscene
+        loadProperArenaScene();
+    }
+    
+    private static void unlockStuff()
+    {
+        /*if (finishedCampaigns[difficultyLevel.Easy] == 1)
+            // unlock ridiculous character
+        else*/ if (finishedCampaigns[difficultyLevel.Easy] == 4)
+            allowedArenaModes.Add(arenaMode.Funny);
+            
+        if (finishedCampaigns[difficultyLevel.Normal] == 2)
+            allowedArenaModes.Add(arenaMode.Teleport);
+            
+        if (finishedCampaigns[difficultyLevel.Hard] == 1)
+            allowedDifficultyLevels.Add(difficultyLevel.Hell);
+        else if (finishedCampaigns[difficultyLevel.Hard] == 2)
+            allowedArenaModes.Add(arenaMode.Ghost);
+        else if (finishedCampaigns[difficultyLevel.Hard] == 3)
+            allowedArenaModes.Add(arenaMode.Meteors);
+            
+        if (finishedCampaigns[difficultyLevel.Normal] == 1)
+            allowedDifficultyLevels.Add(difficultyLevel.Hell);
+        else if (finishedCampaigns[difficultyLevel.Normal] == 2)
+            allowedArenaModes.Add(arenaMode.Shrunken);
+        else if (finishedCampaigns[difficultyLevel.Normal] == 3)
+            allowedArenaModes.Add(arenaMode.Enlarged);
+    }
+    
+    private static void beatTheGame()
+    {
+        // chamar cutscene final.. mais alguma coisa
+        
+        if (difficulty == difficultyLevel.Normal)
+            finishedCampaigns[difficultyLevel.Normal]++;
+        else if (difficulty == difficultyLevel.Hard)
+            finishedCampaigns[difficultyLevel.Hard]++;
+        else if (difficulty == difficultyLevel.Hell)
+            finishedCampaigns[difficultyLevel.Hell]++;
+        else // difficultyLevel.Easy
+            finishedCampaigns[difficultyLevel.Easy]++;
+            
+        Debug.Log
+        (
+            "Game beaten. [x" + 
+            finishedCampaigns[difficultyLevel.Easy].ToString() + ", x" +
+            finishedCampaigns[difficultyLevel.Normal].ToString() + ", x" +
+            finishedCampaigns[difficultyLevel.Hard].ToString() + ", x" +
+            finishedCampaigns[difficultyLevel.Hell].ToString() + "]"
+        );
+            
+        unlockStuff();        
+        goToMainMenu();
     }
 }
