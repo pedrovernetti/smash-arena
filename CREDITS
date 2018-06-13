@@ -4,14 +4,7 @@ Assets/Audio/you_lose.wav
 Assets/Fonts/CUTE CARTOON.OTF
 Assets/Fonts/CUTE SCRIPT.OTF
 Assets/Fonts/DUNGRG_.TTF
-Assets/Fonts/FIRSTV2C.TTF
-Assets/Fonts/FIRSTV2E.TTF
-Assets/Fonts/FIRSTV2I.TTF
-Assets/Fonts/FIRSTV2L.TTF
-Assets/Fonts/FIRSTV2S.TTF
-Assets/Fonts/FIRSTV2.TTF
 Assets/Fonts/RockLess.ttf
-Assets/Fonts/ROCKYAOE.ttf
 Assets/Images/1404_3bevel.png
 Assets/Images/1404_3.jpg
 Assets/Images/31174533_1738110006228095_5222516026746339328_n.png
@@ -29,69 +22,6 @@ Assets/Materials/Pick Up.mat
 Assets/Materials/Steel.mat
 Assets/Materials/Textures/blackMarbleFloorDiffuse.tga
 Assets/Prefabs/board.prefab
-Assets/Skyboxes/Skybox2_10/Skybox2_10.mat
-Assets/Skyboxes/Skybox2_10/SkyboxX-.png
-Assets/Skyboxes/Skybox2_10/SkyboxX+.png
-Assets/Skyboxes/Skybox2_10/SkyboxY-.png
-Assets/Skyboxes/Skybox2_10/SkyboxY+.png
-Assets/Skyboxes/Skybox2_10/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_10/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_11/Skybox2_11.mat
-Assets/Skyboxes/Skybox2_11/SkyboxX-.png
-Assets/Skyboxes/Skybox2_11/SkyboxX+.png
-Assets/Skyboxes/Skybox2_11/SkyboxY-.png
-Assets/Skyboxes/Skybox2_11/SkyboxY+.png
-Assets/Skyboxes/Skybox2_11/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_11/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_1/Skybox2_1.mat
-Assets/Skyboxes/Skybox2_1/SkyboxX-.png
-Assets/Skyboxes/Skybox2_1/SkyboxX+.png
-Assets/Skyboxes/Skybox2_1/SkyboxY-.png
-Assets/Skyboxes/Skybox2_1/SkyboxY+.png
-Assets/Skyboxes/Skybox2_1/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_1/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_2/Skybox2_2.mat
-Assets/Skyboxes/Skybox2_2/SkyboxX-.png
-Assets/Skyboxes/Skybox2_2/SkyboxX+.png
-Assets/Skyboxes/Skybox2_2/SkyboxY-.png
-Assets/Skyboxes/Skybox2_2/SkyboxY+.png
-Assets/Skyboxes/Skybox2_2/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_2/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_3/Skybox2_3.mat
-Assets/Skyboxes/Skybox2_3/skyboxX-.png
-Assets/Skyboxes/Skybox2_3/skyboxX+.png
-Assets/Skyboxes/Skybox2_3/skyboxY-.png
-Assets/Skyboxes/Skybox2_3/skyboxY+.png
-Assets/Skyboxes/Skybox2_3/skyboxZ-.png
-Assets/Skyboxes/Skybox2_3/skyboxZ+.png
-Assets/Skyboxes/Skybox2_4/Skybox2_4.mat
-Assets/Skyboxes/Skybox2_4/SkyboxX-.png
-Assets/Skyboxes/Skybox2_4/SkyboxX+.png
-Assets/Skyboxes/Skybox2_4/SkyboxY-.png
-Assets/Skyboxes/Skybox2_4/SkyboxY+.png
-Assets/Skyboxes/Skybox2_4/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_4/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_5/Skybox2_5.mat
-Assets/Skyboxes/Skybox2_5/SkyboxX-.png
-Assets/Skyboxes/Skybox2_5/SkyboxX+.png
-Assets/Skyboxes/Skybox2_5/SkyboxY-.png
-Assets/Skyboxes/Skybox2_5/SkyboxY+.png
-Assets/Skyboxes/Skybox2_5/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_5/SkyboxZ+.png
-Assets/Skyboxes/Skybox2_6/Skybox2_6.mat
-Assets/Skyboxes/Skybox2_6/skyboxX-.png
-Assets/Skyboxes/Skybox2_6/skyboxX+.png
-Assets/Skyboxes/Skybox2_6/skyboxY-.png
-Assets/Skyboxes/Skybox2_6/skyboxY+.png
-Assets/Skyboxes/Skybox2_6/skyboxZ-.png
-Assets/Skyboxes/Skybox2_6/skyboxZ+.png
-Assets/Skyboxes/Skybox2_7/Skybox2_7.mat
-Assets/Skyboxes/Skybox2_7/SkyboxX-.png
-Assets/Skyboxes/Skybox2_7/SkyboxX+.png
-Assets/Skyboxes/Skybox2_7/SkyboxY-.png
-Assets/Skyboxes/Skybox2_7/SkyboxY+.png
-Assets/Skyboxes/Skybox2_7/SkyboxZ-.png
-Assets/Skyboxes/Skybox2_7/SkyboxZ+.png
 Meta/a.jpeg
 Meta/a.png
 Meta/b.png
@@ -202,6 +132,15 @@ Assets/Prefabs/Players/chess/whitePawn.prefab
 Assets/Prefabs/Players/chess/whiteQueen.prefab
 Assets/Prefabs/Players/chess/whiteRook.prefab
 
+First Order [https://www.dafont.com/first-order.font]
+
+Assets/Fonts/FirstOrder.ttf
+Assets/Fonts/FirstOrderCondensed.ttf
+Assets/Fonts/FirstOrderExpanded.ttf
+Assets/Fonts/FirstOrderItalic.ttf
+Assets/Fonts/FirstOrderLight.ttf
+Assets/Fonts/FirstOrderShadow.ttf
+
 Free Snow Mountain [https://assetstore.unity.com/packages/3d/environments/landscapes/free-snow-mountain-63002]
 
 Assets/Materials/snowyMountain.mat
@@ -226,6 +165,10 @@ Assets/Skyboxes/humanoids/humanoids_Y-.png
 Assets/Skyboxes/humanoids/humanoids_Y+.png
 Assets/Skyboxes/humanoids/humanoids_Z-.png
 Assets/Skyboxes/humanoids/humanoids_Z+.png
+
+Rocky AOE [https://www.dafont.com/rocky.font]
+
+Assets/Fonts/RockyAOE.ttf
 
 Ruined Tower Free [https://assetstore.unity.com/packages/3d/environments/ruined-tower-free-66495]
 
