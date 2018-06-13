@@ -68,6 +68,8 @@ ProjectSettings/UnityConnectSettings.asset
 
 autoral
 
+.gitignore
+.gitattributes
 Assets/Meshes/invertedRoundArena.fbx
 Assets/Meshes/invertedSquareArena.fbx
 Assets/Prefabs/arcaneShield.prefab
@@ -93,6 +95,7 @@ Assets/Scripts/playerController.cs
 Assets/Scripts/quitOnClick.cs
 Assets/Scripts/rotation.cs
 Assets/Scripts/secretsHandler.cs
+CREDITS
 README.md
 
 Classic Chess Set [https://assetstore.unity.com/packages/3d/classic-chess-set-93014]
