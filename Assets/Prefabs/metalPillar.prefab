@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 6400000}
   m_Layer: 0
-  m_Name: Pillar old-school metal prefab
+  m_Name: metalPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 35b0d27b8c528fd4a9f22d3a65d65bfb, type: 2}
   m_StaticBatchInfo:

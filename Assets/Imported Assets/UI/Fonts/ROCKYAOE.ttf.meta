@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9c513c84d97f149c38fbb9f68b49580b
+guid: ae9ed0a150aa51f47802ffba3ff932a5
 timeCreated: 1524571465
 licenseType: Free
 TrueTypeFontImporter:
@@ -13,10 +13,12 @@ TrueTypeFontImporter:
   fontName: ROCKY AOE
   fontNames:
   - ROCKY AOE
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 95b1c4afca7c5aa499ec52027478b6d6, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d55060a6db23b4f968719e5e647e3e79
+guid: 3125a2bb6d57d97419c8a24b3b6a9a17
 timeCreated: 1524571190
 licenseType: Free
 TrueTypeFontImporter:
@@ -17,6 +17,7 @@ TrueTypeFontImporter:
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
