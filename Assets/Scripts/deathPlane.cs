@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class deathPlane : MonoBehaviour
 {
     public Text deathText;
-    
+    public Text roundText;
     private arena arenaController;
     
     private string[] ranking;
@@ -27,8 +27,8 @@ public class deathPlane : MonoBehaviour
         yield return new WaitForSeconds(delay);
         deathText.text = "";
 	}
-	
-	private void setWinner()
+   
+    private void setWinner()
 	{
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         playerController winner;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d55060a6db23b4f968719e5e647e3e79
+guid: 86534719f1ebf1b4bbf44d427666ca05
 timeCreated: 1524571190
 licenseType: Free
 TrueTypeFontImporter:
@@ -13,10 +13,12 @@ TrueTypeFontImporter:
   fontName: RockLess
   fontNames:
   - RockLess
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3125a2bb6d57d97419c8a24b3b6a9a17, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
