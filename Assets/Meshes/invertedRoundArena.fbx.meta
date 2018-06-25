@@ -4,11 +4,22 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cylinder
+    100004: Lamp
+    100006: Camera
     400000: //RootNode
+    400002: Cylinder
+    400004: Lamp
+    400006: Camera
+    2000000: Camera
     2100000: No Name
+    2100002: Material.001
     2300000: //RootNode
+    2300002: Cylinder
     3300000: //RootNode
+    3300002: Cylinder
     4300000: Cylinder
+    10800000: Lamp
   externalObjects: {}
   materials:
     importMaterials: 1
