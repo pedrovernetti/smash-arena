@@ -1,3 +1,4 @@
+
 [Bb]uild/
 [Bb]uilds/
 [Ee]tc/
@@ -7,6 +8,7 @@
 [Tt]emp/
 [Uu]nity[Pp]ackage[Mm]anager/
 Assets/AssetStoreTools*
+[Pp]roject[Ss]ettings/[Pp]roject[Vv]ersion.txt
 
 # Visual Studio cache directory
 .vs/
