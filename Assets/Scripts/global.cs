@@ -83,10 +83,14 @@ public static class global
             0, // Player C
             0  // Player D
         };
+        
+    public static int lastClashTheme = 1;
+    public static int lastClashMode = 1;
+    public static int[] lastClashCharacters = new int[] {1, 1, 1, 1};
     
     public static bool bossEncounter = true;
     
-    public static arenaMode mode = arenaMode.Burning;
+    public static arenaMode mode = arenaMode.Normal;
     public static arenaTheme theme = arenaTheme.Humanoids;
     
     public static int playersCount = 4;
@@ -99,6 +103,8 @@ public static class global
         };
         
     // Progress and achievements
+    
+    public static int overallFinishedCampaigns = 0;
     
     public static SortedDictionary<difficultyLevel,int> finishedCampaigns = 
         new SortedDictionary<difficultyLevel,int>
@@ -119,6 +125,16 @@ public static class global
             }
         );
         
+    public static ArrayList allowedArenaThemes = 
+        new ArrayList(
+            new arenaTheme[] 
+            {
+                arenaTheme.Cars,
+                arenaTheme.Humanoids,
+                arenaTheme.Fantasy
+            }
+        );
+        
     public static ArrayList allowedArenaModes = 
         new ArrayList(
             new arenaMode[] 
@@ -129,6 +145,20 @@ public static class global
                 arenaMode.Burning,
                 arenaMode.Electric,
                 arenaMode.Unstable
+            }
+        );
+        
+    public static ArrayList allowedCharacters = 
+        new ArrayList(
+            new string[] 
+            {
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             }
         );
         
@@ -197,18 +227,22 @@ public static class global
     {
         string scene = "mainMenu";
         mode = randomArenaMode();
-        if (theme == arenaTheme.Cars) scene = "carsScene";
+        
+        if (theme == arenaTheme.Cars) scene = "cars";
         else if (theme == arenaTheme.Humanoids) scene = "humanoids";
         else if (theme == arenaTheme.Fantasy) scene = "fantasy";
         else if (theme == arenaTheme.Chess)
         {
-            scene = "chessScene";
+            scene = "chess";
             if (bossEncounter)
             {
                 playersCount = 2;
                 mode = arenaMode.Normal;
             }
         }
+        else if (theme == arenaTheme.Abstract) scene = "abstract";
+        else if (theme == arenaTheme.Secret) scene = "secret";
+        
         SceneManager.LoadScene(scene);
     }
     
@@ -231,6 +265,16 @@ public static class global
     
     private static void unlockStuff()
     {
+        if ((difficulty >= difficultyLevel.Normal) && 
+            (overallFinishedCampaigns == 0) && (theme == arenaTheme.Chess))
+            allowedArenaThemes.Add(arenaTheme.Chess);
+        if ((!allowedArenaThemes.Contains(arenaTheme.Abstract)) &&
+            (theme == arenaTheme.Abstract))
+            allowedArenaThemes.Add(arenaTheme.Abstract);
+        if ((!allowedArenaThemes.Contains(arenaTheme.Secret)) &&
+            (theme == arenaTheme.Secret))
+            allowedArenaThemes.Add(arenaTheme.Secret);
+                
         /*if (finishedCampaigns[difficultyLevel.Easy] == 1)
             // unlock ridiculous character
         else*/ if (finishedCampaigns[difficultyLevel.Easy] == 4)
@@ -257,6 +301,8 @@ public static class global
     private static void beatTheGame()
     {
         // chamar cutscene final.. mais alguma coisa
+        
+        overallFinishedCampaigns++;
         
         if (difficulty == difficultyLevel.Normal)
             finishedCampaigns[difficultyLevel.Normal]++;
