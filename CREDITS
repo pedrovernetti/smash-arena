@@ -70,15 +70,15 @@ autoral
 
 .gitignore
 .gitattributes
-Assets/Images/Modes/arenaTheme3.png
-Assets/Images/Modes/arenaTheme6.png
-Assets/Images/Themes/arenaTheme0.png
-Assets/Images/Themes/arenaTheme1.png
-Assets/Images/Themes/arenaTheme2.png
-Assets/Images/Themes/arenaTheme3.png
-Assets/Images/Themes/arenaTheme4.png
-Assets/Images/Themes/arenaTheme5.png
-Assets/Images/Themes/arenaTheme6.png
+Assets/Images/Modes/3.png
+Assets/Images/Modes/6.png
+Assets/Images/Themes/0.png
+Assets/Images/Themes/1.png
+Assets/Images/Themes/2.png
+Assets/Images/Themes/3.png
+Assets/Images/Themes/4.png
+Assets/Images/Themes/5.png
+Assets/Images/Themes/6.png
 Assets/Meshes/invertedRoundArena.fbx
 Assets/Meshes/invertedSquareArena.fbx
 Assets/Prefabs/arcaneShield.prefab
@@ -89,22 +89,25 @@ Assets/Scenes/chess.unity
 Assets/Scenes/fantasy.unity
 Assets/Scenes/humanoids.unity
 Assets/Scenes/mainMenu.unity
-Assets/Scripts/AI.cs
-Assets/Scripts/arena.cs
-Assets/Scripts/cameraController.cs
-Assets/Scripts/deathPlane.cs
-Assets/Scripts/getInput.cs
-Assets/Scripts/global.cs
-Assets/Scripts/groundController.cs
-Assets/Scripts/loadSceneOnClick.cs
-Assets/Scripts/orbit.cs
 Assets/Scripts/particleSystemController.cs
+Assets/Scripts/getInput.cs
+Assets/Scripts/UIImageController.cs
+Assets/Scripts/cameraController.cs
+Assets/Scripts/orbit.cs
+Assets/Scripts/loadSceneOnClick.cs
 Assets/Scripts/playerController.cs
+Assets/Scripts/groundController.cs
+Assets/Scripts/arena.cs
 Assets/Scripts/quitOnClick.cs
-Assets/Scripts/rotation.cs
 Assets/Scripts/secretsHandler.cs
+Assets/Scripts/AI.cs
+Assets/Scripts/UIController.cs
+Assets/Scripts/deathPlane.cs
+Assets/Scripts/global.cs
+Assets/Scripts/rotation.cs
 CREDITS
 README.md
+
 
 Classic Chess Set [https://assetstore.unity.com/packages/3d/classic-chess-set-93014]
 
@@ -143,6 +146,7 @@ Assets/Prefabs/Players/chess/whitePawn.prefab
 Assets/Prefabs/Players/chess/whiteQueen.prefab
 Assets/Prefabs/Players/chess/whiteRook.prefab
 
+
 First Order [https://www.dafont.com/first-order.font]
 
 Assets/Fonts/FirstOrder.ttf
@@ -152,6 +156,7 @@ Assets/Fonts/FirstOrderItalic.ttf
 Assets/Fonts/FirstOrderLight.ttf
 Assets/Fonts/FirstOrderShadow.ttf
 
+
 Free Snow Mountain [https://assetstore.unity.com/packages/3d/environments/landscapes/free-snow-mountain-63002]
 
 Assets/Materials/snowyMountain.mat
@@ -159,6 +164,7 @@ Assets/Materials/Textures/snowyMountainAldedo.tga
 Assets/Materials/Textures/snowyMountainNormal.tga
 Assets/Meshes/mountain.fbx
 Assets/Prefabs/snowyMountain.prefab
+
 
 GalaxyBox 2.0 [https://assetstore.unity.com/packages/2d/textures-materials/sky/galaxybox-2-0-84349]
 
@@ -177,9 +183,11 @@ Assets/Skyboxes/humanoids/humanoids_Y+.png
 Assets/Skyboxes/humanoids/humanoids_Z-.png
 Assets/Skyboxes/humanoids/humanoids_Z+.png
 
+
 Rocky AOE [https://www.dafont.com/rocky.font]
 
 Assets/Fonts/RockyAOE.ttf
+
 
 Ruined Tower Free [https://assetstore.unity.com/packages/3d/environments/ruined-tower-free-66495]
 
@@ -189,6 +197,23 @@ Assets/Materials/Textures/groundHeight.tga
 Assets/Materials/Textures/groundMetalicSmooth.tga
 Assets/Materials/Textures/groundNormal.tga
 Assets/Meshes/ruinedTower.fbx
+
+
+Simple Vector Icons [https://assetstore.unity.com/packages/2d/gui/icons/simple-vector-icons-101218]
+
+Assets/Images/Modes/0.png
+Assets/Images/Modes/1.png
+Assets/Images/Modes/2.png
+Assets/Images/Modes/4.png
+Assets/Images/Modes/5.png
+Assets/Images/Modes/7.png
+Assets/Images/Modes/8.png
+Assets/Images/Modes/9.png
+Assets/Images/Modes/10.png
+Assets/Images/Modes/11.png
+Assets/Images/Modes/12.png
+Assets/Images/Modes/13.png
+
 
 Yughues Free Pillars & Columns [https://assetstore.unity.com/packages/3d/environments/yughues-free-pillars-columns-13103]
 
