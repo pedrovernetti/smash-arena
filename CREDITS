@@ -70,6 +70,15 @@ autoral
 
 .gitignore
 .gitattributes
+Assets/Images/Modes/arenaTheme3.png
+Assets/Images/Modes/arenaTheme6.png
+Assets/Images/Themes/arenaTheme0.png
+Assets/Images/Themes/arenaTheme1.png
+Assets/Images/Themes/arenaTheme2.png
+Assets/Images/Themes/arenaTheme3.png
+Assets/Images/Themes/arenaTheme4.png
+Assets/Images/Themes/arenaTheme5.png
+Assets/Images/Themes/arenaTheme6.png
 Assets/Meshes/invertedRoundArena.fbx
 Assets/Meshes/invertedSquareArena.fbx
 Assets/Prefabs/arcaneShield.prefab
@@ -77,8 +86,7 @@ Assets/Prefabs/floatingTower.prefab
 Assets/Scenes/abstract.unity
 Assets/Scenes/cars.unity
 Assets/Scenes/chess.unity
-Assets/Scenes/cutscene.unity
-Assets/Scenes/Fantasy_Basic.unity
+Assets/Scenes/fantasy.unity
 Assets/Scenes/humanoids.unity
 Assets/Scenes/mainMenu.unity
 Assets/Scripts/AI.cs
