@@ -85,9 +85,9 @@ public static class global
             0  // Player D
         };
         
-    public static int lastClashTheme = 1;
-    public static int lastClashMode = 1;
-    public static int[] lastClashCharacters = new int[] {1, 1, 1, 1};
+    public static int lastClashTheme = 0;
+    public static int lastClashMode = 0;
+    public static int[] lastClashCharacters = new int[] {0, 0, 0, 0};
     
     public static bool bossEncounter = true;
     
@@ -196,18 +196,6 @@ public static class global
             stuff[i].SetActive(Random.value > 0.5f);
     }
     
-    // Image functions
-    
-    public static void setImage( GameObject imageObject, string image )
-    {
-        if (imageObject == null) return;
-            
-        imageObject.GetComponent<Image>().sprite = 
-            Resources.Load(image, typeof(Sprite)) as Sprite;
-            
-        Debug.Log(imageObject.name + " replaced with " + image);
-    }
-    
     // Audio functions
     
     public static void playClipAt( AudioClip clip, Vector3 where, float volume )
@@ -233,6 +221,12 @@ public static class global
         theme = arenaTheme.Chess;
         
         playersCount = 4;
+    }
+    
+    public static arenaTheme randomArenaTheme()
+    {
+        int which = Random.Range(0, (allowedArenaThemes.Count - 1));
+        return (arenaTheme)(allowedArenaThemes[which]);
     }
     
     public static arenaMode randomArenaMode()

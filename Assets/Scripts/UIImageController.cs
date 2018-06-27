@@ -4,43 +4,53 @@ using UnityEngine.UI;
 
 public class UIImageController : MonoBehaviour
 {
-    private int whichTheme;
-    private int whichMode;
-    private int[] whichCharacter;
+    public enum imageType : byte
+    {
+        theme = 4,
+        mode = 5,
+        player1 = 0,
+        player2 = 1,
+        player3 = 2,
+        player4 = 3
+    };
     
-    public UIController.UIImageType imageType;
+    private int[] which;
+    private GameObject[] possibilities;
+    
+    public imageType type;
         
     public void Start()
     {
-        whichTheme = -1;
-        whichMode = -1;
-        whichCharacter = new int[] { -1, -1, -1, -1 };
+        which = new int[] { 0, 0, 0, 0 };        
+        possibilities = new GameObject[transform.childCount];
+        for (int i = possibilities.Length - 1; i >= 0; i--)
+        {
+            possibilities[i] = transform.GetChild(i).gameObject;
+            if (i != 0) possibilities[i].SetActive(false);
+            else possibilities[i].SetActive(true);
+        }
     }
 	
     public void FixedUpdate()
     {
-        if ((imageType == UIController.UIImageType.theme) && 
-            (whichTheme != UIController.whichTheme))
+        if ((type == imageType.theme) && (which[0] != UIController.whichTheme))
         {
-            whichTheme = UIController.whichTheme;
-            string imageToLoad = "arenaTheme" + ((int)(global.mode)).ToString();
-            global.setImage(gameObject, imageToLoad);
+            possibilities[which[0]].SetActive(false);
+            which[0] = UIController.whichTheme;
+            possibilities[(which[0] == 0) ? 0 : (int)(global.theme)].SetActive(true);
         }
-        else if ((imageType == UIController.UIImageType.mode) && 
-                 (whichMode != UIController.whichMode))
+        else if ((type == imageType.mode) && (which[0] != UIController.whichMode))
         {
-            whichMode = UIController.whichMode;
-            string imageToLoad = "arenaMode" + ((int)(whichMode)).ToString();
-            global.setImage(gameObject, imageToLoad);
+            possibilities[which[0]].SetActive(false);
+            which[0] = UIController.whichMode;
+            possibilities[(which[0] == 0) ? 0 : (int)(global.mode)].SetActive(true);
         }
-        else if ((imageType >= UIController.UIImageType.player1) && 
-                 (imageType <= UIController.UIImageType.player4) &&
-                 (whichCharacter[(int)(imageType)] !=
-                    UIController.whichCharacter[(int)(imageType)]))
+        /*else if ((type >= imageType.player1) && (type <= imageType.player4) &&
+                 (whichCharacter[(int)(type)] !=
+                    UIController.whichCharacter[(int)(type)]))
         {
-            whichCharacter[(int)(imageType)] = 
-                UIController.whichCharacter[(int)(imageType)];
+            whichCharacter[(int)(type)] = UIController.whichCharacter[(int)(type)];
             //string imageToLoad = ;
-        }
+        }*/
 	} 
 }

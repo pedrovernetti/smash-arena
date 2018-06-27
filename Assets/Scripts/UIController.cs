@@ -3,17 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
-{
-    public enum UIImageType : byte
-    {
-        theme = 4,
-        mode = 5,
-        player1 = 0,
-        player2 = 1,
-        player3 = 2,
-        player4 = 3
-    };
-    
+{   
     public static string currentPanel = "mainMenu";
     
     public static int whichTheme = global.lastClashTheme;
@@ -25,70 +15,54 @@ public class UIController : MonoBehaviour
             global.lastClashCharacters[2],
             global.lastClashCharacters[3]
         };
+        
+    public void changeTheme( string direction )
+    { 
+        int allowedCount = global.allowedArenaThemes.Count;
+        
+        if (direction == "next") whichTheme = (whichTheme + 1) % (allowedCount + 1);
+        else whichTheme -= (whichTheme != 0) ? 1 : -allowedCount;
+        
+        if (whichTheme == 0) global.theme = global.randomArenaTheme();
+        else global.theme = (global.arenaTheme)(global.allowedArenaThemes[whichTheme - 1]);
+        
+        Debug.Log(global.theme.ToString() + " theme selected");
+    }
+        
+    public void changeMode( string direction )
+    { 
+        int allowedCount = global.allowedArenaModes.Count;
+        
+        if (direction == "next") whichMode = (whichMode + 1) % (allowedCount + 1);
+        else whichMode -= (whichMode != 0) ? 1 : -allowedCount;
+        
+        if (whichMode == 0) global.mode = global.randomArenaMode();
+        else global.mode = (global.arenaMode)(global.allowedArenaModes[whichMode - 1]);
+        
+        Debug.Log(global.mode.ToString() + " mode selected");
+    }
 
     public void next( int which = 1 )
     {
-        GameObject replacedImage = null;
-        string imageToLoad = "";
-        
-        if (currentPanel == "clashThemePanel")
-        {                                                                          
-            whichTheme = (whichTheme++ % global.allowedArenaThemes.Count) + 1;
-            global.theme = (global.arenaTheme)(global.allowedArenaThemes[whichTheme]);
-            Debug.Log("Clash: theme " + whichTheme.ToString() + " selected");
-            replacedImage = global.getByName("themeImage");
-            imageToLoad = "themePreview" + whichTheme.ToString();
-        }
-        else if (currentPanel == "clashModePanel")
-        {
-            whichMode = (whichMode++ % global.allowedArenaModes.Count) + 1;
-            global.mode = (global.arenaMode)(global.allowedArenaModes[whichMode]);
-            Debug.Log("Clash: mode " + whichMode.ToString() + " selected");
-            //replacedImage = global.getByName("modeImage");
-        }
-        else if (currentPanel == "clashCharactersPanel")
+        if (currentPanel == "clashCharactersPanel")
         {
             whichCharacter[which] = 
-                (whichCharacter[which]++ % global.allowedCharacters.Count) + 1;
+                (whichCharacter[which]++ % (global.allowedCharacters.Count + 1));
             Debug.Log("Clash: character " + whichTheme.ToString() + " selected" +
                 "as player #" + which.ToString());
-            //replacedImage = global.getByName("player" + which.ToString() + "Image");
         }
-        
-        global.setImage(replacedImage, imageToLoad);
     }
 
     public void previous( int which = 1 )
     {
-        GameObject replacedImage = null;
-        string imageToLoad = ""                              ;
-        
-        if (currentPanel == "clashThemePanel")
-        {
-            whichTheme--;
-            if (whichTheme <= 0) whichTheme = global.allowedArenaThemes.Count;
-            Debug.Log("Clash: theme " + whichTheme.ToString() + " selected");
-            replacedImage = global.getByName("themeImage");
-            imageToLoad = "themePreview" + whichTheme.ToString();
-        }
-        else if (currentPanel == "clashModePanel")
-        {
-            whichMode--;
-            if (whichMode <= 0) whichMode = global.allowedArenaModes.Count;
-            Debug.Log("Clash: mode " + whichMode.ToString() + " selected");
-            //replacedImage = global.getByName("modeImage");
-        }
-        else if (currentPanel == "clashCharactersPanel")
+        if (currentPanel == "clashCharactersPanel")
         {
             whichCharacter[which]--;
             if (whichCharacter[which] <= 0) 
                 whichCharacter[which] = global.allowedCharacters.Count;
             Debug.Log("Clash: character " + whichTheme.ToString() + " selected [" +
                 which.ToString() + "]");
-            //replacedImage = global.getByName("player" + which.ToString() + "Image");
         }
-        
-        global.setImage(replacedImage, imageToLoad);
     }
     
     public void nextPanel()
