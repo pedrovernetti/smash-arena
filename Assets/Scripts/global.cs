@@ -19,17 +19,18 @@ public static class global
         Ghost = 9,      // characters almost invisible and randomly non-solid
         Funny = 10,     // messed physics, messed textures/colors, messed music
         Shrunken = 11,  // characters are half their size
-        Enlarged = 12   // characters are half their size
+        Enlarged = 12,  // characters are twice their size
+        Dark = 13       // lighting is almost nonexisting
     };  
     
     public enum arenaTheme : byte
     {
         Cars = 1,       // characters are cars
         Humanoids = 2,  // characters are humanoid warriors/soldiers
-        Fantasy = 4,    // characters are fantasy mobile game monsters
-        Chess = 8,      // characters are chess pieces
-        Abstract = 16,  // characters are basic 3d geometric forms
-        Secret = 32     // characters are wizard and bizarre creatures
+        Fantasy = 3,    // characters are fantasy mobile game monsters
+        Chess = 4,      // characters are chess pieces
+        Abstract = 5,   // characters are basic 3d geometric forms
+        Secret = 6      // characters are wizard and bizarre creatures
     };
     
     public enum difficultyLevel : byte
@@ -164,6 +165,18 @@ public static class global
         
     // Functions to manipulate things using tags
     
+    public static GameObject getByName( string name)
+    {
+        GameObject parent = GameObject.Find("arena");
+        if (parent == null) parent = GameObject.Find("mainMenu");
+        Transform[] all = parent.GetComponentsInChildren<Transform>(true);
+        foreach (Transform transform in all)
+        {
+            if (transform.name == name) return transform.gameObject;
+        }
+        return null;
+    }
+    
     public static GameObject[] getByTag( string tag )
     {
         return GameObject.FindGameObjectsWithTag(tag);
@@ -181,6 +194,18 @@ public static class global
         GameObject[] stuff = global.getByTag(tag);
         for (int i = stuff.Length - 1; i >= 0; i--)
             stuff[i].SetActive(Random.value > 0.5f);
+    }
+    
+    // Image functions
+    
+    public static void setImage( GameObject imageObject, string image )
+    {
+        if (imageObject == null) return;
+            
+        imageObject.GetComponent<Image>().sprite = 
+            Resources.Load(image, typeof(Sprite)) as Sprite;
+            
+        Debug.Log(imageObject.name + " replaced with " + image);
     }
     
     // Audio functions

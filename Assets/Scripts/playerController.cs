@@ -43,7 +43,7 @@ public class playerController : MonoBehaviour
         set { groundless = value; }
     }
     
-	public void Start () 
+	public void Start() 
 	{
 	    if ((playerNumber > global.playersCount) || (playerNumber < 1) ||
 	        (global.bossEncounter && !isCampaignPlayer && (name != "boss")) ||
@@ -65,7 +65,7 @@ public class playerController : MonoBehaviour
                            RigidbodyConstraints.FreezeRotationZ;
 	}
 	
-    public void FixedUpdate ()
+    public void FixedUpdate()
     {
         if (global.ongoingGame)
         {
