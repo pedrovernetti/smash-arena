@@ -15,6 +15,7 @@ public class selectionImage : MonoBehaviour
     };
     
     private int[] which;
+    private int[] internalIndex;
     private GameObject[] possibilities;
     
     public imageType type;
@@ -22,6 +23,7 @@ public class selectionImage : MonoBehaviour
     public void Start()
     {
         which = new int[] { 0, 0, 0, 0 };        
+        internalIndex = new int[] { 0, 0, 0, 0 };        
         possibilities = new GameObject[transform.childCount];
         for (int i = possibilities.Length - 1; i >= 0; i--)
         {
@@ -35,15 +37,17 @@ public class selectionImage : MonoBehaviour
     {
         if ((type == imageType.theme) && (which[0] != UIController.whichTheme))
         {
-            possibilities[which[0]].SetActive(false);
+            possibilities[internalIndex[0]].SetActive(false);
             which[0] = UIController.whichTheme;
-            possibilities[(which[0] == 0) ? 0 : (int)(global.theme)].SetActive(true);
+            internalIndex[0] = (which[0] == 0) ? 0 : (int)(global.theme);
+            possibilities[internalIndex[0]].SetActive(true);
         }
         else if ((type == imageType.mode) && (which[0] != UIController.whichMode))
         {
-            possibilities[which[0]].SetActive(false);
+            possibilities[internalIndex[0]].SetActive(false);
             which[0] = UIController.whichMode;
-            possibilities[(which[0] == 0) ? 0 : (int)(global.mode)].SetActive(true);
+            internalIndex[0] = (which[0] == 0) ? 0 : (int)(global.mode);
+            possibilities[internalIndex[0]].SetActive(true);
         }
         /*else if ((type >= imageType.player1) && (type <= imageType.player4) &&
                  (whichCharacter[(int)(type)] !=
