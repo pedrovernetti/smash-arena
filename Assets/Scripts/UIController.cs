@@ -14,10 +14,49 @@ public class UIController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "mainMenu")
         {
             global.getByName("mainMenuPanel").SetActive(true);
+            
             global.getByName("clashThemePanel").SetActive(true);
             global.getByName("clashMode").SetActive(false);
+            
+            GameObject tempToggle;
+            for (int i = 1; i <= 4; i++)
+            {
+                tempToggle = global.getByName("difficulty" + i.ToString());
+                if (global.difficulty != (global.difficultyLevel)(i))
+                    tempToggle.GetComponent<Toggle>().isOn = false;
+                else tempToggle.GetComponent<Toggle>().isOn = true;
+            }
+            global.getByName("musicVolumeSlider").GetComponent<Slider>().value =
+                global.musicVolume;
+            global.getByName("audioVolumeSlider").GetComponent<Slider>().value =
+                global.audioVolume;
             global.getByName("options").SetActive(false);
         }
+    }
+    
+    public void setAudioEffectsVolume( GameObject sliderObject )
+    {
+        global.audioVolume = sliderObject.GetComponent<Slider>().value;
+        Debug.Log("Sound effects volume set to " + global.audioVolume.ToString());
+    }
+    
+    public void setMusicVolume( GameObject sliderObject )
+    {
+        global.musicVolume = sliderObject.GetComponent<Slider>().value;
+        Debug.Log("Music volume set to " + global.musicVolume.ToString());
+    }
+    
+    public void setDifficulty( string difficultyLevel )
+    {
+        if (difficultyLevel == "easy")
+            global.difficulty = global.difficultyLevel.Easy;
+        else if (difficultyLevel == "hard")
+            global.difficulty = global.difficultyLevel.Hard;
+        else if (difficultyLevel == "hell")
+            global.difficulty = global.difficultyLevel.Hell;
+        else // difficultyLevel == "normal"
+            global.difficulty = global.difficultyLevel.Normal;
+        Debug.Log(global.difficulty.ToString() + " difficulty selected");
     }
         
     public void changeTheme( string direction )
@@ -68,7 +107,7 @@ public class UIController : MonoBehaviour
     }
     
     public void startGame()
-    {
+    { 
         global.loadProperArenaScene();
     }
     

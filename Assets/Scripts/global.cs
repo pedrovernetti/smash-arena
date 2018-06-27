@@ -50,23 +50,11 @@ public static class global
 
     // Settings
     
-    public static float audioVolume = 1;
-    public static float musicVolume = 0;
+    public static float audioVolume = 1.0f;
+    public static float musicVolume = 0.5f;
     public static bool fullscreen = false;
     
-    private static difficultyLevel gameDifficultyLevel = difficultyLevel.Normal;  
-      
-    public static difficultyLevel difficulty
-    {
-        get { return gameDifficultyLevel; }
-        set
-        {
-            gameDifficultyLevel = value;
-            if (gameDifficultyLevel == difficultyLevel.Easy) 
-                allowedArenaModes.Remove(arenaMode.Unstable);
-            else allowedArenaModes.Add(arenaMode.Unstable);
-        }
-    }
+    public static difficultyLevel difficulty = difficultyLevel.Normal;
     
     // Game
     
@@ -87,8 +75,8 @@ public static class global
     
     public static bool bossEncounter = true;
     
-    public static arenaMode mode = arenaMode.Normal;
-    public static arenaTheme theme = arenaTheme.Humanoids;
+    public static arenaMode mode = (arenaMode)(1);
+    public static arenaTheme theme = (arenaTheme)(1);
     
     public static int playersCount = 4;
     public static string[] playerNames = new string[] 
@@ -235,6 +223,9 @@ public static class global
     public static arenaMode randomArenaMode()
     {
         int which = Random.Range(0, (allowedArenaModes.Count - 1));
+        if ((difficulty == difficultyLevel.Easy) && 
+            ((arenaMode)(allowedArenaModes[which]) == arenaMode.Unstable))
+            return randomArenaMode();
         return (arenaMode)(allowedArenaModes[which]);
     }
     
@@ -297,6 +288,7 @@ public static class global
         else if (theme == arenaTheme.Abstract) scene = "abstract";
         else if (theme == arenaTheme.Secret) scene = "secret";
         
+        Debug.Log("\"" + scene + "\" arena starting...");
         SceneManager.LoadScene(scene);
     }
     
