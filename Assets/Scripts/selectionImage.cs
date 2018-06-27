@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIImageController : MonoBehaviour
+public class selectionImage : MonoBehaviour
 {
     public enum imageType : byte
     {

@@ -84,10 +84,6 @@ public static class global
             0, // Player C
             0  // Player D
         };
-        
-    public static int lastClashTheme = 0;
-    public static int lastClashMode = 0;
-    public static int[] lastClashCharacters = new int[] {0, 0, 0, 0};
     
     public static bool bossEncounter = true;
     
@@ -163,7 +159,7 @@ public static class global
             }
         );
         
-    // Functions to manipulate things using tags
+    // Functions to manipulate things using tags or names
     
     public static GameObject getByName( string name)
     {
@@ -229,17 +225,56 @@ public static class global
         return (arenaTheme)(allowedArenaThemes[which]);
     }
     
+    public static arenaTheme allowedArenaTheme( int which )
+    {
+        if ((which == 0) || (which > allowedArenaThemes.Count))
+            return randomArenaTheme();
+        else return (arenaTheme)(allowedArenaThemes[which - 1]);
+    }
+    
     public static arenaMode randomArenaMode()
     {
         int which = Random.Range(0, (allowedArenaModes.Count - 1));
         return (arenaMode)(allowedArenaModes[which]);
     }
     
+    public static arenaMode allowedArenaMode( int which )
+    {
+        if ((which == 0) || (which > allowedArenaModes.Count))
+            return randomArenaMode();
+        else return (arenaMode)(allowedArenaModes[which - 1]);
+    }
+    
     public static void goToMainMenu()
     {
         Debug.Log("Main Menu");
+        if (SceneManager.GetActiveScene().name != "mainMenu")
+            SceneManager.LoadScene("mainMenu");
+        
+        getByName("mainMenuPanel").SetActive(true);
+        getByName("clashMode").SetActive(false);
+        getByName("options").SetActive(false);
+            
         bossEncounter = false;
-        SceneManager.LoadScene("mainMenu");
+        theme = (arenaTheme)(1);
+        mode = (arenaMode)(1);
+        clashMode = false;
+    }
+    
+    public static void goToClashModePanel()
+    {
+        Debug.Log("Clash Mode");
+        if (SceneManager.GetActiveScene().name != "mainMenu")
+            SceneManager.LoadScene("mainMenu");
+            
+        getByName("mainMenuPanel").SetActive(false);
+        getByName("clashMode").SetActive(true);
+        getByName("options").SetActive(false);
+        
+        bossEncounter = false;
+        getByName("mainMenu").GetComponent<UIController>().changeTheme("clash");
+        getByName("mainMenu").GetComponent<UIController>().changeMode("clash");
+        clashMode = true;
     }
     
     public static void loadProperArenaScene()
@@ -263,6 +298,15 @@ public static class global
         else if (theme == arenaTheme.Secret) scene = "secret";
         
         SceneManager.LoadScene(scene);
+    }
+    
+    public static void quit()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
     
     public static void advanceCampaign()

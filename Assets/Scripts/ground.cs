@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class groundController : MonoBehaviour
+public class ground : MonoBehaviour
 {
     private bool falling;
     private new Transform transform;
