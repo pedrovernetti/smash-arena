@@ -73,7 +73,7 @@ public static class global
             0  // Player D
         };
     
-    public static bool bossEncounter = true;
+    public static bool bossEncounter = false;
     
     public static arenaMode mode = (arenaMode)(1);
     public static arenaTheme theme = (arenaTheme)(1);
