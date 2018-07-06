@@ -15,16 +15,29 @@ public class animatorController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
-            anim.SetBool("horizontal+", true);
+            anim.SetBool("forward", true);
+        if (Input.GetKeyDown(KeyCode.S))
+            anim.SetBool("backward", true);
+        if (Input.GetKeyDown(KeyCode.A))
+            anim.SetBool("left", true);
+        if (Input.GetKeyDown(KeyCode.D))
+            anim.SetBool("right", true);
         if (Input.GetKeyDown(KeyCode.K))
             anim.SetBool("dash", true);
         if (Input.GetKeyUp(KeyCode.W))
-        {
-            anim.SetBool("horizontal+", false);
-        }
+            anim.SetBool("forward", false);
+        if (Input.GetKeyUp(KeyCode.S))
+            anim.SetBool("backward", false);
+        if (Input.GetKeyUp(KeyCode.A))
+            anim.SetBool("left", false);
+        if (Input.GetKeyUp(KeyCode.D))
+            anim.SetBool("right", false);
         if (Input.GetKeyUp(KeyCode.K))
-        {
             anim.SetBool("dash", false);
-        }
+        if (Input.GetKeyDown(KeyCode.J))
+            anim.SetBool("capoeira", true);
+        if (Input.GetKeyUp(KeyCode.J))
+            anim.SetBool("capoeira", false);
+
     }
 }
