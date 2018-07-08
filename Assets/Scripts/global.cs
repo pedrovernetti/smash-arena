@@ -8,7 +8,7 @@ public static class global
 {
     public enum arenaMode : byte
     {
-        Normal = 1,     // nothing special
+        Normal = 1,     // OK // nothing special
         Inverted = 2,   // arena has a hole in its center and walls by the sides
         Frozen = 3,     // ice objects - briefly slow characters down
         Burning = 4,    // fire objects - characters go briefly out of control
@@ -18,9 +18,10 @@ public static class global
         Teleport = 8,   // teleporter objects (like Bomberman holes)
         Ghost = 9,      // characters almost invisible and randomly non-solid
         Funny = 10,     // messed physics, messed textures/colors, messed music
-        Shrunken = 11,  // characters are half their size
-        Enlarged = 12,  // characters are twice their size
-        Dark = 13       // lighting is almost nonexisting
+        Shrunken = 11,  // OK // characters are half their size
+        Enlarged = 12,  // OK // characters are twice their size
+        Dark = 13,      // OK // lighting is almost black
+        DownsideUp = 14 // camera is rotated 180 around Z axis
     };  
     
     public enum arenaTheme : byte
@@ -47,6 +48,14 @@ public static class global
         DRAW = 2,
         LOSE = 4
     }
+    
+    public enum playerType : byte
+    {
+        Disabled = 0,
+        Human = 1,
+        Machine = 2,
+        BrainDead = 4
+    }
 
     // Settings
     
@@ -54,29 +63,14 @@ public static class global
     public static float musicVolume = 0.5f;
     public static bool fullscreen = false;
     
-    public static difficultyLevel difficulty = difficultyLevel.Normal;
-    
     // Game
     
-    public static bool ongoingGame = false;
-    
-    public static System.DateTime now { get { return System.DateTime.Now; } }
-    
-    public static bool clashMode = false;
-    public static int clashRounds = 5;
-    public static int clashRoundsPlayed = 0;
-    public static int[] clashVictories = new int[] 
-        {
-            0, // Player A
-            0, // Player B
-            0, // Player C
-            0  // Player D
-        };
-    
-    public static bool bossEncounter = true;
+    public static difficultyLevel difficulty = difficultyLevel.Normal;
     
     public static arenaMode mode = (arenaMode)(1);
     public static arenaTheme theme = (arenaTheme)(1);
+    
+    public static bool bossEncounter = false;
     
     public static int playersCount = 4;
     public static string[] playerNames = new string[] 
@@ -85,6 +79,37 @@ public static class global
             "Player B", 
             "Player C",
             "Player D"
+        };
+    
+    public static bool ongoingGame = false;
+    
+    public static System.DateTime now { get { return System.DateTime.Now; } }
+    public static bool coinflip { get { return (Random.value > 0.5f); } }
+    
+    public static string currentScene { get { return SceneManager.GetActiveScene().name; } }
+    public static arena currentArena = null;
+    public static ground currentArenaGround = null;
+    
+    // Clash-specific
+    
+    public static bool clashMode = false;
+    public static int clashRounds = 5;
+    public static int clashRoundsPlayed = 0;
+    public static int[] clashVictories = 
+        new int[] 
+        {
+            0, // Player A
+            0, // Player B
+            0, // Player C
+            0  // Player D
+        };
+    public static playerType[] clashPlayerTypes = 
+        new playerType[] 
+        {
+            playerType.Human,
+            playerType.Human,
+            playerType.Human,
+            playerType.Human
         };
         
     // Progress and achievements
@@ -149,7 +174,7 @@ public static class global
         
     // Functions to manipulate things using tags or names
     
-    public static GameObject getByName( string name)
+    public static GameObject getByName( string name )
     {
         GameObject parent = GameObject.Find("arena");
         if (parent == null) parent = GameObject.Find("mainMenu");
@@ -178,6 +203,21 @@ public static class global
         GameObject[] stuff = global.getByTag(tag);
         for (int i = stuff.Length - 1; i >= 0; i--)
             stuff[i].SetActive(Random.value > 0.5f);
+    }
+    
+    public static bool isMachineControlled( int playerNumber )
+    {
+        if ((!clashMode) && (playerNumber > 1)) 
+            return true;
+        else if (clashPlayerTypes[playerNumber] == playerType.Machine)
+            return true;
+        else return false;
+    }
+    
+    public static bool isMachineControlled( GameObject player )
+    {
+        playerController controller = player.GetComponent<playerController>();
+        return isMachineControlled(controller.playerNumber);
     }
     
     // Audio functions
@@ -223,8 +263,11 @@ public static class global
     public static arenaMode randomArenaMode()
     {
         int which = Random.Range(0, (allowedArenaModes.Count - 1));
-        if ((difficulty == difficultyLevel.Easy) && 
+        if (((difficulty == difficultyLevel.Easy) || (theme == arenaTheme.Cars)) && 
             ((arenaMode)(allowedArenaModes[which]) == arenaMode.Unstable))
+            return randomArenaMode();
+        if ((theme == arenaTheme.Fantasy) &&
+            ((arenaMode)(allowedArenaModes[which]) == arenaMode.Inverted))
             return randomArenaMode();
         return (arenaMode)(allowedArenaModes[which]);
     }
@@ -250,6 +293,7 @@ public static class global
         theme = (arenaTheme)(1);
         mode = (arenaMode)(1);
         clashMode = false;
+        currentArena = null;
     }
     
     public static void goToClashModePanel()
@@ -266,6 +310,7 @@ public static class global
         getByName("mainMenu").GetComponent<UIController>().changeTheme("clash");
         getByName("mainMenu").GetComponent<UIController>().changeMode("clash");
         clashMode = true;
+        currentArena = null;
     }
     
     public static void loadProperArenaScene()

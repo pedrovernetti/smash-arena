@@ -7,6 +7,24 @@ public class ground : MonoBehaviour
     private new Transform transform;
     private Rigidbody body;
     
+    public bool disableIfNecessary()
+    {
+        if (global.mode == global.arenaMode.Inverted)
+        {
+             if (name == "arenaGround")
+             {
+                gameObject.SetActiveRecursively(false);
+                return true;
+             }
+        }
+        else if (name == "invertedArenaGround") 
+        {
+            gameObject.SetActiveRecursively(false);
+            return true;
+        }
+        return false;
+    }
+    
 	public void Start() 
 	{
 		falling = false;
@@ -16,25 +34,17 @@ public class ground : MonoBehaviour
 	    if (global.mode != global.arenaMode.Unstable)
 	    {
 	        body.isKinematic = true;
-	        
 	        if (global.mode == global.arenaMode.Ghost)
 	        {
 	            if (global.theme == global.arenaTheme.Chess)
     	            GetComponent<MeshRenderer>().materials[0] = 
     	                GetComponent<MeshRenderer>().materials[2];
 	        }
+	        else if (disableIfNecessary()) return;
 	    }
-	    else 
-	    {
-	        body.isKinematic = false;
-	        if (global.mode == global.arenaMode.Inverted)
-	        {
-	             if (name == "arenaGround") 
-	                gameObject.SetActiveRecursively(false);
-	        }
-	        else if (name == "invertedArenaGround") 
-	            gameObject.SetActiveRecursively(false);
-	    }
+	    else body.isKinematic = false;
+	    
+	    global.currentArenaGround = this;
 	}
 	
 	private void fall()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class secretsHandler
 {
-    private static string secretCode;
+    private static string secretCode = "";
     private static DateTime lastSecretInput; 
     private static DateTime lastSecretInputRead; 
     
