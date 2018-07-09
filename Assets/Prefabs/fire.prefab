@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 405516}
   - component: {fileID: 19878312}
   - component: {fileID: 19938198}
+  - component: {fileID: 135982069093608784}
   m_Layer: 0
   m_Name: fire
-  m_TagString: Untagged
+  m_TagString: fire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13774,3 +13775,15 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 147566}
   m_IsPrefabAsset: 1
+--- !u!135 &135982069093608784
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147566}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0.00002360344, y: -0.0000449419, z: 0}
