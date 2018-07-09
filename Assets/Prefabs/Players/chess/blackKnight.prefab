@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 0}
+  m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1841749532705156}
-  m_IsPrefabAsset: 1
+  m_IsPrefabParent: 0
 --- !u!1 &1841749532705156
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
+  serializedVersion: 5
   m_Component:
   - component: {fileID: 4300367114283004}
   - component: {fileID: 33733679716652744}
@@ -34,7 +34,7 @@ GameObject:
 --- !u!4 &4300367114283004
 Transform:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
@@ -47,7 +47,7 @@ Transform:
 --- !u!23 &23308838098882034
 MeshRenderer:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   m_Enabled: 1
@@ -57,7 +57,6 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f85005734a0b0450f91737fd6e64f3a4, type: 2}
   m_StaticBatchInfo:
@@ -82,14 +81,14 @@ MeshRenderer:
 --- !u!33 &33733679716652744
 MeshFilter:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   m_Mesh: {fileID: 4300000, guid: 37fa4b41bc7842542bb795f93ea1073b, type: 3}
 --- !u!54 &54701307183447476
 Rigidbody:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   serializedVersion: 2
@@ -104,7 +103,7 @@ Rigidbody:
 --- !u!64 &64000753573376280
 MeshCollider:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   m_Material: {fileID: 0}
@@ -118,7 +117,7 @@ MeshCollider:
 --- !u!114 &114805628928331416
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841749532705156}
   m_Enabled: 1
@@ -128,8 +127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: Black Knight
   playerNumber: 2
+  mass: 1
+  drag: 5
   speed: 75
   dashSpeed: 200
   movements: 2
-  mediumHit: {fileID: 8300000, guid: cfbf1849e97fa574b8a27e62eed564e9, type: 3}
-  heavyHit: {fileID: 0}
+  mediumHitSound: {fileID: 0}
+  heavyHitSound: {fileID: 0}
