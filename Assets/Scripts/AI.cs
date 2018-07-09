@@ -29,15 +29,15 @@ public class AI : MonoBehaviour
     }
 	private bool movesLikeACreature
 	{
-    	get { return (movements != playerController.movementStyle.Creature); }
+    	get { return (movements == playerController.movementStyle.Creature); }
 	}	
 	private bool movesLikeAChessPiece
 	{
-	    get { return (movements != playerController.movementStyle.ChessPiece); }
+	    get { return (movements == playerController.movementStyle.ChessPiece); }
 	}	
 	private bool movesLikeACar
 	{
-	    get { return (movements != playerController.movementStyle.Car); }
+	    get { return (movements == playerController.movementStyle.Car); }
 	}
     
     private void setUpScanners()
@@ -102,7 +102,7 @@ public class AI : MonoBehaviour
 	{
 	    if (((movesLikeACar) && (isMoving)) || (!movesLikeACar))
 	    {
-            float rate = 0.5f;
+            float rate = 1f;
             
             Transform target = currentTarget.transform;
             Quaternion targetRotation = 
@@ -115,6 +115,7 @@ public class AI : MonoBehaviour
 	
 	private void chase()
 	{
+	    if (currentTarget.GetComponent<playerController>().isGroundless) return;
 	    if (movesLikeAChessPiece)
 	    {
 	        Vector3 nextPosition = 
@@ -132,7 +133,8 @@ public class AI : MonoBehaviour
     public void FixedUpdate()
     {
         currentTarget = closestEnemy();
+        chase();
         
-        Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
+        //Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
     }
 }

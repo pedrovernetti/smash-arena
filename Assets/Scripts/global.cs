@@ -67,7 +67,7 @@ public static class global
     
     public static difficultyLevel difficulty = difficultyLevel.Normal;
     
-    public static arenaMode mode = (arenaMode)(1);
+    public static arenaMode mode = arenaMode.Electric;
     public static arenaTheme theme = (arenaTheme)(1);
     
     public static bool bossEncounter = false;
@@ -191,18 +191,11 @@ public static class global
         return GameObject.FindGameObjectsWithTag(tag);
     }
     
-    public static void setActiveByTag( string tag, bool active )
+    public static void setActiveByTag( string tag, bool active = true )
     {
         GameObject[] stuff = global.getByTag(tag);
         for (int i = stuff.Length - 1; i >= 0; i--)
             stuff[i].SetActive(active);
-    }
-    
-    public static void setRandomlyActiveByTag( string tag )
-    {
-        GameObject[] stuff = global.getByTag(tag);
-        for (int i = stuff.Length - 1; i >= 0; i--)
-            stuff[i].SetActive(Random.value > 0.5f);
     }
     
     public static bool isMachineControlled( int playerNumber )

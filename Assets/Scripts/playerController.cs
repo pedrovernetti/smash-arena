@@ -191,6 +191,7 @@ public class playerController : MonoBehaviour
 	    float originalDashSpeed = dashSpeed;
         speed /= factor;
         dashSpeed = speed / factor;
+	    Debug.Log(playerName + " is frozen!");
         yield return new WaitForSeconds(duration * 0.8f * (int)(global.difficulty));
         speed *= factor;
         yield return new WaitForSeconds(duration * 0.2f * (int)(global.difficulty));
@@ -214,6 +215,7 @@ public class playerController : MonoBehaviour
 	public IEnumerator burn( float factor, float duration )
 	{
 	    isBurning = true;
+	    Debug.Log(playerName + " is burning!");
 	    StartCoroutine(agonize(factor));
         new WaitForSeconds(duration * (int)(global.difficulty));
         isBurning = false;
@@ -224,6 +226,7 @@ public class playerController : MonoBehaviour
 	{
 	    movementStyle originalMovementStyle = movements;
 	    movements = movementStyle.Still;
+	    Debug.Log(playerName + " is paralyzed!");
         yield return new WaitForSeconds(duration * (int)(global.difficulty));
         movements = originalMovementStyle;
 	}
@@ -247,6 +250,7 @@ public class playerController : MonoBehaviour
         }
         else if (other.collider.CompareTag("ice"))
         {
+            Debug.Log(playerName + "collided with ice");
             StartCoroutine(freeze(3f, 1f));
             other.collider.gameObject.SetActive(false);
         }
