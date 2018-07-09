@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: f3e45234a80360f44834a8888c604712
+timeCreated: 1531117175
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: ag
+    100002: ag001
+    100004: ag002
+    100006: ag003
+    100008: ag004
+    100010: ag005
+    100012: ag006
+    100014: ag007
+    100016: ag008
+    100018: ag009
+    100020: ag010
+    100022: Box001
+    100024: Circle001
+    100026: Cylinder001
+    100028: Cylinder002
+    100030: Cylinder003
+    100032: Line001
+    100034: Shape002
+    100036: Shape003
+    100038: Shape004
+    100040: Shape005
+    100042: Shape006
+    100044: Shape007
+    100046: Shape008
+    100048: Shape1
+    100050: //RootNode
+    400000: ag
+    400002: ag001
+    400004: ag002
+    400006: ag003
+    400008: ag004
+    400010: ag005
+    400012: ag006
+    400014: ag007
+    400016: ag008
+    400018: ag009
+    400020: ag010
+    400022: Box001
+    400024: Circle001
+    400026: Cylinder001
+    400028: Cylinder002
+    400030: Cylinder003
+    400032: Line001
+    400034: Shape002
+    400036: Shape003
+    400038: Shape004
+    400040: Shape005
+    400042: Shape006
+    400044: Shape007
+    400046: Shape008
+    400048: Shape1
+    400050: //RootNode
+    2100000: agMat
+    2100002: ag001Mat
+    2100004: ag002Mat
+    2100006: ag003Mat
+    2100008: ag004Mat
+    2100010: ag005Mat
+    2100012: ag006Mat
+    2100014: ag007Mat
+    2100016: ag008Mat
+    2100018: ag009Mat
+    2100020: ag010Mat
+    2100022: Box001Mat
+    2100024: Circle001Mat
+    2100026: Cylinder001Mat
+    2100028: Cylinder002Mat
+    2100030: Cylinder003Mat
+    2100032: Line001Mat
+    2100034: Shape002Mat
+    2100036: Shape003Mat
+    2100038: Shape004Mat
+    2100040: Shape005Mat
+    2100042: Shape006Mat
+    2100044: Shape007Mat
+    2100046: Shape008Mat
+    2100048: Shape1Mat
+    2300000: ag
+    2300002: ag001
+    2300004: ag002
+    2300006: ag003
+    2300008: ag004
+    2300010: ag005
+    2300012: ag006
+    2300014: ag007
+    2300016: ag008
+    2300018: ag009
+    2300020: ag010
+    2300022: Box001
+    2300024: Circle001
+    2300026: Cylinder001
+    2300028: Cylinder002
+    2300030: Cylinder003
+    2300032: Line001
+    2300034: Shape002
+    2300036: Shape003
+    2300038: Shape004
+    2300040: Shape005
+    2300042: Shape006
+    2300044: Shape007
+    2300046: Shape008
+    2300048: Shape1
+    3300000: ag
+    3300002: ag001
+    3300004: ag002
+    3300006: ag003
+    3300008: ag004
+    3300010: ag005
+    3300012: ag006
+    3300014: ag007
+    3300016: ag008
+    3300018: ag009
+    3300020: ag010
+    3300022: Box001
+    3300024: Circle001
+    3300026: Cylinder001
+    3300028: Cylinder002
+    3300030: Cylinder003
+    3300032: Line001
+    3300034: Shape002
+    3300036: Shape003
+    3300038: Shape004
+    3300040: Shape005
+    3300042: Shape006
+    3300044: Shape007
+    3300046: Shape008
+    3300048: Shape1
+    4300000: ag
+    4300002: ag001
+    4300004: ag002
+    4300006: ag003
+    4300008: ag004
+    4300010: ag005
+    4300012: ag006
+    4300014: ag007
+    4300016: ag008
+    4300018: ag009
+    4300020: ag010
+    4300022: Box001
+    4300024: Circle001
+    4300026: Cylinder001
+    4300028: Cylinder002
+    4300030: Cylinder003
+    4300032: Line001
+    4300034: Shape002
+    4300036: Shape003
+    4300038: Shape004
+    4300040: Shape005
+    4300042: Shape006
+    4300044: Shape007
+    4300046: Shape008
+    4300048: Shape1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

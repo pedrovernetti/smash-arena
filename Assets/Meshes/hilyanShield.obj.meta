@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: ac24358a3f26e5d40ab9f73b6c416778
+timeCreated: 1531111885
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Hylian_Shield_Deckfl_che
+    100002: Hylian_Shield_Griff_Griff1_Zylinder1
+    100004: Hylian_Shield_Griff_Griff1_Zylinder_1
+    100006: Hylian_Shield_Griff_Griff1_Zylinder_2
+    100008: Hylian_Shield_Griff_Griff2_Kugel
+    100010: Hylian_Shield_Muster_1_Muster_11
+    100012: Hylian_Shield_Noppen1_Noppen2_Noppen
+    100014: Hylian_Shield_Noppen1_Noppen2_Noppen_1
+    100016: Hylian_Shield_Noppen1_Noppen2_Noppen_2
+    100018: Hylian_Shield_Noppen1_Noppen2_Noppen_3
+    100020: Hylian_Shield_Noppen1_Noppen2_Noppen_4
+    100022: Hylian_Shield_Noppen1_Noppen2_Noppen_5
+    100024: Hylian_Shield_Noppen1_Noppen2_Noppen_6
+    100026: Hylian_Shield_Noppen1_Noppen2_Noppen_7
+    100028: Hylian_Shield_Noppen1_Noppen2_Noppen_8
+    100030: Hylian_Shield_Noppen1_Noppen2_Noppen_9
+    100032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Bein
+    100034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gel
+    100036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rper
+    100038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Kopf
+    100040: Hylian_Shield_Rahmen_Rahmen1
+    100042: Hylian_Shield_Tri_Force_Pyramide
+    100044: Hylian_Shield_Tri_Force_Pyramide_1
+    100046: Hylian_Shield_Tri_Force_Pyramide_2
+    100048: Hylian_Shield_Tri_Force_Pyramide_3
+    100050: //RootNode
+    400000: Hylian_Shield_Deckfl_che
+    400002: Hylian_Shield_Griff_Griff1_Zylinder1
+    400004: Hylian_Shield_Griff_Griff1_Zylinder_1
+    400006: Hylian_Shield_Griff_Griff1_Zylinder_2
+    400008: Hylian_Shield_Griff_Griff2_Kugel
+    400010: Hylian_Shield_Muster_1_Muster_11
+    400012: Hylian_Shield_Noppen1_Noppen2_Noppen
+    400014: Hylian_Shield_Noppen1_Noppen2_Noppen_1
+    400016: Hylian_Shield_Noppen1_Noppen2_Noppen_2
+    400018: Hylian_Shield_Noppen1_Noppen2_Noppen_3
+    400020: Hylian_Shield_Noppen1_Noppen2_Noppen_4
+    400022: Hylian_Shield_Noppen1_Noppen2_Noppen_5
+    400024: Hylian_Shield_Noppen1_Noppen2_Noppen_6
+    400026: Hylian_Shield_Noppen1_Noppen2_Noppen_7
+    400028: Hylian_Shield_Noppen1_Noppen2_Noppen_8
+    400030: Hylian_Shield_Noppen1_Noppen2_Noppen_9
+    400032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Bein
+    400034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gel
+    400036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rper
+    400038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Kopf
+    400040: Hylian_Shield_Rahmen_Rahmen1
+    400042: Hylian_Shield_Tri_Force_Pyramide
+    400044: Hylian_Shield_Tri_Force_Pyramide_1
+    400046: Hylian_Shield_Tri_Force_Pyramide_2
+    400048: Hylian_Shield_Tri_Force_Pyramide_3
+    400050: //RootNode
+    2100000: Hylian_Shield_Deckfl_cheMat
+    2100002: Hylian_Shield_Griff_Griff1_Zylinder1Mat
+    2100004: Hylian_Shield_Griff_Griff1_Zylinder_1Mat
+    2100006: Hylian_Shield_Griff_Griff1_Zylinder_2Mat
+    2100008: Hylian_Shield_Griff_Griff2_KugelMat
+    2100010: Hylian_Shield_Muster_1_Muster_11Mat
+    2100012: Hylian_Shield_Noppen1_Noppen2_NoppenMat
+    2100014: Hylian_Shield_Noppen1_Noppen2_Noppen_1Mat
+    2100016: Hylian_Shield_Noppen1_Noppen2_Noppen_2Mat
+    2100018: Hylian_Shield_Noppen1_Noppen2_Noppen_3Mat
+    2100020: Hylian_Shield_Noppen1_Noppen2_Noppen_4Mat
+    2100022: Hylian_Shield_Noppen1_Noppen2_Noppen_5Mat
+    2100024: Hylian_Shield_Noppen1_Noppen2_Noppen_6Mat
+    2100026: Hylian_Shield_Noppen1_Noppen2_Noppen_7Mat
+    2100028: Hylian_Shield_Noppen1_Noppen2_Noppen_8Mat
+    2100030: Hylian_Shield_Noppen1_Noppen2_Noppen_9Mat
+    2100032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_BeinMat
+    2100034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gelMat
+    2100036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rperMat
+    2100038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_KopfMat
+    2100040: Hylian_Shield_Rahmen_Rahmen1Mat
+    2100042: Hylian_Shield_Tri_Force_PyramideMat
+    2100044: Hylian_Shield_Tri_Force_Pyramide_1Mat
+    2100046: Hylian_Shield_Tri_Force_Pyramide_2Mat
+    2100048: Hylian_Shield_Tri_Force_Pyramide_3Mat
+    2300000: Hylian_Shield_Deckfl_che
+    2300002: Hylian_Shield_Griff_Griff1_Zylinder1
+    2300004: Hylian_Shield_Griff_Griff1_Zylinder_1
+    2300006: Hylian_Shield_Griff_Griff1_Zylinder_2
+    2300008: Hylian_Shield_Griff_Griff2_Kugel
+    2300010: Hylian_Shield_Muster_1_Muster_11
+    2300012: Hylian_Shield_Noppen1_Noppen2_Noppen
+    2300014: Hylian_Shield_Noppen1_Noppen2_Noppen_1
+    2300016: Hylian_Shield_Noppen1_Noppen2_Noppen_2
+    2300018: Hylian_Shield_Noppen1_Noppen2_Noppen_3
+    2300020: Hylian_Shield_Noppen1_Noppen2_Noppen_4
+    2300022: Hylian_Shield_Noppen1_Noppen2_Noppen_5
+    2300024: Hylian_Shield_Noppen1_Noppen2_Noppen_6
+    2300026: Hylian_Shield_Noppen1_Noppen2_Noppen_7
+    2300028: Hylian_Shield_Noppen1_Noppen2_Noppen_8
+    2300030: Hylian_Shield_Noppen1_Noppen2_Noppen_9
+    2300032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Bein
+    2300034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gel
+    2300036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rper
+    2300038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Kopf
+    2300040: Hylian_Shield_Rahmen_Rahmen1
+    2300042: Hylian_Shield_Tri_Force_Pyramide
+    2300044: Hylian_Shield_Tri_Force_Pyramide_1
+    2300046: Hylian_Shield_Tri_Force_Pyramide_2
+    2300048: Hylian_Shield_Tri_Force_Pyramide_3
+    3300000: Hylian_Shield_Deckfl_che
+    3300002: Hylian_Shield_Griff_Griff1_Zylinder1
+    3300004: Hylian_Shield_Griff_Griff1_Zylinder_1
+    3300006: Hylian_Shield_Griff_Griff1_Zylinder_2
+    3300008: Hylian_Shield_Griff_Griff2_Kugel
+    3300010: Hylian_Shield_Muster_1_Muster_11
+    3300012: Hylian_Shield_Noppen1_Noppen2_Noppen
+    3300014: Hylian_Shield_Noppen1_Noppen2_Noppen_1
+    3300016: Hylian_Shield_Noppen1_Noppen2_Noppen_2
+    3300018: Hylian_Shield_Noppen1_Noppen2_Noppen_3
+    3300020: Hylian_Shield_Noppen1_Noppen2_Noppen_4
+    3300022: Hylian_Shield_Noppen1_Noppen2_Noppen_5
+    3300024: Hylian_Shield_Noppen1_Noppen2_Noppen_6
+    3300026: Hylian_Shield_Noppen1_Noppen2_Noppen_7
+    3300028: Hylian_Shield_Noppen1_Noppen2_Noppen_8
+    3300030: Hylian_Shield_Noppen1_Noppen2_Noppen_9
+    3300032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Bein
+    3300034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gel
+    3300036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rper
+    3300038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Kopf
+    3300040: Hylian_Shield_Rahmen_Rahmen1
+    3300042: Hylian_Shield_Tri_Force_Pyramide
+    3300044: Hylian_Shield_Tri_Force_Pyramide_1
+    3300046: Hylian_Shield_Tri_Force_Pyramide_2
+    3300048: Hylian_Shield_Tri_Force_Pyramide_3
+    4300000: Hylian_Shield_Deckfl_che
+    4300002: Hylian_Shield_Griff_Griff1_Zylinder1
+    4300004: Hylian_Shield_Griff_Griff1_Zylinder_1
+    4300006: Hylian_Shield_Griff_Griff1_Zylinder_2
+    4300008: Hylian_Shield_Griff_Griff2_Kugel
+    4300010: Hylian_Shield_Muster_1_Muster_11
+    4300012: Hylian_Shield_Noppen1_Noppen2_Noppen
+    4300014: Hylian_Shield_Noppen1_Noppen2_Noppen_1
+    4300016: Hylian_Shield_Noppen1_Noppen2_Noppen_2
+    4300018: Hylian_Shield_Noppen1_Noppen2_Noppen_3
+    4300020: Hylian_Shield_Noppen1_Noppen2_Noppen_4
+    4300022: Hylian_Shield_Noppen1_Noppen2_Noppen_5
+    4300024: Hylian_Shield_Noppen1_Noppen2_Noppen_6
+    4300026: Hylian_Shield_Noppen1_Noppen2_Noppen_7
+    4300028: Hylian_Shield_Noppen1_Noppen2_Noppen_8
+    4300030: Hylian_Shield_Noppen1_Noppen2_Noppen_9
+    4300032: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Bein
+    4300034: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gel
+    4300036: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rper
+    4300038: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Kopf
+    4300040: Hylian_Shield_Rahmen_Rahmen1
+    4300042: Hylian_Shield_Tri_Force_Pyramide
+    4300044: Hylian_Shield_Tri_Force_Pyramide_1
+    4300046: Hylian_Shield_Tri_Force_Pyramide_2
+    4300048: Hylian_Shield_Tri_Force_Pyramide_3
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
