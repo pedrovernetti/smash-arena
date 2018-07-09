@@ -51,6 +51,19 @@ public class playerController : MonoBehaviour
 	// sounds
 	public AudioClip mediumHitSound;
 	public AudioClip heavyHitSound;
+	
+	private void setPlayerNumber()
+	{
+	    /*for (int i = 0; i < 4; i++)
+	    {
+	        if (global.playerCharacters[i] == gameObject.name)
+	        {
+	            playerNumber = i + 1;
+	            return;
+	        }
+	    }
+	    playerNumber = 0;*/
+	}
     
     private bool removePlayerIfNecessary()
     {
@@ -81,6 +94,7 @@ public class playerController : MonoBehaviour
     
 	public void Start() 
 	{
+	    setPlayerNumber();
 	    if (removePlayerIfNecessary()) return;
 	    
 	    if (global.clashMode) 

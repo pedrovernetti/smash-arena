@@ -6,6 +6,18 @@ using UnityEngine;
 
 public static class global 
 {
+    public class Tuple<type1, type2>
+    {
+        public type1 Item1 { get; private set; }
+        public type2 Item2 { get; private set; }
+
+        public Tuple(type1 item1, type2 item2)
+        {
+            Item1 = item1;
+            Item2 = item2;
+        }
+    }
+
     public enum arenaMode : byte
     {
         Normal = 1,     // OK // nothing special
@@ -73,12 +85,21 @@ public static class global
     public static bool bossEncounter = false;
     
     public static int playersCount = 4;
-    public static string[] playerNames = new string[] 
+    public static string[] playerNames = 
+        new string[] 
         {
             "Player A",
             "Player B", 
             "Player C",
             "Player D"
+        };
+    public static string[] playerCharacters = 
+        new string[] 
+        {
+            "newton",
+            "newton",
+            "newton",
+            "newton"
         };
     
     public static bool ongoingGame = false;
@@ -162,15 +183,71 @@ public static class global
         new ArrayList(
             new string[] 
             {
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                // cars
+                "blueCar",
+                "kendoVan",
+                "newtonsCar",
+                "oldTimer",
+                // humanoids
+                "akai",
+                "newton",
+                "spartanHero",
+                "vampire",
+                // fantasy
+                "newtonGhost",
+                "ghost",
+                "rabbit",
+                "slime"
             }
         );
+        
+    // Enemies lists by theme
+        
+    public static Tuple<string, float>[] carEnemies = 
+        new Tuple<string, float>[] 
+        {
+            new Tuple<string, float>("blueCar", 25.0f),
+            new Tuple<string, float>("forklift", 20.0f),
+            new Tuple<string, float>("kendoVan", 15.0f),
+            new Tuple<string, float>("oldTimer", 5.0f)
+        };
+        
+    public static Tuple<string, float>[] humanoidEnemies = 
+        new Tuple<string, float>[] 
+        {
+            new Tuple<string, float>("akai", 20.0f),
+            new Tuple<string, float>("heraklios", 10.0f),
+            //new Tuple<string, float>("knight", 10.0f),
+            new Tuple<string, float>("nightShade", 10.0f),
+            new Tuple<string, float>("spartanHero", 20.0f),
+            new Tuple<string, float>("vampire", 10.0f),
+            new Tuple<string, float>("whiteClown", 10.0f),
+            new Tuple<string, float>("wiezzorek", 10.0f),
+            new Tuple<string, float>("yBot", 2.5f)
+        };
+        
+    public static Tuple<string, float>[] fantasyEnemies = 
+        new Tuple<string, float>[] 
+        {
+            new Tuple<string, float>("ghost", 25.0f),
+            new Tuple<string, float>("rabbit", 20.0f),
+            new Tuple<string, float>("slime", 20.0f)
+        };
+        
+    public static Tuple<string, float>[] chessEnemies = 
+        new Tuple<string, float>[] 
+        {
+            new Tuple<string, float>("blackPawn", 37.0f),
+            new Tuple<string, float>("blackRook", 20.0f),
+            new Tuple<string, float>("blackKnight", 15.0f),
+            new Tuple<string, float>("blackBishop", 15.0f),
+            new Tuple<string, float>("blackQueen", 1.0f),
+            new Tuple<string, float>("whitePawn", 31.0f),
+            new Tuple<string, float>("whiteRook", 20.0f),
+            new Tuple<string, float>("whiteKnight", 5.0f),
+            new Tuple<string, float>("whiteBishop", 5.0f),
+            new Tuple<string, float>("whiteQueen", 1.0f)
+        };
         
     // Functions to manipulate things using tags or names
     
@@ -270,6 +347,41 @@ public static class global
         if ((which == 0) || (which > allowedArenaModes.Count))
             return randomArenaMode();
         else return (arenaMode)(allowedArenaModes[which - 1]);
+    }
+    
+    public static string mainCharacter()
+    {
+        if (theme == arenaTheme.Cars) return "newtonsCar";
+        else if (theme == arenaTheme.Humanoids) return "newton";
+        else if (theme == arenaTheme.Fantasy) return "newtonGhost";
+        else return "knightNewton";
+    }
+    
+    public static string randomCharacter()
+    {
+        Tuple<string, float> character;
+        if (theme == arenaTheme.Cars)
+            character = carEnemies[Random.Range(0, (carEnemies.Length - 1))];
+        else if (theme == arenaTheme.Humanoids)
+            character = humanoidEnemies[Random.Range(0, (humanoidEnemies.Length - 1))];
+        else if (theme == arenaTheme.Fantasy)
+            character = fantasyEnemies[Random.Range(0, (fantasyEnemies.Length - 1))];
+        else character = chessEnemies[Random.Range(0, (chessEnemies.Length - 1))];
+        if (Random.Range(0, 100) < character.Item2) return character.Item1;
+        else return randomCharacter();
+    }
+    
+    public static string reallyRandomCharacter()
+    {
+        int which = Random.Range(0, (allowedCharacters.Count - 1));
+        return (string)(allowedCharacters[which]);
+    }
+    
+    public static string allowedCharacter( int which )
+    {
+        if ((which == 0) || (which > allowedCharacters.Count))
+            return reallyRandomCharacter();
+        else return (string)(allowedCharacters[which - 1]);
     }
     
     public static void goToMainMenu()

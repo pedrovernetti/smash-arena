@@ -26,6 +26,20 @@ public class arena : MonoBehaviour
     private System.DateTime lastPlayPauseTime;
     private bool paused;
     public bool isPaused { get { return paused; } }
+    
+    #if UNITY_EDITOR
+    private void setThemeBasedOnScene()
+    {
+        if (global.currentScene == "cars") 
+            global.theme = global.arenaTheme.Cars;
+        else if (global.currentScene == "humanoids")
+            global.theme = global.arenaTheme.Humanoids;
+        else if (global.currentScene == "fantasy")
+            global.theme = global.arenaTheme.Fantasy;
+        else if (global.currentScene == "chess")
+            global.theme = global.arenaTheme.Chess;
+    }
+    #endif
 	
 	private void findReferencePoints()
 	{
@@ -118,7 +132,35 @@ public class arena : MonoBehaviour
 	
 	private void preparePlayers()
 	{
+	    /*string[] players = new string[4];
+	    if (!global.clashMode)
+	    {
+	        players[0] = global.mainCharacter();
+	        for (int i = 1; i < 4; i++) 
+	            players[i] = global.randomCharacter();
+	    }
+	    else
+	    {
+	        for (int i = 0; i < 4; i++)     
+	            players[i] = global.clashPlayerCharacters[i];
+	    }
 	    
+	    GameObject[] characters = global.getByTag("Player");
+	    for (int i = characters.Length - 1, j = 0, ok = 0; i >= 0; i--, ok = 0)
+	    {
+	        for (j = 0; j < 4; j++)
+	        {
+	            if (characters[i].name == players[j])
+	            {
+	                characters[i].GetComponent<playerController>().playerNumber = 
+	                    j + 1;
+	                characters[i].transform.position = 
+	                    randomArenaPosition(characters[i].transform.position.y);
+	                ok = 1;
+	            }
+	        }
+	        if (ok == 0) Object.Destroy(characters[i]);
+	    }*/
 	}
     
     public void setLightingColor( Color color )
@@ -283,6 +325,10 @@ public class arena : MonoBehaviour
 	
 	public void Start()
 	{
+        #if UNITY_EDITOR
+        setThemeBasedOnScene();
+        #endif
+        
         global.currentArena = this;
 	    paused = false;
         
