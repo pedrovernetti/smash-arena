@@ -223,7 +223,7 @@ MonoBehaviour:
   speed: 70
   dashSpeed: 200
   movements: 2
-  mediumHitSound: {fileID: 0}
+  mediumHitSound: {fileID: 8300000, guid: cfbf1849e97fa574b8a27e62eed564e9, type: 3}
   heavyHitSound: {fileID: 0}
 --- !u!1 &26356844
 GameObject:
@@ -54421,7 +54421,7 @@ MonoBehaviour:
   speed: 75
   dashSpeed: 200
   movements: 2
-  mediumHitSound: {fileID: 0}
+  mediumHitSound: {fileID: 8300000, guid: cfbf1849e97fa574b8a27e62eed564e9, type: 3}
   heavyHitSound: {fileID: 0}
 --- !u!23 &869991884
 MeshRenderer:
@@ -102599,12 +102599,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: White Knight
   playerNumber: 1
-  mass: 1
+  mass: 100
   drag: 5
-  speed: 75
+  speed: 7500
   dashSpeed: 200
   movements: 2
-  mediumHitSound: {fileID: 0}
+  mediumHitSound: {fileID: 8300000, guid: cfbf1849e97fa574b8a27e62eed564e9, type: 3}
   heavyHitSound: {fileID: 0}
 --- !u!23 &1480251060
 MeshRenderer:
@@ -136805,7 +136805,7 @@ MonoBehaviour:
   speed: 60
   dashSpeed: 200
   movements: 2
-  mediumHitSound: {fileID: 0}
+  mediumHitSound: {fileID: 8300000, guid: cfbf1849e97fa574b8a27e62eed564e9, type: 3}
   heavyHitSound: {fileID: 0}
 --- !u!64 &1931794858
 MeshCollider:
