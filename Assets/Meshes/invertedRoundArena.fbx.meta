@@ -1,23 +1,20 @@
 fileFormatVersion: 2
-guid: 06917a21db50d445db87ad5d0d881147
+guid: c8332c69533a14776b39d63a29010e45
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
+    100000: Camera
     100002: Cylinder
-    100004: Lamp
-    100006: Camera
-    400000: //RootNode
+    100004: //RootNode
+    100006: Lamp
+    400000: Camera
     400002: Cylinder
-    400004: Lamp
-    400006: Camera
+    400004: //RootNode
+    400006: Lamp
     2000000: Camera
-    2100000: No Name
-    2100002: Material.001
-    2300000: //RootNode
-    2300002: Cylinder
-    3300000: //RootNode
-    3300002: Cylinder
+    2100000: Material.001
+    2300000: Cylinder
+    3300000: Cylinder
     4300000: Cylinder
     10800000: Lamp
   externalObjects: {}
@@ -71,6 +68,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

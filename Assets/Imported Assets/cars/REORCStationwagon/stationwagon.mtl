@@ -1,0 +1,86 @@
+# 
+# 
+
+newmtl 07___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka license_plate_01_d.dds
+	map_Kd license_plate_01_d.dds
+
+newmtl 1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.6210 0.6210 0.6210
+	Ke 0.0000 0.0000 0.0000
+	map_Ka car_stationwagon_d.dds
+	map_Kd car_stationwagon_d.dds
+
+newmtl 0
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.3960 0.3960 0.3960
+	Ke 0.0000 0.0000 0.0000
+	map_Ka car_stationwagon_01_d.dds
+	map_Kd car_stationwagon_01_d.dds
+
+newmtl 3
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.5490 0.5490 0.5490
+	Ke 0.0000 0.0000 0.0000
+	map_Ka car_stationwagon_underside_d.dds
+	map_Kd car_stationwagon_underside_d.dds
+
+newmtl 4
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.5040 0.5040 0.5040
+	Ke 0.0000 0.0000 0.0000
+	map_Ka car_stationwagon_windows_d.dds
+	map_Kd car_stationwagon_windows_d.dds
+
+newmtl 2
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.4770 0.4770 0.4770
+	Ke 0.0000 0.0000 0.0000
+	map_Ka car_stationwagon_wheels_d.dds
+	map_Kd car_stationwagon_wheels_d.dds

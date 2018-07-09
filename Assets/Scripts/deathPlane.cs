@@ -43,7 +43,7 @@ public class deathPlane : MonoBehaviour
 	                StartCoroutine(showDeathText("DRAW"));
                     arenaController.finish(global.gameResult.DRAW);
                 }
-                else if (winner.isCampaignPlayer)
+                else if (winner.isCampaignHero)
                 {
 	                StartCoroutine(showDeathText("YOU WIN"));
                     arenaController.finish(global.gameResult.WIN, winner);
@@ -78,6 +78,12 @@ public class deathPlane : MonoBehaviour
             activePlayersCount--;
             setDead(other.gameObject.GetComponent<playerController>());
             if (activePlayersCount == 1) setWinner();
+        }
+        else if ((!global.clashMode) && (other.gameObject.name == "bridge") &&
+                 (global.currentScene == "cars"))
+        {
+            // liberar algo show
+            Debug.Log("Bridge easter egg unlocked...");
         }
     }
 }

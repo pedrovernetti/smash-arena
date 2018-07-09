@@ -1,5 +1,7 @@
 Assets/Skyboxes/*.png filter=lfs diff=lfs merge=lfs -text
-Assets/Materials/Source/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/Materials/Textures/*.png filter=lfs diff=lfs merge=lfs -text
 *.wav filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.cs diff=csharp
