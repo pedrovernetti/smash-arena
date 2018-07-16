@@ -99,11 +99,9 @@ public class playerController : MonoBehaviour
 	    }
     }
     
-    private IEnumerator delayedStart()
-    {
-        yield return new WaitUntil(() => global.currentArena.playersInPlace);
-        
-	    if (removePlayerIfNecessary()) yield break;
+	public void Start() 
+	{
+	    if (removePlayerIfNecessary()) return;
 	    
 	    if (global.clashMode) 
 	    {
@@ -127,13 +125,6 @@ public class playerController : MonoBehaviour
 	        gameObject.AddComponent<AI>();
 	    else if (playerType == global.playerType.BrainDead)
 	        movements = movementStyle.Still;
-	        
-	    yield break;
-    }
-    
-	public void Start() 
-	{
-	    StartCoroutine(delayedStart());
 	}
 	
 	private void carControl( float horizontal, float vertical )
