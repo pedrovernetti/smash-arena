@@ -16,10 +16,16 @@ public static class secretsHandler
         set { secretCode = value; }
     }
     
-    private static void editorTrick1()
+    // Recarrega a arena atual
+    // BEGIN : GAMBIARRA
+    public static int editorTrickUseCounter = 0;
+    public static void editorTrick1( bool avoidRecursion = false )
     {
+        editorTrickUseCounter++;
+        if (avoidRecursion && (editorTrickUseCounter > 1)) return;
         SceneManager.LoadScene(global.currentScene);
     }
+    // END : GAMBIARRA
     
     // Recarrega a arena atual num modo aleatório
     private static void secretTrick1()

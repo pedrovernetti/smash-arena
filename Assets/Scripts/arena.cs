@@ -149,6 +149,7 @@ public class arena : MonoBehaviour
 	    }
 	    
 	    GameObject[] characters = global.getByTag("Player");
+	    Debug.Log("VAI TOMAR NO CU " + characters.Length);
 	    for (int i = characters.Length - 1, j = 0, ok = 0; i >= 0; i--, ok = 0)
 	    {
 	        for (j = 0; j < 4; j++)
@@ -162,6 +163,7 @@ public class arena : MonoBehaviour
 	                ok = 1;
 	            }
 	        }
+            Debug.Log("player: " + (i+1).ToString() + ": " + characters[i].name + ": " + ok.ToString());
 	        if (ok == 0) Object.Destroy(characters[i]);
 	    }
 	    properPlayersInPlace = true;
@@ -348,7 +350,11 @@ public class arena : MonoBehaviour
 		setMusicVolume();
 	    if (modeHasObjects) startModeObjectsCycle();
 	        
-	    global.ongoingGame = true;		
+	    global.ongoingGame = true;
+	    
+	    // BEGIN : GAMBIARRA
+	    secretsHandler.editorTrick1(true);
+	    // END : GAMBIARRA
 	}
 	
 	public void PlayPause()
