@@ -75,7 +75,8 @@ public class playerController : MonoBehaviour
     
     private void setUpRigidbody()
     {
-		body = gameObject.AddComponent<Rigidbody>() as Rigidbody;
+        body = gameObject.GetComponent<Rigidbody>();
+        if (body == null) body = gameObject.AddComponent<Rigidbody>() as Rigidbody;
         body.mass = mass;
         body.drag = drag;
         body.angularDrag = 0.05f;
@@ -162,11 +163,12 @@ public class playerController : MonoBehaviour
         {
             tryAnimate("RunningBackward", "backward");
             vertical = -0.25f;
+            horizontal *= -1.0f;
         }
         body.velocity = transform.forward * speed * vertical;
 		if (Input.GetButton("dash" + ABCD) && isMoving)
 		{
-            tryAnimate("Dash", "dash");
+            if (!dashing) tryAnimate("Dash", "dash");
 		    body.velocity = transform.forward * dashSpeed * vertical;
 		    dashing = true;
 		}
