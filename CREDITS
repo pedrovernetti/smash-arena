@@ -70,6 +70,7 @@ autoral
 
 .gitignore
 .gitattributes
+Assets/Audio/Collisions/glassBottleOnMarble.wav
 Assets/Images/Modes/3.png
 Assets/Images/Modes/6.png
 Assets/Images/Themes/0.png
@@ -107,6 +108,11 @@ Assets/Scripts/global.cs
 Assets/Scripts/rotation.cs
 CREDITS
 README.md
+
+
+Banana Slap [http://soundbible.com/2047-Banana-Slap.html]
+
+Assets/Audio/Collisions/bananaSlap.wav
 
 
 Classic Chess Set [https://assetstore.unity.com/packages/3d/classic-chess-set-93014]
@@ -184,6 +190,26 @@ Assets/Skyboxes/humanoids/humanoids_Z-.png
 Assets/Skyboxes/humanoids/humanoids_Z+.png
 
 
+Metal Bang [http://soundbible.com/947-Metal-Bang.html]
+
+Assets/Audio/Collisions/metalBang.wav
+
+
+Metal Impact Hollow [http://soundbible.com/346-Metal-Impact-Hollow.html]
+
+Assets/Audio/Collisions/hollowMetalImpact.wav
+
+
+Punch [http://soundbible.com/721-Punch.html]
+
+Assets/Audio/Collisions/punch.wav
+
+
+Realistic Punch [http://soundbible.com/2069-Realistic-Punch.html]
+
+Assets/Audio/Collisions/realisticPunch.wav
+
+
 Rocky AOE [https://www.dafont.com/rocky.font]
 
 Assets/Fonts/RockyAOE.ttf
@@ -213,6 +239,11 @@ Assets/Images/Modes/10.png
 Assets/Images/Modes/11.png
 Assets/Images/Modes/12.png
 Assets/Images/Modes/13.png
+
+
+Strong Punch [http://soundbible.com/1773-Strong-Punch.html]
+
+Assets/Audio/Collisions/strongPunch.wav
 
 
 Yughues Free Pillars & Columns [https://assetstore.unity.com/packages/3d/environments/yughues-free-pillars-columns-13103]
