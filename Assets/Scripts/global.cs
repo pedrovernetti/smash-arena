@@ -78,8 +78,9 @@ public static class global
     // Game
     
     public static difficultyLevel difficulty = difficultyLevel.Normal;
+    public static int difficultyFactor { get { return (int)(difficulty); } }
     
-    public static arenaMode mode = arenaMode.Electric;
+    public static arenaMode mode = arenaMode.Frozen;
     public static arenaTheme theme = (arenaTheme)(1);
     
     public static bool bossEncounter = false;
@@ -202,6 +203,8 @@ public static class global
         );
         
     // Enemies lists by theme
+    
+    private static string lastPickedEnemy = null;
         
     public static Tuple<string, float>[] carEnemies = 
         new Tuple<string, float>[] 
@@ -229,8 +232,10 @@ public static class global
     public static Tuple<string, float>[] fantasyEnemies = 
         new Tuple<string, float>[] 
         {
-            new Tuple<string, float>("ghost", 25.0f),
+            new Tuple<string, float>("ghost", 20.0f),
             new Tuple<string, float>("rabbit", 20.0f),
+            new Tuple<string, float>("footman", 25.0f),
+            new Tuple<string, float>("impling", 15.0f),
             new Tuple<string, float>("slime", 20.0f)
         };
         
@@ -317,6 +322,11 @@ public static class global
         playersCount = 4;
     }
     
+    public static bool chance( float percent )
+    {
+        return (Random.Range(0.0f, 100.0f) < percent);
+    }
+    
     public static arenaTheme randomArenaTheme()
     {
         int which = Random.Range(0, (allowedArenaThemes.Count - 1));
@@ -354,7 +364,7 @@ public static class global
         if (theme == arenaTheme.Cars) return "newtonsCar";
         else if (theme == arenaTheme.Humanoids) return "newton";
         else if (theme == arenaTheme.Fantasy) return "newtonGhost";
-        else return "knightNewton";
+        else return "chessNewton";
     }
     
     public static string randomCharacter()
@@ -367,7 +377,13 @@ public static class global
         else if (theme == arenaTheme.Fantasy)
             character = fantasyEnemies[Random.Range(0, (fantasyEnemies.Length - 1))];
         else character = chessEnemies[Random.Range(0, (chessEnemies.Length - 1))];
-        if (Random.Range(0, 100) < character.Item2) return character.Item1;
+        
+        if ((Random.Range(0, 100) < character.Item2) && 
+            (character.Item1 != lastPickedEnemy))
+        {
+            lastPickedEnemy = character.Item1;
+            return character.Item1;
+        }
         else return randomCharacter();
     }
     

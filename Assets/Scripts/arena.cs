@@ -16,6 +16,9 @@ public class arena : MonoBehaviour
     private float arenaRadius, holeRadius;
     private float arenaSizeX, arenaSizeZ, holeSizeX, holeSizeZ;
     
+    private bool properPlayersInPlace;
+    public bool playersInPlace { get { return properPlayersInPlace; } }
+    
     private ArrayList modeObjects;
     private bool modeHasObjects;
     private Vector3 objectsRestingPlace;
@@ -132,17 +135,17 @@ public class arena : MonoBehaviour
 	
 	private void preparePlayers()
 	{
-	    /*string[] players = new string[4];
+	    string[] players = new string[4];
 	    if (!global.clashMode)
 	    {
 	        players[0] = global.mainCharacter();
-	        for (int i = 1; i < 4; i++) 
-	            players[i] = global.randomCharacter();
+	        for (int i = 1; i < 4; i++)
+	            global.playerCharacters[i] = players[i] = global.randomCharacter();
 	    }
 	    else
 	    {
 	        for (int i = 0; i < 4; i++)     
-	            players[i] = global.clashPlayerCharacters[i];
+	            players[i] = global.playerCharacters[i];
 	    }
 	    
 	    GameObject[] characters = global.getByTag("Player");
@@ -160,7 +163,8 @@ public class arena : MonoBehaviour
 	            }
 	        }
 	        if (ok == 0) Object.Destroy(characters[i]);
-	    }*/
+	    }
+	    properPlayersInPlace = true;
 	}
     
     public void setLightingColor( Color color )
@@ -276,9 +280,14 @@ public class arena : MonoBehaviour
 	
 	private void setMusicVolume()
 	{
-	    GameObject[] music = global.getByTag("music");
-	    if (music[0] != null) 
-	        music[0].GetComponent<AudioSource>().volume = global.musicVolume;
+	    GameObject music = global.getByName("soundtrack");
+	    if (music != null) 
+	        music.GetComponent<AudioSource>().volume = global.musicVolume;
+	}
+	
+	public void hideObject( GameObject something )
+	{
+	    something.transform.position = objectsRestingPlace;
 	}
 	
 	public void modeObjectsSwitch()
@@ -291,6 +300,7 @@ public class arena : MonoBehaviour
 	        modeObjectsAreResting = false;
 	        if (global.ongoingGame) foreach (GameObject modeObject in modeObjects)
 	        {
+	            modeObject.SetActive(true);
 	            modeObject.transform.position = 
 	                randomArenaPosition(modeObject.transform.position.y);
 	        }
@@ -300,7 +310,7 @@ public class arena : MonoBehaviour
 	        modeObjectsAreResting = true;
 	        if (global.ongoingGame) foreach (GameObject modeObject in modeObjects)
 	        {
-	            modeObject.transform.position = objectsRestingPlace;
+	            hideObject(modeObject);
 	        }
 	    }
 	}
@@ -319,7 +329,7 @@ public class arena : MonoBehaviour
     	    global.getByName("OBJECTS_RESTING_PLACE").transform.position;
 	    modeObjectsAreResting = false;
 		maximumObjectsSwitchInterval = 
-		    Mathf.Max(12.0f, (18.0f / (int)(global.difficulty)));
+		    Mathf.Max(12.0f, (18.0f / global.difficultyFactor));
 		modeObjectsSwitch();
     }
 	
@@ -346,6 +356,7 @@ public class arena : MonoBehaviour
 	    if ((global.now - lastPlayPauseTime).TotalMilliseconds < 200) return;
 	    lastPlayPauseTime = global.now;
 	    
+	    //GameObject[] objectsToPlayPause = ;
         if (global.ongoingGame)
         {
             if (global.ongoingGame) global.ongoingGame = false;
