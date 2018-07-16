@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class secretsHandler
 {
@@ -13,6 +14,11 @@ public static class secretsHandler
     {
         get { return secretCode; }
         set { secretCode = value; }
+    }
+    
+    private static void editorTrick1()
+    {
+        SceneManager.LoadScene(global.currentScene);
     }
     
     // Recarrega a arena atual num modo aleatório
@@ -68,6 +74,10 @@ public static class secretsHandler
                 Debug.Log("secret: " + secretCode);
             }
                
+            
+            #if UNITY_EDITOR
+            if (secretCode.EndsWith("RULDL")) editorTrick1();
+            #endif
             if (secretCode.EndsWith("RULDL")) secretTrick1();
             if (secretCode.EndsWith("LLUU")) secretTrick2();
             if (secretCode.EndsWith("UUDDLRLR12")) secretTrick3();
