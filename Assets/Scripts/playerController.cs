@@ -16,13 +16,19 @@ public class playerController : MonoBehaviour
     // player's data
     private global.playerType playerType;
     public string playerName;
-    public int playerNumber;
+    private int number;
+    public int playerNumber { get { return number; } set { number = value; } }
     private char ABCD;
     
     public bool isCampaignHero
     { 
         get { return ((!global.clashMode) && (playerNumber == 1)); }
     }    
+    
+    public bool isMachine
+    {
+        get { return (playerType == global.playerType.Machine); }
+    }
     
     // player's physics
     public float mass = 1.0f;
@@ -31,11 +37,13 @@ public class playerController : MonoBehaviour
 	public float speed = 80.0f;
 	public float dashSpeed = 200.0f;
 	public movementStyle movements = movementStyle.Creature;
+	private Animator animator;
+	private bool hasAnimator;
 	private bool groundless;
 	private bool dashing;	
     public bool isDashing { get { return dashing; } }    
     public bool isMoving { get { return (body.velocity.magnitude > 0.1); } }
-    private bool isBurning;
+    private string lastAnimationBool;
     
     public bool isGroundless
     { 
@@ -51,19 +59,6 @@ public class playerController : MonoBehaviour
 	// sounds
 	public AudioClip mediumHitSound;
 	public AudioClip heavyHitSound;
-	
-	private void setPlayerNumber()
-	{
-	    /*for (int i = 0; i < 4; i++)
-	    {
-	        if (global.playerCharacters[i] == gameObject.name)
-	        {
-	            playerNumber = i + 1;
-	            return;
-	        }
-	    }
-	    playerNumber = 0;*/
-	}
     
     private bool removePlayerIfNecessary()
     {
@@ -92,10 +87,22 @@ public class playerController : MonoBehaviour
             body.constraints |= RigidbodyConstraints.FreezeRotationY;
     }
     
-	public void Start() 
-	{
-	    setPlayerNumber();
-	    if (removePlayerIfNecessary()) return;
+    public void tryAnimate( string animation, string animationBool = "" )
+    {
+	    if (hasAnimator) 
+	    {
+	        if (lastAnimationBool != "") animator.SetBool(lastAnimationBool, false);
+	        lastAnimationBool = animationBool;
+            animator.Play(animation);
+	        if (animationBool != "") animator.SetBool(animationBool, true);
+	    }
+    }
+    
+    private IEnumerator delayedStart()
+    {
+        yield return new WaitUntil(() => global.currentArena.playersInPlace);
+        
+	    if (removePlayerIfNecessary()) yield break;
 	    
 	    if (global.clashMode) 
 	    {
@@ -111,24 +118,55 @@ public class playerController : MonoBehaviour
 	    
 	    setUpRigidbody();
 		groundless = false;
-        isBurning = false;
+        
+        animator = GetComponent<Animator>();
+        hasAnimator = (animator != null) ? true : false;
 	    
 	    if (playerType == global.playerType.Machine)
 	        gameObject.AddComponent<AI>();
 	    else if (playerType == global.playerType.BrainDead)
 	        movements = movementStyle.Still;
+	        
+	    yield break;
+    }
+    
+	public void Start() 
+	{
+	    StartCoroutine(delayedStart());
 	}
 	
-	private void creatureOrCarControl( float horizontal, float vertical )
+	private void carControl( float horizontal, float vertical )
 	{
-	    if (((movements == movementStyle.Car) && isMoving) || 
-	        (movements != movementStyle.Car))
-	        transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
+	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
         if (groundless) return;
         if (vertical != 0.0f) vertical = (vertical > 0.0f) ? 0.25f : -0.25f;
         body.velocity = transform.forward * speed * vertical;
 		if (Input.GetButton("dash" + ABCD) && isMoving)
 		{
+		    body.velocity = transform.forward * dashSpeed * vertical;
+		    dashing = true;
+		}
+		else dashing = false;
+	}
+	
+	private void creatureControl( float horizontal, float vertical )
+	{
+	    transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
+        if (groundless) return;
+        if (vertical > 0.0f)
+        {
+            tryAnimate("Running", "forward");
+            vertical = 0.25f;
+        }
+        else if (vertical < 0.0f)
+        {
+            tryAnimate("RunningBackward", "backward");
+            vertical = -0.25f;
+        }
+        body.velocity = transform.forward * speed * vertical;
+		if (Input.GetButton("dash" + ABCD) && isMoving)
+		{
+            tryAnimate("Dash", "dash");
 		    body.velocity = transform.forward * dashSpeed * vertical;
 		    dashing = true;
 		}
@@ -155,12 +193,15 @@ public class playerController : MonoBehaviour
 	
 	public void control( float horizontal = 0.0f, float vertical = 0.0f )
 	{
-	    float h = (horizontal != 0.0f) ? horizontal : Input.GetAxis("horizontal" + ABCD);
-	    float v = (vertical != 0.0f) ? vertical : Input.GetAxis("vertical" + ABCD);
+	    float h = ((horizontal != 0.0f) || isMachine) ? 
+	                horizontal : Input.GetAxis("horizontal" + ABCD);
+	    float v = ((vertical != 0.0f) || isMachine) ? 
+	                vertical : Input.GetAxis("vertical" + ABCD);
 	    
-	    if (movements == movementStyle.Creature) creatureOrCarControl(h, v);
+	    if ((h == 0.0f) && (v == 0.0f)) return;
+	    else if (movements == movementStyle.Creature) creatureControl(h, v);
 	    else if (movements == movementStyle.ChessPiece) chessControl(h, v);
-	    else if (movements == movementStyle.Car) creatureOrCarControl(h, v);
+	    else if (movements == movementStyle.Car) carControl(h, v);
 	}
 	
 	private IEnumerator smoothRotationReset()
@@ -186,6 +227,7 @@ public class playerController : MonoBehaviour
         {
 		    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);		    
 		    control();
+		    if (!isMoving) tryAnimate("Idle");
         }
         
         if (!global.currentArena.isInsideArenaLimits(transform.position))
@@ -200,53 +242,54 @@ public class playerController : MonoBehaviour
         }
 	}
 	
-	public IEnumerator freeze( float factor, float duration )
+	public IEnumerator freeze()
 	{
 	    float originalDashSpeed = dashSpeed;
-        speed /= factor;
-        dashSpeed = speed / factor;
+        speed /= (global.difficultyFactor + 1);
+        dashSpeed = speed / (global.difficultyFactor + 1);
 	    Debug.Log(playerName + " is frozen!");
-        yield return new WaitForSeconds(duration * 0.8f * (int)(global.difficulty));
-        speed *= factor;
-        yield return new WaitForSeconds(duration * 0.2f * (int)(global.difficulty));
+	    yield return new WaitForSeconds(1.5f * 0.8f * global.difficultyFactor);
+        speed *= (global.difficultyFactor + 1);
+	    yield return new WaitForSeconds(1.5f * 0.2f * global.difficultyFactor);
         dashSpeed = originalDashSpeed;
+        yield break;
 	}
 	
-	public IEnumerator agonize( float factor )
+	public IEnumerator burn()
 	{
-	    for (float x = 0.0f, y = 0.0f; isBurning; )
+	    System.DateTime end = global.now.AddSeconds(1.25f * global.difficultyFactor);
+	    Debug.Log(playerName + " is burning!");
+	    for (float x = 0.0f, y = 0.0f; end >= global.now; )
 	    {
 	        if (Random.value > 0.66)
 	        {
 	            x = (global.coinflip) ? -1.0f : 1.0f;
 	            y = (global.coinflip) ? -1.0f : 1.0f;
-                control((x * factor), (y * factor));
+                control((x * global.difficultyFactor), (y * global.difficultyFactor));
             }
         }
-        yield return 0;
+        yield break;
 	}
 	
-	public IEnumerator burn( float factor, float duration )
-	{
-	    isBurning = true;
-	    Debug.Log(playerName + " is burning!");
-	    StartCoroutine(agonize(factor));
-        new WaitForSeconds(duration * (int)(global.difficulty));
-        isBurning = false;
-        yield return 0;
-	}
-	
-	public IEnumerator paralyze( float duration )
+	public IEnumerator paralyze()
 	{
 	    movementStyle originalMovementStyle = movements;
 	    movements = movementStyle.Still;
 	    Debug.Log(playerName + " is paralyzed!");
-        yield return new WaitForSeconds(duration * (int)(global.difficulty));
+	    yield return new WaitForSeconds(1.25f * global.difficultyFactor);
         movements = originalMovementStyle;
+        yield break;
 	}
 	
 	public void OnCollisionEnter( Collision other ) 
     {
+        if (other.collider.GetComponent<Rigidbody>() != null)
+        {
+            float magnitude = (other.relativeVelocity.magnitude * 0.5f) + 0.5f;
+            AudioClip clip = (dashing) ? heavyHitSound : mediumHitSound;
+            if (clip != null)
+                global.playClipAt(clip, transform.position, magnitude);
+        }
         if (other.collider.CompareTag("ground"))
         {
             groundless = false;
@@ -256,30 +299,25 @@ public class playerController : MonoBehaviour
         {
             if (other.collider.GetComponent<playerController>().isDashing)
                 body.mass /= 2;
-                
-            float magnitude = (other.relativeVelocity.magnitude * 0.5f) + 0.5f;
-            AudioClip clip = (dashing) ? heavyHitSound : mediumHitSound;
-            if (clip != null)
-                global.playClipAt(clip, transform.position, magnitude);
         }
-        else if (other.collider.CompareTag("ice"))
+    }
+    
+    public void OnTriggerEnter( Collider other )
+    {
+        if (other.CompareTag("fire")) StartCoroutine(burn());
+        else if (other.CompareTag("ice"))
         {
-            Debug.Log(playerName + "collided with ice");
-            StartCoroutine(freeze(3f, 1f));
-            other.collider.gameObject.SetActive(false);
+            StartCoroutine(freeze());
+            global.currentArena.hideObject(other.gameObject);
         }
-        else if (other.collider.CompareTag("fire"))
+        else if (other.CompareTag("shock"))
         {
-            StartCoroutine(burn(3f, 1f));
-        }
-        else if (other.collider.CompareTag("shock"))
-        {
-            StartCoroutine(paralyze(1f));
-            other.collider.gameObject.SetActive(false);
+            StartCoroutine(paralyze());
+            global.currentArena.hideObject(other.gameObject);
         }
     }
  
-    public void OnCollisionExit ( Collision other ) 
+    public void OnCollisionExit( Collision other ) 
     {
         if (other.collider.CompareTag("ground"))
         {
