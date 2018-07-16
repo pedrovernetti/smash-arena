@@ -156,17 +156,17 @@ public class playerController : MonoBehaviour
         if (groundless) return;
         if (vertical > 0.0f)
         {
-            tryAnimate("Running", "forward");
+            if (!dashing) tryAnimate("Running", "forward");
             vertical = 0.25f;
         }
         else if (vertical < 0.0f)
         {
-            tryAnimate("RunningBackward", "backward");
+            if (!dashing) tryAnimate("RunningBackward", "backward");
             vertical = -0.25f;
             horizontal *= -1.0f;
         }
         body.velocity = transform.forward * speed * vertical;
-		if (Input.GetButton("dash" + ABCD) && isMoving)
+		if (Input.GetButton("dash" + ABCD) && isMoving && (vertical > 0.0f))
 		{
             if (!dashing) tryAnimate("Dash", "dash");
 		    body.velocity = transform.forward * dashSpeed * vertical;
