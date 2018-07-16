@@ -76,7 +76,7 @@ public static class secretsHandler
                
             
             #if UNITY_EDITOR
-            if (secretCode.EndsWith("RULDL")) editorTrick1();
+            if (secretCode.EndsWith("11")) editorTrick1();
             #endif
             if (secretCode.EndsWith("RULDL")) secretTrick1();
             if (secretCode.EndsWith("LLUU")) secretTrick2();
