@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class playerController : MonoBehaviour
 {
     public enum movementStyle : byte
@@ -37,12 +38,16 @@ public class playerController : MonoBehaviour
 	public float speed = 80.0f;
 	public float dashSpeed = 200.0f;
 	public movementStyle movements = movementStyle.Creature;
+	private Quaternion defaultRotation;
 	private Animator animator;
 	private bool hasAnimator;
 	private bool groundless;
-	private bool dashing;	
+	private bool dashing;
     public bool isDashing { get { return dashing; } }    
     public bool isMoving { get { return (body.velocity.magnitude > 0.1); } }
+    private System.DateTime burningUntil;
+    public bool isBurning { get { return (global.now > burningUntil); } }
+    
     private string lastAnimationBool;
     
     public bool isGroundless
@@ -53,30 +58,20 @@ public class playerController : MonoBehaviour
     
     public bool isStanding
     {
-        get { return ((transform.rotation.x == 0.0f) && (transform.rotation.z == 0.0f)); }
+        get 
+        { 
+            return ((transform.rotation.eulerAngles.x == defaultRotation.eulerAngles.x) && 
+                    (transform.rotation.eulerAngles.z == defaultRotation.eulerAngles.z));
+        }
     }
 	
 	// sounds
 	public AudioClip mediumHitSound;
 	public AudioClip heavyHitSound;
     
-    private bool removePlayerIfNecessary()
-    {
-        if ((playerNumber > global.playersCount) || (playerNumber < 1) ||
-	        (global.bossEncounter && !isCampaignHero && (name != "boss")) ||
-	        (!global.bossEncounter && (name == "boss")) ||
-	        (global.clashPlayerTypes[playerNumber - 1] == global.playerType.Disabled))
-	    {
-	        gameObject.SetActiveRecursively(false);
-	        return true;
-	    }
-	    return false;
-    }
-    
     private void setUpRigidbody()
     {
-        body = gameObject.GetComponent<Rigidbody>();
-        if (body == null) body = gameObject.AddComponent<Rigidbody>() as Rigidbody;
+        body = GetComponent<Rigidbody>();
         body.mass = mass;
         body.drag = drag;
         body.angularDrag = 0.05f;
@@ -99,13 +94,11 @@ public class playerController : MonoBehaviour
 	    }
     }
     
-	public void Start() 
-	{
-	    if (removePlayerIfNecessary()) return;
-	    
+    private void delayedStart()
+    {
 	    if (global.clashMode) 
 	    {
-	        playerType = global.clashPlayerTypes[playerNumber - 1];
+	        playerType = global.playerTypes[playerNumber - 1];
 	        playerName = global.playerNames[playerNumber - 1];
 	        mass = body.mass = (mass <= 2.0f) ? mass : 2.0f;
 	        drag = body.drag = (drag <= 5.0f) ? drag : 5.0f;
@@ -116,6 +109,7 @@ public class playerController : MonoBehaviour
 	    else ABCD = (char)('@'+playerNumber);
 	    
 	    setUpRigidbody();
+	    defaultRotation = transform.rotation;
 		groundless = false;
         
         animator = GetComponent<Animator>();
@@ -125,6 +119,13 @@ public class playerController : MonoBehaviour
 	        gameObject.AddComponent<AI>();
 	    else if (playerType == global.playerType.BrainDead)
 	        movements = movementStyle.Still;
+	        
+	    burningUntil = global.now.AddSeconds(-1);
+    }
+    
+	public void Start() 
+	{
+	    Invoke("delayedStart", 2.0f);
 	}
 	
 	private void carControl( float horizontal, float vertical )
@@ -143,7 +144,7 @@ public class playerController : MonoBehaviour
 	
 	private void creatureControl( float horizontal, float vertical )
 	{
-	    transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
+	    transform.Rotate(Vector3.up, horizontal * speed * 2.0f * Time.deltaTime);
         if (groundless) return;
         if (vertical > 0.0f)
         {
@@ -197,42 +198,35 @@ public class playerController : MonoBehaviour
 	    else if (movements == movementStyle.Car) carControl(h, v);
 	}
 	
-	private IEnumerator smoothRotationReset()
+	private void dealWithRotations()
 	{
-        if (isStanding) yield break;
-        float timer = 0.0f;
-        Quaternion target = global.currentArenaGround.transform.rotation;
-        target = Quaternion.Euler(target.x, transform.rotation.y, target.z);
-        Quaternion start = transform.rotation;
-        while (timer <= 1.0f)
-        {
-            timer += Time.deltaTime * 1.0f;
-            transform.rotation = Quaternion.Lerp(start, target, timer);
-            yield return new WaitForEndOfFrame();
-        }
-        transform.rotation = target;
-        yield break;
-	}
-	
-    public void FixedUpdate()
-    {
-        if (global.ongoingGame)
-        {
-		    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);		    
-		    control();
-		    if (!isMoving) tryAnimate("Idle");
-        }
-        
         if (!global.currentArena.isInsideArenaLimits(transform.position))
             body.constraints = RigidbodyConstraints.None;
-        else
+        else if (isStanding)
         {
             body.constraints = RigidbodyConstraints.FreezeRotationX | 
                                RigidbodyConstraints.FreezeRotationZ ; 
             if (movements == movementStyle.ChessPiece)
-                body.constraints |= RigidbodyConstraints.FreezeRotationY; 
-            //StartCoroutine(smoothRotationReset());
+                body.constraints |= RigidbodyConstraints.FreezeRotationY;
         }
+	}
+	
+    public void FixedUpdate()
+    {
+        if (!global.ongoingGame) return;
+        
+	    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);
+	    else if (isBurning && global.chance(0.33f))
+	    {
+            float x = ((global.coinflip) ? -1.0f : 1.0f) * global.difficultyFactor;
+            float y = ((global.coinflip) ? -1.0f : 1.0f) * global.difficultyFactor;
+            control(x, y);
+        }
+	       
+	    control();
+	    if (!isMoving) tryAnimate("Idle");
+	    
+	    dealWithRotations();
 	}
 	
 	public IEnumerator freeze()
@@ -248,22 +242,6 @@ public class playerController : MonoBehaviour
         yield break;
 	}
 	
-	public IEnumerator burn()
-	{
-	    System.DateTime end = global.now.AddSeconds(1.25f * global.difficultyFactor);
-	    Debug.Log(playerName + " is burning!");
-	    for (float x = 0.0f, y = 0.0f; end >= global.now; )
-	    {
-	        if (Random.value > 0.66)
-	        {
-	            x = (global.coinflip) ? -1.0f : 1.0f;
-	            y = (global.coinflip) ? -1.0f : 1.0f;
-                control((x * global.difficultyFactor), (y * global.difficultyFactor));
-            }
-        }
-        yield break;
-	}
-	
 	public IEnumerator paralyze()
 	{
 	    movementStyle originalMovementStyle = movements;
@@ -276,6 +254,8 @@ public class playerController : MonoBehaviour
 	
 	public void OnCollisionEnter( Collision other ) 
     {
+        if (!global.ongoingGame) return;
+        
         if (other.collider.GetComponent<Rigidbody>() != null)
         {
             float magnitude = (other.relativeVelocity.magnitude * 0.5f) + 0.5f;
@@ -297,7 +277,13 @@ public class playerController : MonoBehaviour
     
     public void OnTriggerEnter( Collider other )
     {
-        if (other.CompareTag("fire")) StartCoroutine(burn());
+        if (!global.ongoingGame) return;
+        
+        if (other.CompareTag("fire")) 
+        {
+            burningUntil = global.now.AddSeconds(1.25f * global.difficultyFactor);
+    	    Debug.Log(playerName + " is burning!");
+        }
         else if (other.CompareTag("ice"))
         {
             StartCoroutine(freeze());
@@ -312,6 +298,8 @@ public class playerController : MonoBehaviour
  
     public void OnCollisionExit( Collision other ) 
     {
+        if (!global.ongoingGame) return;
+        
         if (other.collider.CompareTag("ground"))
         {
             groundless = true;

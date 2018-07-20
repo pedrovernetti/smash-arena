@@ -22,6 +22,7 @@ public class AI : MonoBehaviour
     private playerController.movementStyle movements;
     private collisionScanner[] scanners;
     private GameObject currentTarget;
+    private System.DateTime whenToReturnToAction;
     
     private bool isMoving
     { 
@@ -63,39 +64,41 @@ public class AI : MonoBehaviour
         }
     }
 	
-	private GameObject closestEnemy()
+	private GameObject closestEnemy( bool forceAny = false )
 	{
+	    if (whenToReturnToAction > global.now) return null;
+	    
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         GameObject closest = null;
         float distance = Mathf.Infinity, currentDistance;
-        Vector3 difference;        
+        Vector3 difference;
         
         foreach (GameObject player in players)
         {
             difference = player.transform.position - transform.position;
             currentDistance = difference.sqrMagnitude;
-            if (!(global.difficulty > global.difficultyLevel.Normal) ||
-                !(global.isMachineControlled(player)))
+            if ((global.difficulty > global.difficultyLevel.Normal) &&
+                (global.isMachineControlled(player)) && !forceAny &&
+                global.chance(50.0f / global.difficultyFactor))
+                continue;
+            if ((currentDistance > 0.0f) && 
+                (currentDistance < (distance + Random.Range(0.0f, 4.0f))))
             {
-                if ((currentDistance > 0.0f) && (currentDistance < distance))
-                {
-                    closest = player;
-                    distance = currentDistance;
-                }
+                closest = player;
+                distance = currentDistance;
             }
         }
         
-        return closest;
+        return ((closest != null) ? closest : closestEnemy(true));
 	}
     
 	public void Start() 
 	{
 	    body = gameObject.GetComponent<Rigidbody>();
 	    controller = gameObject.GetComponent<playerController>();
-	    movements = controller.movements;
-	    
+	    movements = controller.movements;	    
 	    setUpScanners();
-	    currentTarget = closestEnemy();
+	    Debug.Log(controller.playerName + " is machine-controlled");
 	}
 	
 	private void turnToTarget()
@@ -113,28 +116,42 @@ public class AI : MonoBehaviour
         }
 	}
 	
+	private void think()
+	{
+	    whenToReturnToAction = 
+	        global.now.AddSeconds(Random.Range(1.0f, 6.0f / global.difficultyFactor));
+	    currentTarget = null;
+	}
+	
 	private void chase()
 	{
-	    if (currentTarget.GetComponent<playerController>().isGroundless) return;
 	    if (movesLikeAChessPiece)
 	    {
 	        Vector3 nextPosition = 
 	            Vector3.MoveTowards(transform.position, currentTarget.transform.position, 1.0f);
-	        controller.control(nextPosition.x, nextPosition.z);
+	        controller.control(nextPosition.x * -1, nextPosition.z * -1);
 	    }
 	    else
 	    {
             turnToTarget();
 	        controller.control(0.0f, 1.0f);
 	    }
-        //controller.control(, );
 	}
     
     public void FixedUpdate()
     {
-        currentTarget = closestEnemy();
-        chase();
+        if (!global.ongoingGame) return;
         
-        //Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
+        currentTarget = closestEnemy();
+        
+        if (global.chance(35.0f / global.difficultyFactor)) 
+            think();
+        
+        if (!global.chance(10.0f / global.difficultyFactor) && (currentTarget != null) &&
+            !(currentTarget.GetComponent<playerController>() != null) &&
+            !(currentTarget.GetComponent<playerController>().isGroundless))
+            chase();
+        
+        if (currentTarget != null) Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
     }
 }

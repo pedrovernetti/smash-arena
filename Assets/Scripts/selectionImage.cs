@@ -49,12 +49,11 @@ public class selectionImage : MonoBehaviour
             internalIndex[0] = (which[0] == 0) ? 0 : (int)(global.mode);
             possibilities[internalIndex[0]].SetActive(true);
         }
-        /*else if ((type >= imageType.player1) && (type <= imageType.player4) &&
-                 (whichCharacter[(int)(type)] !=
-                    UIController.whichCharacter[(int)(type)]))
+        else if ((type >= imageType.player1) && (type <= imageType.player4) &&
+                 (which[(int)(type)] != UIController.whichCharacter[(int)(type)]))
         {
-            whichCharacter[(int)(type)] = UIController.whichCharacter[(int)(type)];
+            which[(int)(type)] = UIController.whichCharacter[(int)(type)];
             //string imageToLoad = ;
-        }*/
+        }
 	} 
 }

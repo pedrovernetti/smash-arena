@@ -6,19 +6,23 @@ using UnityEngine.UI;
 public class deathPlane : MonoBehaviour
 {
     public Text deathText;
-    public Text roundText;
     private arena arenaController;
     
     private string[] ranking;
     private int activePlayersCount;
 
-	public void Start ()
-	{
+    private void delayedStart()
+    {
 	    arenaController = GameObject.Find("arena").GetComponent<arena>();
 	    if (arenaController == null) 
 	        Debug.Log("scene is missing an arena object!");
-		activePlayersCount = (global.bossEncounter) ? 2 : global.playersCount;
+		activePlayersCount = global.getByTag("Player").Length;
 		ranking = new string[activePlayersCount];
+    }
+    
+	public void Start()
+	{
+	    Invoke("delayedStart", 2.5f);
 	}
 	
 	public IEnumerator showDeathText( string text, float delay = 4f )
@@ -26,6 +30,7 @@ public class deathPlane : MonoBehaviour
         deathText.text = text;
         yield return new WaitForSeconds(delay);
         deathText.text = "";
+        yield break;
 	}
    
     private void setWinner()
@@ -78,12 +83,6 @@ public class deathPlane : MonoBehaviour
             activePlayersCount--;
             setDead(other.gameObject.GetComponent<playerController>());
             if (activePlayersCount == 1) setWinner();
-        }
-        else if ((!global.clashMode) && (other.gameObject.name == "bridge") &&
-                 (global.currentScene == "cars"))
-        {
-            // liberar algo show
-            Debug.Log("Bridge easter egg unlocked...");
         }
     }
 }

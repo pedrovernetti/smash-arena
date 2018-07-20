@@ -8,16 +8,21 @@ public class collisionScanner : MonoBehaviour
     private ArrayList collidingObjectsList;
     
     public ArrayList collidingObjects { get { return collidingObjectsList; } }
+    
+    public void Start()
+    {
+        collidingObjectsList = new ArrayList();
+    }
 
-	public void OnCollisionEnter( Collision other ) 
+    public void OnTriggerEnter( Collider other )
     {
         if (other.gameObject.layer != 8)
-            collidingObjects.Add(other.gameObject);
+            collidingObjectsList.Add(other.gameObject);
     }
     
-	public void OnCollisionExit( Collision other ) 
+    public void OnTriggerExit( Collider other )
     {
         if (other.gameObject.layer != 8)
-            collidingObjects.Remove(other.gameObject);
+            collidingObjectsList.Remove(other.gameObject);
     }
 }

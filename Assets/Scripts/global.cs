@@ -80,7 +80,7 @@ public static class global
     public static difficultyLevel difficulty = difficultyLevel.Normal;
     public static int difficultyFactor { get { return (int)(difficulty); } }
     
-    public static arenaMode mode = arenaMode.Frozen;
+    public static arenaMode mode = (arenaMode)(1);
     public static arenaTheme theme = (arenaTheme)(1);
     
     public static bool bossEncounter = false;
@@ -125,7 +125,7 @@ public static class global
             0, // Player C
             0  // Player D
         };
-    public static playerType[] clashPlayerTypes = 
+    public static playerType[] playerTypes = 
         new playerType[] 
         {
             playerType.Human,
@@ -284,7 +284,7 @@ public static class global
     {
         if ((!clashMode) && (playerNumber > 1)) 
             return true;
-        else if (clashPlayerTypes[playerNumber] == playerType.Machine)
+        else if (playerTypes[playerNumber] == playerType.Machine)
             return true;
         else return false;
     }
@@ -303,24 +303,6 @@ public static class global
     }
     
     // Game control functions
-    
-    public static void restart()
-    {
-        Debug.Log("Reseting the game");
-        
-        clashMode = false;
-        clashRounds = 5;
-        clashRoundsPlayed = 0;
-        clashVictories[0] = clashVictories[1] = 
-                clashVictories[2] = clashVictories[3] = 0;
-        
-        bossEncounter = false;
-        
-        mode = arenaMode.Normal;
-        theme = arenaTheme.Chess;
-        
-        playersCount = 4;
-    }
     
     public static bool chance( float percent )
     {
@@ -434,28 +416,65 @@ public static class global
         currentArena = null;
     }
     
+    public static void setPlayers()
+    {
+        if (clashMode) return;
+        if (bossEncounter)
+        {
+            global.playerCharacters[0] = global.mainCharacter();
+            global.playerCharacters[1] = "boss";
+            playersCount = 2;
+            playerTypes = new playerType[] 
+                { playerType.Human, playerType.Machine, playerType.Disabled, playerType.Disabled };
+        }
+        else
+        {
+            playerCharacters[0] = mainCharacter();
+	        for (int i = 1; i < 4; i++) playerCharacters[i] = randomCharacter();
+            playersCount = 4;
+            playerTypes = new playerType[] 
+                { playerType.Human, playerType.Machine, playerType.Machine, playerType.Machine };
+	    }
+    }
+    
     public static void loadProperArenaScene()
     {
         string scene = "mainMenu";
-        mode = randomArenaMode();
+        
+        if (bossEncounter) mode = arenaMode.Normal;
+        else mode = randomArenaMode();
         
         if (theme == arenaTheme.Cars) scene = "cars";
         else if (theme == arenaTheme.Humanoids) scene = "humanoids";
         else if (theme == arenaTheme.Fantasy) scene = "fantasy";
-        else if (theme == arenaTheme.Chess)
-        {
-            scene = "chess";
-            if (bossEncounter)
-            {
-                playersCount = 2;
-                mode = arenaMode.Normal;
-            }
-        }
+        else if (theme == arenaTheme.Chess) scene = "chess";
         else if (theme == arenaTheme.Abstract) scene = "abstract";
         else if (theme == arenaTheme.Secret) scene = "secret";
         
+        if (!clashMode) setPlayers();
+	                
         Debug.Log("\"" + scene + "\" arena starting...");
         SceneManager.LoadScene(scene);
+    }
+    
+    public static void restart()
+    {
+        Debug.Log("Reseting the game");
+        
+        mode = (arenaMode)(1);
+        theme = (arenaTheme)(1);
+        bossEncounter = false;
+        playersCount = 4;
+        ongoingGame = false;
+        currentArena = null;
+        currentArenaGround = null;
+        
+        clashMode = false;
+        clashRoundsPlayed = 0;
+        clashVictories[0] = clashVictories[1] = 
+                clashVictories[2] = clashVictories[3] = 0;
+                
+        goToMainMenu();
     }
     
     public static void quit()
@@ -476,6 +495,7 @@ public static class global
             {
                 beatTheGame();
                 restart();
+                goToMainMenu();
                 return;
             }
         }

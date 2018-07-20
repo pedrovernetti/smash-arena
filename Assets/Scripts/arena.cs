@@ -30,6 +30,8 @@ public class arena : MonoBehaviour
     private bool paused;
     public bool isPaused { get { return paused; } }
     
+    public Text roundText;
+    
     #if UNITY_EDITOR
     private void setThemeBasedOnScene()
     {
@@ -43,6 +45,23 @@ public class arena : MonoBehaviour
             global.theme = global.arenaTheme.Chess;
     }
     #endif
+    
+    private IEnumerator countdown()
+    {
+        System.DateTime next = global.now;
+        System.DateTime end = next.AddSeconds(3); 
+        for (int i = 0; global.now <= end; )
+        {
+            if (global.now > next)
+            {
+                next = global.now.AddSeconds(1);
+                i++;
+                roundText.text = i.ToString();
+            }
+        }
+        roundText.text = "";
+        yield break;
+    }
 	
 	private void findReferencePoints()
 	{
@@ -135,26 +154,17 @@ public class arena : MonoBehaviour
 	
 	private void preparePlayers()
 	{
-	    string[] players = new string[4];
-	    if (!global.clashMode)
-	    {
-	        players[0] = global.mainCharacter();
-	        for (int i = 1; i < 4; i++)
-	            global.playerCharacters[i] = players[i] = global.randomCharacter();
-	    }
-	    else
-	    {
-	        for (int i = 0; i < 4; i++)     
-	            players[i] = global.playerCharacters[i];
-	    }
-	    
+	    string[] players = global.playerCharacters;
 	    GameObject[] characters = global.getByTag("Player");
 	    Debug.Log("VAI TOMAR NO CU " + characters.Length);
 	    for (int i = characters.Length - 1, j = 0, ok = 0; i >= 0; i--, ok = 0)
 	    {
 	        for (j = 0; j < 4; j++)
 	        {
-	            if (characters[i].name == players[j])
+	            Debug.Log(j.ToString() + ": " + global.playerCharacters[j] + ": " + global.playerTypes[j]);
+	            if (global.playerTypes[j] == global.playerType.Disabled)
+	                continue;
+	            if (global.playerCharacters[j] == characters[i].name)
 	            {
 	                characters[i].GetComponent<playerController>().playerNumber = 
 	                    j + 1;
@@ -163,7 +173,7 @@ public class arena : MonoBehaviour
 	                ok = 1;
 	            }
 	        }
-            Debug.Log("player: " + (i+1).ToString() + ": " + characters[i].name + ": " + ok.ToString());
+	        Debug.Log(i.ToString() + ": " + characters[i].name + ": " + ((ok != 0) ? "on" : "off"));
 	        if (ok == 0) Object.Destroy(characters[i]);
 	    }
 	    properPlayersInPlace = true;
@@ -334,6 +344,11 @@ public class arena : MonoBehaviour
 		    Mathf.Max(12.0f, (18.0f / global.difficultyFactor));
 		modeObjectsSwitch();
     }
+    
+    private void startGame()
+    {
+	    global.ongoingGame = true;
+    }
 	
 	public void Start()
 	{
@@ -341,19 +356,21 @@ public class arena : MonoBehaviour
         setThemeBasedOnScene();
         #endif
         
+        StartCoroutine(countdown());
+        
         global.currentArena = this;
 	    paused = false;
         
 		findReferencePoints();		
-		preparePlayers();		
+		preparePlayers();
 		setUpModeElements();
 		setMusicVolume();
 	    if (modeHasObjects) startModeObjectsCycle();
-	        
-	    global.ongoingGame = true;
+	    
+	    Invoke("startGame", 3.0f);
 	    
 	    // BEGIN : GAMBIARRA
-	    secretsHandler.editorTrick1(true);
+	     secretsHandler.editorTrick1(true);
 	    // END : GAMBIARRA
 	}
 	
@@ -395,6 +412,7 @@ public class arena : MonoBehaviour
 	public void finish( global.gameResult result, playerController winner = null )
 	{
         global.ongoingGame = false;
+        Debug.Log("End");
         Object.Destroy(global.getByName("mode"));
 	    if (result == global.gameResult.WIN)
 	    {
@@ -415,10 +433,9 @@ public class arena : MonoBehaviour
                     global.bossEncounter = false;
                     // chama cutscene de derrota e volta pro menu principal
                 }
-                
                 // uma cutscene para draw
             }
 	    }
-	    else global.restart(); // LOSE - só se aplica à campanha
+	    else global.restart();
 	}
 }
