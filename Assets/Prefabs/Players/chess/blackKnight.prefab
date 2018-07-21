@@ -1,29 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1841749532705156}
-  m_IsPrefabParent: 0
 --- !u!1 &1841749532705156
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4300367114283004}
   - component: {fileID: 33733679716652744}
   - component: {fileID: 23308838098882034}
+  - component: {fileID: 64382022686713204}
   - component: {fileID: 54701307183447476}
-  - component: {fileID: 114805628928331416}
-  - component: {fileID: 64000753573376280}
   m_Layer: 0
   m_Name: blackKnight
   m_TagString: Player
@@ -34,12 +22,12 @@ GameObject:
 --- !u!4 &4300367114283004
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841749532705156}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: -22.199997, y: -0.49997962, z: -5.7999997}
-  m_LocalScale: {x: 0.54999995, y: 0.54999995, z: 0.54999995}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,8 +35,8 @@ Transform:
 --- !u!23 &23308838098882034
 MeshRenderer:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841749532705156}
   m_Enabled: 1
   m_CastShadows: 1
@@ -57,6 +45,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: f85005734a0b0450f91737fd6e64f3a4, type: 2}
   m_StaticBatchInfo:
@@ -81,15 +70,15 @@ MeshRenderer:
 --- !u!33 &33733679716652744
 MeshFilter:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841749532705156}
   m_Mesh: {fileID: 4300000, guid: 37fa4b41bc7842542bb795f93ea1073b, type: 3}
 --- !u!54 &54701307183447476
 Rigidbody:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841749532705156}
   serializedVersion: 2
   m_Mass: 1
@@ -98,13 +87,13 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
---- !u!64 &64000753573376280
+--- !u!64 &64382022686713204
 MeshCollider:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841749532705156}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -114,23 +103,3 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 37fa4b41bc7842542bb795f93ea1073b, type: 3}
---- !u!114 &114805628928331416
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1841749532705156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02cd00bd35f5b0d4fa1aef9f3f67effd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: Black Knight
-  playerNumber: 2
-  mass: 1
-  drag: 5
-  speed: 75
-  dashSpeed: 200
-  movements: 2
-  mediumHitSound: {fileID: 0}
-  heavyHitSound: {fileID: 0}

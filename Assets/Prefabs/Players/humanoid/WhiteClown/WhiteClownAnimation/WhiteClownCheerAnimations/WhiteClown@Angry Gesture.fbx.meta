@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: a58832c18589f644bbc1e5e7cadc6bf5
-timeCreated: 1531956305
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Head
     100002: HeadTop_End
@@ -139,6 +137,7 @@ ModelImporter:
     400130: Spine2
     7400000: mixamo.com
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -152,12 +151,19 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'LeftUpLeg'
+      : position error = 86.140549 mm\n\t'LeftLeg' : position error = 146.836975 mm\n\t'LeftFoot'
+      : position error = 41.485126 mm\n\t'LeftToeBase' : position error = 56.044289
+      mm\n\t'RightUpLeg' : position error = 86.140549 mm\n\t'RightLeg' : position
+      error = 146.835403 mm\n\t'RightFoot' : position error = 41.480534 mm\n\t'RightToeBase'
+      : position error = 56.043499 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -189,6 +195,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
