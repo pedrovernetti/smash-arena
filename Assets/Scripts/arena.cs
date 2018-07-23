@@ -43,7 +43,7 @@ public class arena : MonoBehaviour
 	}
     
     #if UNITY_EDITOR
-    private void setThemeBasedOnScene()
+    private void editorModeWorkaround()
     {
         if (global.currentScene == "cars") 
             global.theme = global.arenaTheme.Cars;
@@ -53,6 +53,8 @@ public class arena : MonoBehaviour
             global.theme = global.arenaTheme.Fantasy;
         else if (global.currentScene == "chess")
             global.theme = global.arenaTheme.Chess;
+            
+        global.setPlayers();
     }
     #endif
 	
@@ -316,7 +318,7 @@ public class arena : MonoBehaviour
 	{
         setAsCurrentArena();
         #if UNITY_EDITOR
-        setThemeBasedOnScene();
+        editorModeWorkaround();
         #endif
         
 	    paused = false;
@@ -332,7 +334,7 @@ public class arena : MonoBehaviour
 	    global.ongoingGame = true;
 	    
 	    // BEGIN : GAMBIARRA
-	     secretsHandler.editorTrick1(true);
+	    //secretsHandler.editorTrick1(true);
 	    // END : GAMBIARRA
 	}
 	

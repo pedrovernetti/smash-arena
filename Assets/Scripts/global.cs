@@ -238,6 +238,7 @@ public static class global
             new Tuple<string, float>("rabbit", 20.0f),
             new Tuple<string, float>("footman", 25.0f),
             new Tuple<string, float>("impling", 15.0f),
+            new Tuple<string, float>("golem", 3.0f),
             new Tuple<string, float>("slime", 20.0f)
         };
         
