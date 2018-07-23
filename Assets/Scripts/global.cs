@@ -211,6 +211,9 @@ public static class global
             new Tuple<string, float>("blueCar", 25.0f),
             new Tuple<string, float>("forklift", 20.0f),
             new Tuple<string, float>("kendoVan", 15.0f),
+            new Tuple<string, float>("humvee", 15.0f),
+            new Tuple<string, float>("stationWagon", 15.0f),
+            new Tuple<string, float>("taxi", 15.0f),
             new Tuple<string, float>("oldTimer", 5.0f)
         };
         
@@ -312,6 +315,12 @@ public static class global
     public static bool chance( float percent )
     {
         return (Random.Range(0.0f, 100.0f) < percent);
+    }
+    
+    public static float noiseFreeValue( float x )
+    {
+        if ((x < 0.05f) && (x > -0.05f) x = 0.0f;
+        return x;
     }
     
     public static int playersCount()
