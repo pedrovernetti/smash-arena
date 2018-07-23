@@ -6,9 +6,12 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: No Name
+    2100002: Material
+    2100004: Material__whiteMarble_png
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cube
+    4300002: Cube_001
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -28,7 +31,6 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5

@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 8a4892f8c66c47f4e8b5b8775ef5205a
-timeCreated: 1531112821
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: background
     100002: floor
@@ -55,7 +53,48 @@ ModelImporter:
     4300010: Pokeball_Sphere1
     4300012: Pokeball_Sphere2
     4300014: reflect_panel
-  externalObjects: {}
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pokeball_CylinderMat
+    second: {fileID: 2100000, guid: 825084ec11ad14a86961fba0c2003fd2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pokeball_Cylinder_1Mat
+    second: {fileID: 2100000, guid: 5c82712423eee41efbb2b9dc452d3999, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pokeball_Sphere1Mat
+    second: {fileID: 2100000, guid: e110ce0b1a87b4cc694323c944efa666, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pokeball_Sphere2Mat
+    second: {fileID: 2100000, guid: c11e4654032004662b76d80d54930e62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pokeball_SphereMat
+    second: {fileID: 2100000, guid: 49d2485834b494fe69586d20ef121aea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backgroundMat
+    second: {fileID: 2100000, guid: 15574026c39ae41249298f155d83d7bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: floorMat
+    second: {fileID: 2100000, guid: acc37b7cdc2cd49fbb47a5c456a6ca94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: reflect_panelMat
+    second: {fileID: 2100000, guid: 2893664d1af17485ab6e029f6750b447, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -74,6 +113,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -105,6 +145,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

@@ -96,18 +96,24 @@ public static class global
     public static string[] playerCharacters = 
         new string[] 
         {
-            "newton",
-            "newton",
-            "newton",
-            "newton"
+            "missingNo1",
+            "missingNo2",
+            "missingNo3",
+            "missingNo4"
         };
     public static playerType[] playerTypes = 
         new playerType[] 
         {
             playerType.Human,
+            #if UNITY_EDITOR
+            playerType.Machine,
+            playerType.Machine,
+            playerType.Machine
+            #else
             playerType.Human,
             playerType.Human,
             playerType.Human
+            #endif
         };
     
     public static bool ongoingGame = false;
@@ -191,13 +197,18 @@ public static class global
                 // humanoids
                 "akai",
                 "newton",
-                "spartanHero",
+                "whiteClown",
                 "vampire",
                 // fantasy
                 "newtonGhost",
                 "ghost",
                 "rabbit",
-                "slime"
+                "slime",
+                // chess
+                "blackPawn",
+                "blackRook",
+                "blackKnight",
+                "blackBishop"
             }
         );
         
@@ -224,7 +235,7 @@ public static class global
             new Tuple<string, float>("heraklios", 10.0f),
             //new Tuple<string, float>("knight", 10.0f),
             new Tuple<string, float>("nightShade", 10.0f),
-            new Tuple<string, float>("spartanHero", 20.0f),
+            //new Tuple<string, float>("spartanHero", 20.0f),
             new Tuple<string, float>("vampire", 10.0f),
             new Tuple<string, float>("whiteClown", 10.0f),
             new Tuple<string, float>("wiezzorek", 10.0f),
@@ -267,6 +278,15 @@ public static class global
         foreach (Transform transform in all)
         {
             if (transform.name == name) return transform.gameObject;
+        }
+        return null;
+    }
+    public static GameObject getChildByName( GameObject parent, string childName )
+    {
+        Transform[] all = parent.GetComponentsInChildren<Transform>(true);
+        foreach (Transform transform in all)
+        {
+            if (transform.name == childName) return transform.gameObject;
         }
         return null;
     }
@@ -443,20 +463,24 @@ public static class global
     
     public static void setPlayers()
     {
-        if (clashMode) return;
-        if (bossEncounter)
+        if (!clashMode)
         {
-            global.playerCharacters[0] = global.mainCharacter();
-            global.playerCharacters[1] = "boss";
-            playerTypes = new playerType[] 
-                { playerType.Human, playerType.Machine, playerType.Disabled, playerType.Disabled };
-        }
-        else
-        {
-            playerCharacters[0] = mainCharacter();
-	        for (int i = 1; i < 4; i++) playerCharacters[i] = randomCharacter();
-            playerTypes = new playerType[] 
-                { playerType.Human, playerType.Machine, playerType.Machine, playerType.Machine };
+            if (bossEncounter)
+            {
+                global.playerCharacters[0] = global.mainCharacter();
+                global.playerCharacters[1] = "boss";
+                playerTypes = new playerType[] 
+                    { playerType.Human, playerType.Machine, 
+                      playerType.Disabled, playerType.Disabled };
+            }
+            else
+            {
+                playerCharacters[0] = mainCharacter();
+	            for (int i = 1; i < 4; i++) playerCharacters[i] = randomCharacter();
+                playerTypes = new playerType[] 
+                    { playerType.Human, playerType.Machine, 
+                      playerType.Machine, playerType.Machine };
+	        }
 	    }
 	    Debug.Log("Players: " + playerCharacters[0] + ":" + playerTypes[0] + ", " + 
 	                playerCharacters[1] + ":" + playerTypes[1] + ", " + 

@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: ac24358a3f26e5d40ab9f73b6c416778
-timeCreated: 1531111885
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Hylian_Shield_Deckfl_che
     100002: Hylian_Shield_Griff_Griff1_Zylinder1
@@ -157,7 +155,133 @@ ModelImporter:
     4300044: Hylian_Shield_Tri_Force_Pyramide_1
     4300046: Hylian_Shield_Tri_Force_Pyramide_2
     4300048: Hylian_Shield_Tri_Force_Pyramide_3
-  externalObjects: {}
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Deckfl_cheMat
+    second: {fileID: 2100000, guid: 3da5c7042f5374755ab4bd2ae4ba4b7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Griff_Griff1_Zylinder1Mat
+    second: {fileID: 2100000, guid: 9f858cfc347234e598dd3a3b21e18611, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Griff_Griff1_Zylinder_1Mat
+    second: {fileID: 2100000, guid: e65af60db6cd04daf8efa04c1e4380ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Griff_Griff1_Zylinder_2Mat
+    second: {fileID: 2100000, guid: 0a2345d72c56244c39e9dad4a5fe4d75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Griff_Griff2_KugelMat
+    second: {fileID: 2100000, guid: a30d06a018b404824bf250f7f22557b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Muster_1_Muster_11Mat
+    second: {fileID: 2100000, guid: b380ccdbf56124726a5f7b5ac554b528, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_NoppenMat
+    second: {fileID: 2100000, guid: f5bf766030f174cb695c895d9e8a72f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_1Mat
+    second: {fileID: 2100000, guid: 41f4bb7b1ae98476ba26699b2c4feb44, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_2Mat
+    second: {fileID: 2100000, guid: b13073ae7c3e143168179990ccbe00e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_3Mat
+    second: {fileID: 2100000, guid: df48e3713bb114cd18f7603f8970f16d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_4Mat
+    second: {fileID: 2100000, guid: b7e14dde6cb9e423086de29342f055b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_5Mat
+    second: {fileID: 2100000, guid: 76649752a84df41f087d9f24d83baa0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_6Mat
+    second: {fileID: 2100000, guid: dc1a10f5b14964b948cb9db2f6ab374d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_7Mat
+    second: {fileID: 2100000, guid: 070f5e6f204e043aeb8c75efbacc4f25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_8Mat
+    second: {fileID: 2100000, guid: 3aca279e3e3164b21849ed349a2b4655, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Noppen1_Noppen2_Noppen_9Mat
+    second: {fileID: 2100000, guid: 9f6b576f60a3a453ab862e38e998ac86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Phoenix_Phoenix1_Phoenix_BeinMat
+    second: {fileID: 2100000, guid: 8547bf29386c24b518f15606b1648924, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Phoenix_Phoenix1_Phoenix_Fl_gelMat
+    second: {fileID: 2100000, guid: 4b77a39816475456789bef3ae8ab263e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Phoenix_Phoenix1_Phoenix_K_rperMat
+    second: {fileID: 2100000, guid: d9469a26559f84508bc6096dce06da1d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Phoenix_Phoenix1_Phoenix_KopfMat
+    second: {fileID: 2100000, guid: 53465be8ec04046c8965213537dfbf30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Rahmen_Rahmen1Mat
+    second: {fileID: 2100000, guid: 4f90b7f785dbf41c8b7f2645c88e7317, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Tri_Force_PyramideMat
+    second: {fileID: 2100000, guid: 8112d6fa917964b258b44c5ff0cad0d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Tri_Force_Pyramide_1Mat
+    second: {fileID: 2100000, guid: 56916e8844f494f7b969781627fa9cd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Tri_Force_Pyramide_2Mat
+    second: {fileID: 2100000, guid: 33fc41bab294a409fbd3521c20e2992b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hylian_Shield_Tri_Force_Pyramide_3Mat
+    second: {fileID: 2100000, guid: 7fa2f3ec45ec44aee91e54b564424df5, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -176,6 +300,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -207,6 +332,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

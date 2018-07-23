@@ -59,6 +59,27 @@ public class UIController : MonoBehaviour
             global.difficulty = global.difficultyLevel.Normal;
         Debug.Log(global.difficulty.ToString() + " difficulty selected");
     }
+    
+    private void updateClashRoundsNumberOnGUI()
+    {
+        GameObject clashRoundsNumber = global.getByName("clashRoundsNumber");
+        if (clashRoundsNumber.GetComponent<Text>() != null)
+            clashRoundsNumber.GetComponent<Text>().text = global.clashRounds.ToString();
+    }
+    
+    public void moreClashRounds()
+    {
+        if (global.clashRounds < 5) global.clashRounds++;
+        updateClashRoundsNumberOnGUI();
+        Debug.Log("Clash rounds set to " + global.clashRounds);
+    }
+    
+    public void lessClashRounds()
+    {
+        if (global.clashRounds > 1) global.clashRounds--;
+        updateClashRoundsNumberOnGUI();
+        Debug.Log("Clash rounds set to " + global.clashRounds);
+    }
         
     public void changeTheme( string direction )
     { 
@@ -102,22 +123,57 @@ public class UIController : MonoBehaviour
             global.allowedCharacter(whichCharacter[whichPlayer]);        
         Debug.Log(global.playerCharacters[whichPlayer] + " selected as player " + whichPlayer);
     }
-
-    public void next( int which = 1 )
+    
+    public void changeCharacter1( string direction )
     {
-        whichCharacter[which] = 
-            (whichCharacter[which]++ % (global.allowedCharacters.Count + 1));
-        Debug.Log("Clash: character " + whichTheme.ToString() + " selected" +
-            "as player #" + which.ToString());
+        changeCharacter(direction, 0);
     }
-
-    public void previous( int which = 1 )
+    
+    public void changeCharacter2( string direction )
     {
-        whichCharacter[which]--;
-        if (whichCharacter[which] <= 0) 
-            whichCharacter[which] = global.allowedCharacters.Count;
-        Debug.Log("Clash: character " + whichTheme.ToString() + " selected [" +
-            which.ToString() + "]");
+        changeCharacter(direction, 1);
+    }
+    
+    public void changeCharacter3( string direction )
+    {
+        changeCharacter(direction, 2);
+    }
+    
+    public void changeCharacter4( string direction )
+    {
+        changeCharacter(direction, 3);
+    }
+    
+    public void changePlayerType( string type, int whichPlayer )
+    {
+        if (type == "Human") 
+            global.playerTypes[whichPlayer] = global.playerType.Human;
+        else if (type == "Machine") 
+            global.playerTypes[whichPlayer] = global.playerType.Machine;
+        else if (type == "Disabled") 
+            global.playerTypes[whichPlayer] = global.playerType.Disabled;
+        else global.playerTypes[whichPlayer] = global.playerType.BrainDead;
+        Debug.Log("Player " + whichPlayer + " set as " + global.playerTypes[whichPlayer]);
+    }
+    
+    public void changePlayerType1( Text dropdownLabel )
+    {
+        changePlayerType(dropdownLabel.GetComponent<Text>().text, 0);
+    }
+    
+    public void changePlayerType2( Text dropdownLabel )
+    {
+        changePlayerType(dropdownLabel.GetComponent<Text>().text, 1);
+    }
+    
+    public void changePlayerType3( Text dropdownLabel )
+    {
+        changePlayerType(dropdownLabel.GetComponent<Text>().text, 2);
+    }
+    
+    public void changePlayerType4( Text dropdownLabel )
+    {
+        changePlayerType(dropdownLabel.GetComponent<Text>().text, 3);
     }
     
     public void goToClashModePanel()

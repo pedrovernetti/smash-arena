@@ -18,10 +18,8 @@ public class collisionScanner : MonoBehaviour
 
     public void OnTriggerEnter( Collider other )
     {
-        Debug.Log("scanned: " + other.gameObject.name);
         if (other.gameObject.layer != 8)
             collidingObjectsList.Add(other.gameObject);
-        Debug.Log("ending scanning");
     }
     
     public void OnTriggerExit( Collider other )

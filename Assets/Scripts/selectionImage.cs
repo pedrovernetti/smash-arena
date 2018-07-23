@@ -1,3 +1,4 @@
+using System;
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,16 +16,16 @@ public class selectionImage : MonoBehaviour
         player4 = 3
     };
     
-    private int[] which;
-    private int[] internalIndex;
+    private int which;
+    private int internalIndex;
     private GameObject[] possibilities;
     
     public imageType type;
         
     public void Start()
     {
-        which = new int[] { 0, 0, 0, 0 };        
-        internalIndex = new int[] { 0, 0, 0, 0 };        
+        which = 0;        
+        internalIndex = 0;     
         possibilities = new GameObject[transform.childCount];
         for (int i = possibilities.Length - 1; i >= 0; i--)
         {
@@ -36,27 +37,40 @@ public class selectionImage : MonoBehaviour
 	
     public void FixedUpdate()
     {
-        if ((type == imageType.theme) && (which[0] != UIController.whichTheme))
+        if ((type == imageType.theme) && (which != UIController.whichTheme))
         {
-            possibilities[internalIndex[0]].SetActive(false);
-            which[0] = UIController.whichTheme;
-            internalIndex[0] = (which[0] == 0) ? 0 : (int)(global.theme);
-            possibilities[internalIndex[0]].SetActive(true);
+            possibilities[internalIndex].SetActive(false);
+            which = UIController.whichTheme;
+            internalIndex = (which == 0) ? 0 : (int)(global.theme);
+            possibilities[internalIndex].SetActive(true);
         }
-        else if ((type == imageType.mode) && (which[0] != UIController.whichMode))
+        else if ((type == imageType.mode) && (which != UIController.whichMode))
         {
-            possibilities[internalIndex[0]].SetActive(false);
-            which[0] = UIController.whichMode;
-            internalIndex[0] = (which[0] == 0) ? 0 : (int)(global.mode);
-            possibilities[internalIndex[0]].SetActive(true);
+            possibilities[internalIndex].SetActive(false);
+            which = UIController.whichMode;
+            internalIndex = (which == 0) ? 0 : (int)(global.mode);
+            possibilities[internalIndex].SetActive(true);
         }
         else if ((type >= imageType.player1) && (type <= imageType.player4) &&
-                 (which[(int)(type)] != UIController.whichCharacter[(int)(type)]))
+                 (possibilities[0].name != global.playerCharacters[(int)(type)]))
         {
-            possibilities[internalIndex[(int)(type)]].SetActive(false);
-            which[(int)(type)] = UIController.whichCharacter[(int)(type)];
-            internalIndex[(int)(type)] = (which[0] == 0) ? 0 : (int)(global.mode);
-            possibilities[internalIndex[(int)(type)]].SetActive(true);
+            possibilities[0].SetActive(false);
+            GameObject current = 
+                global.getChildByName(gameObject, global.playerCharacters[(int)(type)]);
+            if (current != null) 
+            {
+                current.SetActive(true);
+                possibilities[0] = current;
+            }
+            else
+            {
+                current = global.getChildByName(gameObject, "missing");
+                if (current != null) 
+                {
+                    current.SetActive(true);
+                    possibilities[0] = current;
+                }
+            }
         }
 	} 
 }

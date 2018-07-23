@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: c8332c69533a14776b39d63a29010e45
 ModelImporter:
-  serializedVersion: 23
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Camera
     100002: Cylinder
@@ -13,9 +13,15 @@ ModelImporter:
     400006: Lamp
     2000000: Camera
     2100000: Material.001
+    2100002: unnamed
+    2100004: Material_002__sandyGround_jpg
+    2100006: Material_002
     2300000: Cylinder
+    2300002: //RootNode
     3300000: Cylinder
+    3300002: //RootNode
     4300000: Cylinder
+    4300002: Cube
     10800000: Lamp
   externalObjects: {}
   materials:
@@ -36,7 +42,6 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -68,8 +73,6 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

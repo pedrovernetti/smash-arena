@@ -12,6 +12,10 @@ public class arena : MonoBehaviour
         Square = 2
     }
     
+    #if UNITY_EDITOR
+    public static bool quickTest = true;
+    #endif
+    
     public arenaGroundShape arenaShape;
     private Vector3 referencePoint, auxiliarPoint;
     private float arenaRadius, holeRadius;
@@ -45,6 +49,7 @@ public class arena : MonoBehaviour
     #if UNITY_EDITOR
     private void editorModeWorkaround()
     {
+        Debug.Log("#QuickTesting");
         if (global.currentScene == "cars") 
             global.theme = global.arenaTheme.Cars;
         else if (global.currentScene == "humanoids")
@@ -53,8 +58,10 @@ public class arena : MonoBehaviour
             global.theme = global.arenaTheme.Fantasy;
         else if (global.currentScene == "chess")
             global.theme = global.arenaTheme.Chess;
-            
-        global.setPlayers();
+        
+        if (!global.bossEncounter) global.mode = global.randomArenaMode();
+        
+        quickTest = false;
     }
     #endif
 	
@@ -144,7 +151,6 @@ public class arena : MonoBehaviour
 		    position += (Vector3)(Random.insideUnitCircle * arenaRadius);
 		    position.y = y;
 		}
-	    Debug.Log("generating random arena position: " + position);
 		return ((isInsideArenaLimits(position)) ? position : randomArenaPosition(y));
 	}
     
@@ -167,6 +173,8 @@ public class arena : MonoBehaviour
 	private void invertedModeChanges()
 	{
 	    findHoleReferencePoints();
+        global.setActiveByTag("onlyUnstableMode", false);
+        global.getByName("arenaBase").SetActive(false);
         modeHasObjects = false;
 	}
 	
@@ -273,7 +281,6 @@ public class arena : MonoBehaviour
 	
 	public void modeObjectsSwitch()
 	{
-	    Debug.Log("[mode objects switch]");
 	    nextModeObjectsSwitch =
 	        global.now.AddSeconds(Random.Range(2.0f, maximumObjectsSwitchInterval));
 	    if (modeObjectsAreResting)
@@ -318,7 +325,7 @@ public class arena : MonoBehaviour
 	{
         setAsCurrentArena();
         #if UNITY_EDITOR
-        editorModeWorkaround();
+        if (quickTest) editorModeWorkaround();
         #endif
         
 	    paused = false;
@@ -464,6 +471,7 @@ public class arena : MonoBehaviour
                 return;
             }
         }
+        finish(global.gameResult.DRAW);
 	}
 	
 	public void setDead( playerController player )

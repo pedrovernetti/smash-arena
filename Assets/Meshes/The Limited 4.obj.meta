@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: b3a9a3d75a188f14fabe1bcb043dfcc4
-timeCreated: 1530557929
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     100002: The_limited_1_Body
@@ -55,7 +53,48 @@ ModelImporter:
     4300010: The_limited_1_N_Text___N1_N2
     4300012: The_limited_1_N_Text___N1_N2_Cap_1
     4300014: The_limited_1_N_Text___N1_N2_Cap_2
-  externalObjects: {}
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_BodyMat
+    second: {fileID: 2100000, guid: 5e35cedb3a32e48c1bfdb9c957c4c22e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_Eye_CubeMat
+    second: {fileID: 2100000, guid: 872cc69b2b60646bb94c4f7913b17f13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_Eye_Cube_1Mat
+    second: {fileID: 2100000, guid: 957cc6b7894a24159813150aff6c62b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_Head_1Mat
+    second: {fileID: 2100000, guid: 76032b3a9a7894b78abd9b5ed77164c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_N_Text___N1_N2Mat
+    second: {fileID: 2100000, guid: c956248b9ff3544a88b8bbd9f0a5da0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_N_Text___N1_N2_Cap_1Mat
+    second: {fileID: 2100000, guid: 6d0b5c5c8e1064908bcbef6fe6be3f68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_N_Text___N1_N2_Cap_2Mat
+    second: {fileID: 2100000, guid: 97c8481a7743d4a599829cbdda099246, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: The_limited_1_mouthMat
+    second: {fileID: 2100000, guid: 205040fb3c0e74f77af6ad7dc8f16a71, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -74,6 +113,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -105,6 +145,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

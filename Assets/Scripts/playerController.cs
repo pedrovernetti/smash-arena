@@ -42,6 +42,8 @@ public class playerController : MonoBehaviour
 	private Quaternion defaultRotation;
 	private Animator animator;
 	private bool hasAnimator;
+	private AI intelligence;
+	public bool hasIntelligence { get { return (intelligence != null); } }
 	private bool groundless;
 	private bool dashing;
     public bool isDashing { get { return dashing; } }    
@@ -74,7 +76,8 @@ public class playerController : MonoBehaviour
 	
 	public void Awake()
 	{
-	    gameObject.SetActive(false);
+        gameObject.SetActive(false);
+            
 	    for (int i = 0; i < 4; i++)
         {
             if (global.playerTypes[i] == global.playerType.Disabled) continue;
@@ -139,13 +142,24 @@ public class playerController : MonoBehaviour
         hasAnimator = (animator != null) ? true : false;
 	    
 	    if (playerType == global.playerType.Machine)
-	        gameObject.AddComponent<AI>();
-	    else if (playerType == global.playerType.BrainDead)
-	        movements = movementStyle.Still;
+	        intelligence = gameObject.AddComponent<AI>();
+	    else 
+	    {
+	        intelligence = null;
+	        if (playerType == global.playerType.BrainDead)
+	            movements = movementStyle.Still;
+	    }
 	        
 	    burningUntil = global.now.AddSeconds(-1);
 	    
 	    ready = true;
+	}
+	
+	private bool isTryingToDash()
+	{
+        if (Input.GetButton("dash" + ABCD)) return true;
+        else if (hasIntelligence && intelligence.wantsToDash) return true;
+	    else return false;
 	}
 	
 	private void carControl( float horizontal, float vertical )
@@ -155,7 +169,7 @@ public class playerController : MonoBehaviour
         if (groundless) return;
         if (vertical != 0.0f) vertical = (vertical > 0.0f) ? 0.25f : -0.25f;
         body.velocity = transform.forward * speed * vertical;
-		if (Input.GetButton("dash" + ABCD) && isMoving)
+		if (isTryingToDash() && isMoving && (vertical > 0.0f))
 		{
 		    body.velocity = transform.forward * dashSpeed * vertical;
 		    dashing = true;
@@ -180,7 +194,7 @@ public class playerController : MonoBehaviour
             horizontal *= -1.0f;
         }
         body.velocity = transform.forward * speed * vertical;
-		if (Input.GetButton("dash" + ABCD) && isMoving && (vertical > 0.0f))
+		if (isTryingToDash() && isMoving && (vertical > 0.0f))
 		{
             if (!dashing) tryAnimate("Dash", "dash");
 		    body.velocity = transform.forward * dashSpeed * vertical;
@@ -199,7 +213,7 @@ public class playerController : MonoBehaviour
         }
         Vector3 movement = new Vector3 (horizontal, 0.0f, vertical);
         body.AddForce(movement * speed);
-        if (Input.GetButton("dash" + ABCD) && isMoving)
+        if (isTryingToDash() && isMoving)
     	{
     	    body.AddForce(movement * dashSpeed);
     		dashing = true;
@@ -222,7 +236,8 @@ public class playerController : MonoBehaviour
 	
 	private void dealWithRotations()
 	{
-        if (!global.currentArena.isInsideArenaLimits(transform.position))
+        if ((!global.currentArena.isInsideArenaLimits(transform.position)) &&
+            (movements != movementStyle.Creature))
             body.constraints = RigidbodyConstraints.None;
         else if (isStanding)
         {
@@ -238,7 +253,7 @@ public class playerController : MonoBehaviour
         if ((!global.ongoingGame) || (!isReady)) return;
         
 	    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);
-	    else if (isBurning && global.chance(0.33f))
+	    else if (isBurning && global.chance(33.0f))
 	    {
             float x = ((global.coinflip) ? -1.0f : 1.0f) * global.difficultyFactor;
             float y = ((global.coinflip) ? -1.0f : 1.0f) * global.difficultyFactor;
@@ -305,8 +320,7 @@ public class playerController : MonoBehaviour
             Debug.Log(playerName + " died");
             gameObject.SetActive(false);
             global.currentArena.setDead(this);
-            if (playerType == global.playerType.Machine)
-                Object.Destroy(GetComponent<AI>());
+            if (hasIntelligence) Object.Destroy(GetComponent<AI>());
             Object.Destroy(this);
         }
         else if (!global.ongoingGame) return;
