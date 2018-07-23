@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class selectionImage : MonoBehaviour
 {
     public enum imageType : byte
@@ -52,8 +53,10 @@ public class selectionImage : MonoBehaviour
         else if ((type >= imageType.player1) && (type <= imageType.player4) &&
                  (which[(int)(type)] != UIController.whichCharacter[(int)(type)]))
         {
+            possibilities[internalIndex[(int)(type)]].SetActive(false);
             which[(int)(type)] = UIController.whichCharacter[(int)(type)];
-            //string imageToLoad = ;
+            internalIndex[(int)(type)] = (which[0] == 0) ? 0 : (int)(global.mode);
+            possibilities[internalIndex[(int)(type)]].SetActive(true);
         }
 	} 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody))]
 public class playerController : MonoBehaviour
 {
@@ -47,6 +48,8 @@ public class playerController : MonoBehaviour
     public bool isMoving { get { return (body.velocity.magnitude > 0.1); } }
     private System.DateTime burningUntil;
     public bool isBurning { get { return (global.now > burningUntil); } }
+    private bool ready = false;
+    public bool isReady { get { return ready; } }
     
     private string lastAnimationBool;
     
@@ -68,6 +71,29 @@ public class playerController : MonoBehaviour
 	// sounds
 	public AudioClip mediumHitSound;
 	public AudioClip heavyHitSound;
+	
+	public void Awake()
+	{
+	    gameObject.SetActive(false);
+	    for (int i = 0; i < 4; i++)
+        {
+            if (global.playerTypes[i] == global.playerType.Disabled) continue;
+            if (global.playerCharacters[i] == gameObject.name)
+            {
+                playerType = global.playerTypes[i];
+                playerNumber = i + 1;
+                ABCD = (char)('@'+playerNumber);
+                gameObject.SetActive(true);
+            }
+        }
+	}
+	
+	private void placeProperly()
+	{
+	    GameObject reference = global.getByName("PLAYER" + (char)('0'+playerNumber) + "_PLACE");
+	    if (reference != null) transform.position = reference.transform.position;
+	    else transform.position = global.currentArena.randomArenaPosition(transform.position.y);
+	}
     
     private void setUpRigidbody()
     {
@@ -94,19 +120,16 @@ public class playerController : MonoBehaviour
 	    }
     }
     
-    private void delayedStart()
-    {
+	public void Start() 
+	{
+        placeProperly();
+        
 	    if (global.clashMode) 
 	    {
-	        playerType = global.playerTypes[playerNumber - 1];
 	        playerName = global.playerNames[playerNumber - 1];
 	        mass = body.mass = (mass <= 2.0f) ? mass : 2.0f;
 	        drag = body.drag = (drag <= 5.0f) ? drag : 5.0f;
 	    }
-	    else if (playerNumber == 1) playerType = global.playerType.Human;
-	    else playerType = global.playerType.Machine;
-	    if (!((playerNumber > 0) && (playerNumber < 5))) ABCD = 'A';
-	    else ABCD = (char)('@'+playerNumber);
 	    
 	    setUpRigidbody();
 	    defaultRotation = transform.rotation;
@@ -121,11 +144,8 @@ public class playerController : MonoBehaviour
 	        movements = movementStyle.Still;
 	        
 	    burningUntil = global.now.AddSeconds(-1);
-    }
-    
-	public void Start() 
-	{
-	    Invoke("delayedStart", 2.0f);
+	    
+	    ready = true;
 	}
 	
 	private void carControl( float horizontal, float vertical )
@@ -213,7 +233,7 @@ public class playerController : MonoBehaviour
 	
     public void FixedUpdate()
     {
-        if (!global.ongoingGame) return;
+        if ((!global.ongoingGame) || (!isReady)) return;
         
 	    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);
 	    else if (isBurning && global.chance(0.33f))
@@ -277,9 +297,18 @@ public class playerController : MonoBehaviour
     
     public void OnTriggerEnter( Collider other )
     {
-        if (!global.ongoingGame) return;
         
-        if (other.CompareTag("fire")) 
+        if (other.CompareTag("deathPlane"))
+        {
+            Debug.Log(playerName + " died");
+            gameObject.SetActive(false);
+            global.currentArena.setDead(this);
+            if (playerType == global.playerType.Machine)
+                Object.Destroy(GetComponent<AI>());
+            Object.Destroy(this);
+        }
+        else if (!global.ongoingGame) return;
+        else if (other.CompareTag("fire")) 
         {
             burningUntil = global.now.AddSeconds(1.25f * global.difficultyFactor);
     	    Debug.Log(playerName + " is burning!");

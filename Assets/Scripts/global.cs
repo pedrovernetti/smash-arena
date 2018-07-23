@@ -85,7 +85,6 @@ public static class global
     
     public static bool bossEncounter = false;
     
-    public static int playersCount = 4;
     public static string[] playerNames = 
         new string[] 
         {
@@ -101,6 +100,14 @@ public static class global
             "newton",
             "newton",
             "newton"
+        };
+    public static playerType[] playerTypes = 
+        new playerType[] 
+        {
+            playerType.Human,
+            playerType.Human,
+            playerType.Human,
+            playerType.Human
         };
     
     public static bool ongoingGame = false;
@@ -124,14 +131,6 @@ public static class global
             0, // Player B
             0, // Player C
             0  // Player D
-        };
-    public static playerType[] playerTypes = 
-        new playerType[] 
-        {
-            playerType.Human,
-            playerType.Human,
-            playerType.Human,
-            playerType.Human
         };
         
     // Progress and achievements
@@ -297,6 +296,12 @@ public static class global
     
     // Audio functions
     
+    public static void playClip( AudioClip clip )
+    {
+        Vector3 where = getByName("camera").transform.position;
+        AudioSource.PlayClipAtPoint(clip, where, audioVolume);
+    }
+    
     public static void playClipAt( AudioClip clip, Vector3 where, float volume )
     {
         AudioSource.PlayClipAtPoint(clip, where, volume * audioVolume);
@@ -307,6 +312,16 @@ public static class global
     public static bool chance( float percent )
     {
         return (Random.Range(0.0f, 100.0f) < percent);
+    }
+    
+    public static int playersCount()
+    {
+        int count = 0;
+	    for (int i = 0; i < 4; i++)
+	    {
+	        if (playerTypes[i] != playerType.Disabled) count++;
+	    }
+	    return count;
     }
     
     public static arenaTheme randomArenaTheme()
@@ -423,7 +438,6 @@ public static class global
         {
             global.playerCharacters[0] = global.mainCharacter();
             global.playerCharacters[1] = "boss";
-            playersCount = 2;
             playerTypes = new playerType[] 
                 { playerType.Human, playerType.Machine, playerType.Disabled, playerType.Disabled };
         }
@@ -431,10 +445,13 @@ public static class global
         {
             playerCharacters[0] = mainCharacter();
 	        for (int i = 1; i < 4; i++) playerCharacters[i] = randomCharacter();
-            playersCount = 4;
             playerTypes = new playerType[] 
                 { playerType.Human, playerType.Machine, playerType.Machine, playerType.Machine };
 	    }
+	    Debug.Log("Players: " + playerCharacters[0] + ":" + playerTypes[0] + ", " + 
+	                playerCharacters[1] + ":" + playerTypes[1] + ", " + 
+	                playerCharacters[2] + ":" + playerTypes[2] + ", " + 
+	                playerCharacters[3] + ":" + playerTypes[3]);
     }
     
     public static void loadProperArenaScene()
@@ -452,6 +469,7 @@ public static class global
         else if (theme == arenaTheme.Secret) scene = "secret";
         
         if (!clashMode) setPlayers();
+        currentArena = null;
 	                
         Debug.Log("\"" + scene + "\" arena starting...");
         SceneManager.LoadScene(scene);
@@ -464,7 +482,6 @@ public static class global
         mode = (arenaMode)(1);
         theme = (arenaTheme)(1);
         bossEncounter = false;
-        playersCount = 4;
         ongoingGame = false;
         currentArena = null;
         currentArenaGround = null;

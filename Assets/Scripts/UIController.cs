@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class UIController : MonoBehaviour
 {   
     public static int whichTheme = 0;
@@ -77,6 +78,29 @@ public class UIController : MonoBehaviour
         
         global.mode = global.allowedArenaMode(whichMode);        
         Debug.Log(global.mode.ToString() + " mode selected");
+    }
+    
+    public void changeCharacter( string direction, int whichPlayer )
+    {
+        int allowedCount = global.allowedCharacters.Count;
+        if (direction == "previous") 
+            whichCharacter[whichPlayer] -= 
+                (whichCharacter[whichPlayer] != 0) ? 1 : -allowedCount;
+        else if (direction == "next")
+            whichCharacter[whichPlayer] = 
+                (whichCharacter[whichPlayer] + 1) % (allowedCount + 1);
+                
+        for (int i = 0; i < 4; i++)
+        {
+            if ((i != whichPlayer) &&
+                (global.allowedCharacter(whichCharacter[whichPlayer]) == 
+                    global.playerCharacters[i]))
+                changeCharacter(direction, whichPlayer);
+        }
+        
+        global.playerCharacters[whichPlayer] = 
+            global.allowedCharacter(whichCharacter[whichPlayer]);        
+        Debug.Log(global.playerCharacters[whichPlayer] + " selected as player " + whichPlayer);
     }
 
     public void next( int which = 1 )

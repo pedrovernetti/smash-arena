@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class orbit : MonoBehaviour
 {
     private Vector3 direction;

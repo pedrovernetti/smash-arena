@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class arena : MonoBehaviour
 {
     public enum arenaGroundShape : byte
@@ -16,21 +17,30 @@ public class arena : MonoBehaviour
     private float arenaRadius, holeRadius;
     private float arenaSizeX, arenaSizeZ, holeSizeX, holeSizeZ;
     
-    private bool properPlayersInPlace;
-    public bool playersInPlace { get { return properPlayersInPlace; } }
-    
     private ArrayList modeObjects;
     private bool modeHasObjects;
     private Vector3 objectsRestingPlace;
     private bool modeObjectsAreResting;
     private float maximumObjectsSwitchInterval;
     private System.DateTime nextModeObjectsSwitch;
+    
+    private int activePlayersCount;
+    public Text roundText;
+    public Text deathText;
+    private System.DateTime textExpiration;
+    public AudioClip deathSound;
 
     private System.DateTime lastPlayPauseTime;
     private bool paused;
     public bool isPaused { get { return paused; } }
     
-    public Text roundText;
+    private string exitAction;
+    
+    private void setAsCurrentArena()
+    {
+	    if (global.currentArena != null) Object.Destroy(global.currentArena);
+	    global.currentArena = this;
+	}
     
     #if UNITY_EDITOR
     private void setThemeBasedOnScene()
@@ -45,23 +55,6 @@ public class arena : MonoBehaviour
             global.theme = global.arenaTheme.Chess;
     }
     #endif
-    
-    private IEnumerator countdown()
-    {
-        System.DateTime next = global.now;
-        System.DateTime end = next.AddSeconds(3); 
-        for (int i = 0; global.now <= end; )
-        {
-            if (global.now > next)
-            {
-                next = global.now.AddSeconds(1);
-                i++;
-                roundText.text = i.ToString();
-            }
-        }
-        roundText.text = "";
-        yield break;
-    }
 	
 	private void findReferencePoints()
 	{
@@ -149,34 +142,8 @@ public class arena : MonoBehaviour
 		    position += (Vector3)(Random.insideUnitCircle * arenaRadius);
 		    position.y = y;
 		}
+	    Debug.Log("generating random arena position: " + position);
 		return ((isInsideArenaLimits(position)) ? position : randomArenaPosition(y));
-	}
-	
-	private void preparePlayers()
-	{
-	    string[] players = global.playerCharacters;
-	    GameObject[] characters = global.getByTag("Player");
-	    Debug.Log("VAI TOMAR NO CU " + characters.Length);
-	    for (int i = characters.Length - 1, j = 0, ok = 0; i >= 0; i--, ok = 0)
-	    {
-	        for (j = 0; j < 4; j++)
-	        {
-	            Debug.Log(j.ToString() + ": " + global.playerCharacters[j] + ": " + global.playerTypes[j]);
-	            if (global.playerTypes[j] == global.playerType.Disabled)
-	                continue;
-	            if (global.playerCharacters[j] == characters[i].name)
-	            {
-	                characters[i].GetComponent<playerController>().playerNumber = 
-	                    j + 1;
-	                characters[i].transform.position = 
-	                    randomArenaPosition(characters[i].transform.position.y);
-	                ok = 1;
-	            }
-	        }
-	        Debug.Log(i.ToString() + ": " + characters[i].name + ": " + ((ok != 0) ? "on" : "off"));
-	        if (ok == 0) Object.Destroy(characters[i]);
-	    }
-	    properPlayersInPlace = true;
 	}
     
     public void setLightingColor( Color color )
@@ -344,34 +311,36 @@ public class arena : MonoBehaviour
 		    Mathf.Max(12.0f, (18.0f / global.difficultyFactor));
 		modeObjectsSwitch();
     }
-    
-    private void startGame()
-    {
-	    global.ongoingGame = true;
-    }
 	
 	public void Start()
 	{
+        setAsCurrentArena();
         #if UNITY_EDITOR
         setThemeBasedOnScene();
         #endif
         
-        StartCoroutine(countdown());
-        
-        global.currentArena = this;
 	    paused = false;
         
 		findReferencePoints();		
-		preparePlayers();
 		setUpModeElements();
 		setMusicVolume();
 	    if (modeHasObjects) startModeObjectsCycle();
 	    
-	    Invoke("startGame", 3.0f);
+	    activePlayersCount = global.playersCount();
+	    //ranking = new string[activePlayersCount];
+	    
+	    global.ongoingGame = true;
 	    
 	    // BEGIN : GAMBIARRA
 	     secretsHandler.editorTrick1(true);
 	    // END : GAMBIARRA
+	}
+	
+	private void removeExpiredTexts()
+	{
+	    if (((deathText.text != "") || (roundText.text != "")) &&
+	        (global.now >= textExpiration))
+	        deathText.text = roundText.text = "";
 	}
 	
 	public void PlayPause()
@@ -398,6 +367,8 @@ public class arena : MonoBehaviour
 	
 	public void FixedUpdate()
 	{
+	    removeExpiredTexts();
+	    
 	    if (modeHasObjects)
 	    {
     	    if (paused) nextModeObjectsSwitch = 
@@ -409,6 +380,35 @@ public class arena : MonoBehaviour
 	    else if ((!global.ongoingGame)) secretsHandler.readSecretCode();
 	}
 	
+	public void showText( string text, float duration, bool useDeathText = false )
+	{
+	    if (useDeathText)
+	    {
+	        roundText.text = "";
+	        deathText.text = text;
+	    }
+	    else
+	    {
+	        deathText.text = "";
+	        roundText.text = text;
+	    }
+        textExpiration = global.now.AddSeconds(duration);
+	}
+	
+	private void exitArena()
+	{
+	    if (global.clashRoundsPlayed >= global.clashRounds) global.restart();
+	    else if (exitAction == "end") global.restart();
+	    else if (exitAction == "next") global.advanceCampaign();
+	    else global.loadProperArenaScene();
+	}
+	
+	public void invokeOnTextExpiration( string methodName )
+	{
+	    float time = (float)((textExpiration - global.now).TotalSeconds) + 0.5f;
+	    Invoke(methodName, time);
+	}
+	
 	public void finish( global.gameResult result, playerController winner = null )
 	{
         global.ongoingGame = false;
@@ -418,24 +418,62 @@ public class arena : MonoBehaviour
 	    {
 	        if (global.clashMode)
 	        {
+	            showText(winner.playerName + "\nWINS", 4, true);
 	            global.clashVictories[winner.playerNumber - 1]++;
-	            global.loadProperArenaScene();
+	            exitAction = "repeat";
 	        }
-	        else global.advanceCampaign();
+	        else 
+	        {
+                showText("YOU WIN", 4, true);
+	            exitAction = "next";
+	        }
 	    }
 	    else if (result == global.gameResult.DRAW)
 	    {
-            if (global.clashMode) global.loadProperArenaScene();
-            else
-            {
-                if (global.bossEncounter) 
-                {
-                    global.bossEncounter = false;
-                    // chama cutscene de derrota e volta pro menu principal
-                }
-                // uma cutscene para draw
-            }
+	        showText("DRAW", 4, true);
+	        if (global.bossEncounter) 
+	        {
+                global.bossEncounter = false;
+                exitAction = "end";
+	        }
+            else exitAction = "repeat";
 	    }
-	    else global.restart();
+	    else 
+	    {
+            global.playClip(deathSound);
+            showText("YOU LOSE", 4, true);
+            exitAction = "end";
+	    }
+	    invokeOnTextExpiration("exitArena");
+	}
+	
+	private void setWinner()
+	{
+        GameObject[] players = global.getByTag("Player");
+        playerController winner;
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i].activeInHierarchy)
+            {
+                winner = players[i].GetComponent<playerController>();
+	            //ranking[0] = winner.playerName;
+                if (winner.isGroundless) finish(global.gameResult.DRAW);
+                else finish(global.gameResult.WIN, winner);
+                return;
+            }
+        }
+	}
+	
+	public void setDead( playerController player )
+	{
+	    //ranking[activePlayersCount - 1] = player.playerName;
+	    activePlayersCount--;
+	    
+	    if (global.clashMode)
+	        showText(player.playerName + "\nDIES", 2, true);
+	    else  if ((player.playerNumber == 1) && (!global.clashMode))
+            finish(global.gameResult.LOSE);
+	    
+	    if (activePlayersCount == 1) setWinner();
 	}
 }

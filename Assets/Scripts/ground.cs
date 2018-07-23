@@ -13,13 +13,13 @@ public class ground : MonoBehaviour
         {
              if (name == "arenaGround")
              {
-                gameObject.SetActiveRecursively(false);
+                gameObject.SetActive(false);
                 return true;
              }
         }
         else if (name == "invertedArenaGround") 
         {
-            gameObject.SetActiveRecursively(false);
+            gameObject.SetActive(false);
             return true;
         }
         return false;
