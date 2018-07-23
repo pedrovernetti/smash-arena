@@ -150,6 +150,7 @@ public class playerController : MonoBehaviour
 	
 	private void carControl( float horizontal, float vertical )
 	{
+	    if (vertical < 0.0f) horizontal *= -1.0f;
 	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
         if (groundless) return;
         if (vertical != 0.0f) vertical = (vertical > 0.0f) ? 0.25f : -0.25f;
@@ -164,6 +165,7 @@ public class playerController : MonoBehaviour
 	
 	private void creatureControl( float horizontal, float vertical )
 	{
+	    if (vertical < 0.0f) horizontal *= -1.0f;
 	    transform.Rotate(Vector3.up, horizontal * speed * 2.0f * Time.deltaTime);
         if (groundless) return;
         if (vertical > 0.0f)
@@ -207,10 +209,10 @@ public class playerController : MonoBehaviour
 	
 	public void control( float horizontal = 0.0f, float vertical = 0.0f )
 	{
-	    float h = ((horizontal != 0.0f) || isMachine) ? 
-	                horizontal : Input.GetAxis("horizontal" + ABCD);
-	    float v = ((vertical != 0.0f) || isMachine) ? 
-	                vertical : Input.GetAxis("vertical" + ABCD);
+	    float h = global.noiseFreeValue(((horizontal != 0.0f) || isMachine) ? 
+	                horizontal : Input.GetAxis("horizontal" + ABCD));
+	    float v = global.noiseFreeValue((vertical != 0.0f) || isMachine) ? 
+	                vertical : Input.GetAxis("vertical" + ABCD));
 	    
 	    if ((h == 0.0f) && (v == 0.0f)) return;
 	    else if (movements == movementStyle.Creature) creatureControl(h, v);
