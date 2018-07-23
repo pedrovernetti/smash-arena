@@ -319,7 +319,7 @@ public static class global
     
     public static float noiseFreeValue( float x )
     {
-        if ((x < 0.05f) && (x > -0.05f) x = 0.0f;
+        if ((x < 0.05f) && (x > -0.05f)) x = 0.0f;
         return x;
     }
     

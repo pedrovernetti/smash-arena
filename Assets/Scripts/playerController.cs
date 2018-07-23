@@ -211,7 +211,7 @@ public class playerController : MonoBehaviour
 	{
 	    float h = global.noiseFreeValue(((horizontal != 0.0f) || isMachine) ? 
 	                horizontal : Input.GetAxis("horizontal" + ABCD));
-	    float v = global.noiseFreeValue((vertical != 0.0f) || isMachine) ? 
+	    float v = global.noiseFreeValue(((vertical != 0.0f) || isMachine) ? 
 	                vertical : Input.GetAxis("vertical" + ABCD));
 	    
 	    if ((h == 0.0f) && (v == 0.0f)) return;
