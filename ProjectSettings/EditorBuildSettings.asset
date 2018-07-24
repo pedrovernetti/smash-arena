@@ -20,10 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/chess.unity
     guid: 22d97703bbed284459262b8ca31e6a3b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/abstract.unity
     guid: c67379811bc094406978dbfede62a04c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/secret.unity
     guid: dbb318a21e91246d0b7cdd8ff5e0f79c
-  m_configObjects: {}
