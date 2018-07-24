@@ -1,4 +1,5 @@
 ﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,26 +29,56 @@ public static class secretsHandler
     // END : GAMBIARRA
     
     // Recarrega a arena atual num modo aleatório
-    private static void secretTrick1()
+    public static void secretTrick1()
     {
         global.bossEncounter = false;
         global.loadProperArenaScene();
     }
     
-    private static void secretTrick2()
+    public static void secretTrick2()
     {
     }
     
-    private static void secretTrick3()
+    public static void secretTrick3()
     {
     }
     
-    private static void secretTrick4()
+    // Libera tudo
+    public static void secretTrick4()
     {
+        global.allowedArenaModes = new ArrayList(new global.arenaMode[]
+            { global.arenaMode.Normal, global.arenaMode.Inverted, 
+              global.arenaMode.Frozen, global.arenaMode.Burning,
+              global.arenaMode.Electric, global.arenaMode.Unstable,
+              global.arenaMode.Shrunken, global.arenaMode.Enlarged,
+              global.arenaMode.Dark, global.arenaMode.DownsideUp });
+            
+        global.allowedArenaThemes = new ArrayList(new global.arenaTheme[]
+            { global.arenaTheme.Cars, global.arenaTheme.Humanoids, 
+              global.arenaTheme.Fantasy, global.arenaTheme.Chess });
+        
+        global.allowedCharacters = new ArrayList(new string
+            [ global.chessEnemies.Length + global.humanoidEnemies.Length +
+              global.carEnemies.Length + global.fantasyEnemies.Length ]);
+        int j = 0;
+        for (int i = global.chessEnemies.Length - 1; i >= 0; i--, j++)
+            global.allowedCharacters[j] = global.chessEnemies[i].Item1;
+        for (int i = global.fantasyEnemies.Length - 1; i >= 0; i--, j++)
+            global.allowedCharacters[j] = global.fantasyEnemies[i].Item1;
+        for (int i = global.humanoidEnemies.Length - 1; i >= 0; i--, j++)
+            global.allowedCharacters[j] = global.humanoidEnemies[i].Item1;
+        for (int i = global.carEnemies.Length - 1; i >= 0; i--, j++)
+            global.allowedCharacters[j] = global.carEnemies[i].Item1;
+            
+        global.cheated = true;
+        global.currentArena.showText("Everything is now unlocked", 2f, true);
     }
     
     private static void secretTrick5()
     {
+        global.playerCharacters =  new string[] 
+            { "missingNo1", "missingNo2", "missingNo3", "missingNo4" };
+        global.currentArena.showText("WTF???", 2f, true);
     }
 
     public static void readSecretCode()
@@ -87,7 +118,7 @@ public static class secretsHandler
             if (secretCode.EndsWith("RULDL")) secretTrick1();
             if (secretCode.EndsWith("LLUU")) secretTrick2();
             if (secretCode.EndsWith("UUDDLRLR12")) secretTrick3();
-            if (secretCode.EndsWith("0112358")) secretTrick4();
+            if (secretCode.EndsWith("1RDL")) secretTrick4();
             if (secretCode.EndsWith("6655321")) secretTrick5();
         }
     }

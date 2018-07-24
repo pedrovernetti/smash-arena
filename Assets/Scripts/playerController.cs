@@ -49,7 +49,7 @@ public class playerController : MonoBehaviour
     public bool isDashing { get { return dashing; } }    
     public bool isMoving { get { return (body.velocity.magnitude > 0.1); } }
     private System.DateTime burningUntil;
-    public bool isBurning { get { return (global.now > burningUntil); } }
+    public bool isBurning { get { return (global.now <= burningUntil); } }
     private bool ready = false;
     public bool isReady { get { return ready; } }
     
@@ -126,13 +126,6 @@ public class playerController : MonoBehaviour
 	public void Start() 
 	{
         placeProperly();
-        
-	    if (global.clashMode) 
-	    {
-	        playerName = global.playerNames[playerNumber - 1];
-	        mass = body.mass = (mass <= 2.0f) ? mass : 2.0f;
-	        drag = body.drag = (drag <= 5.0f) ? drag : 5.0f;
-	    }
 	    
 	    setUpRigidbody();
 	    defaultRotation = transform.rotation;
@@ -167,7 +160,8 @@ public class playerController : MonoBehaviour
 	private void carControl( float horizontal, float vertical )
 	{
 	    if (vertical < 0.0f) horizontal *= -1.0f;
-	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);'
+	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
+        if (groundless) return;
         if (vertical != 0.0f) vertical = (vertical > 0.0f) ? 0.25f : -0.25f;
         body.velocity = transform.forward * speed * vertical;
 		if (isTryingToDash() && isMoving && (vertical > 0.0f))
@@ -228,6 +222,9 @@ public class playerController : MonoBehaviour
 	                horizontal : Input.GetAxis("horizontal" + ABCD));
 	    float v = global.noiseFreeValue(((vertical != 0.0f) || isMachine) ? 
 	                vertical : Input.GetAxis("vertical" + ABCD));
+	                
+	    if ((playerType == global.playerType.Human) && (h != 0.0f) && (v != 0.0f))
+	        Debug.Log("h:" + h + "|v:" + v + " (" + horizontal + "|" + vertical + ")");
 	    
 	    if ((h == 0.0f) && (v == 0.0f)) return;
 	    else if (movements == movementStyle.Creature) creatureControl(h, v);
@@ -253,7 +250,8 @@ public class playerController : MonoBehaviour
     {
         if ((!global.ongoingGame) || (!isReady)) return;
         
-	    if (body.drag <= 0) body.AddForce(Physics.gravity * body.mass * 2);
+	    if (groundless && !global.currentArena.isInsideArenaLimits(transform.position))
+	        body.AddForce(Physics.gravity * body.mass * 2);
 	    else if (isBurning && global.chance(33.0f))
 	    {
             float x = ((global.coinflip) ? -1.0f : 1.0f) * global.difficultyFactor;
@@ -303,7 +301,9 @@ public class playerController : MonoBehaviour
         }
         if (other.collider.CompareTag("ground"))
         {
+            Debug.Log("collides with ground");
             groundless = false;
+            body.mass = mass;
             body.drag = 5;
         }
         else if (other.collider.CompareTag("Player"))
@@ -322,7 +322,6 @@ public class playerController : MonoBehaviour
             gameObject.SetActive(false);
             global.currentArena.setDead(this);
             if (hasIntelligence) Object.Destroy(GetComponent<AI>());
-            Object.Destroy(this);
         }
         else if (!global.ongoingGame) return;
         else if (other.CompareTag("fire")) 
@@ -348,7 +347,10 @@ public class playerController : MonoBehaviour
         
         if (other.collider.CompareTag("ground"))
         {
+            Debug.Log("collides out with ground");
             groundless = true;
+            if (!global.currentArena.isInsideArenaLimits(transform.position))
+                body.mass *= 1000;
             body.drag = 0;
         }
         else if (other.collider.CompareTag("Player"))

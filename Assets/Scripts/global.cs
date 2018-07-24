@@ -142,6 +142,7 @@ public static class global
     // Progress and achievements
     
     public static int overallFinishedCampaigns = 0;
+    public static bool cheated = false;
     
     public static SortedDictionary<difficultyLevel,int> finishedCampaigns = 
         new SortedDictionary<difficultyLevel,int>
@@ -215,6 +216,7 @@ public static class global
     // Enemies lists by theme
     
     private static string lastPickedEnemy = null;
+    private static string secondlastPickedEnemy = null;
         
     public static Tuple<string, float>[] carEnemies = 
         new Tuple<string, float>[] 
@@ -406,8 +408,10 @@ public static class global
         else character = chessEnemies[Random.Range(0, (chessEnemies.Length - 1))];
         
         if ((Random.Range(0, 100) < character.Item2) && 
-            (character.Item1 != lastPickedEnemy))
+            (character.Item1 != lastPickedEnemy) &&
+            (character.Item1 != secondlastPickedEnemy))
         {
+            secondlastPickedEnemy = lastPickedEnemy;
             lastPickedEnemy = character.Item1;
             return character.Item1;
         }
@@ -502,7 +506,7 @@ public static class global
         else if (theme == arenaTheme.Abstract) scene = "abstract";
         else if (theme == arenaTheme.Secret) scene = "secret";
         
-        if (!clashMode) setPlayers();
+        setPlayers();
         currentArena = null;
 	                
         Debug.Log("\"" + scene + "\" arena starting...");

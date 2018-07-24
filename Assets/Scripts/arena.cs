@@ -174,7 +174,6 @@ public class arena : MonoBehaviour
 	{
 	    findHoleReferencePoints();
         global.setActiveByTag("onlyUnstableMode", false);
-        global.getByName("arenaBase").SetActive(false);
         modeHasObjects = false;
 	}
 	
@@ -267,16 +266,29 @@ public class arena : MonoBehaviour
 		else normalModeChanges();
 	}
 	
-	private void setMusicVolume()
+	private void setSoundVolume()
 	{
 	    GameObject music = global.getByName("soundtrack");
 	    if (music != null) 
 	        music.GetComponent<AudioSource>().volume = global.musicVolume;
+	    
+        Transform[] all = gameObject.GetComponentsInChildren<Transform>(true);
+        foreach (Transform transform in all)
+        {
+            if ((transform.gameObject.GetComponent<AudioSource>() != null) &&
+                (transform.name != "soundtrack"))
+                {
+                    transform.gameObject.GetComponent<AudioSource>().volume =
+                        global.audioVolume;
+                }
+        }
 	}
 	
 	public void hideObject( GameObject something )
 	{
 	    something.transform.position = objectsRestingPlace;
+	    if (something.GetComponent<AudioSource>() != null)
+	        something.GetComponent<AudioSource>().Pause();
 	}
 	
 	public void modeObjectsSwitch()
@@ -291,6 +303,8 @@ public class arena : MonoBehaviour
 	            modeObject.SetActive(true);
 	            modeObject.transform.position = 
 	                randomArenaPosition(modeObject.transform.position.y);
+	            if (modeObject.GetComponent<AudioSource>() != null)
+	                modeObject.GetComponent<AudioSource>().Play();
 	        }
 	    }
 	    else
@@ -321,6 +335,21 @@ public class arena : MonoBehaviour
 		modeObjectsSwitch();
     }
 	
+	public void showText( string text, float duration, bool useDeathText = false )
+	{
+	    if (useDeathText)
+	    {
+	        roundText.text = "";
+	        deathText.text = text;
+	    }
+	    else
+	    {
+	        deathText.text = "";
+	        roundText.text = text;
+	    }
+        textExpiration = global.now.AddSeconds(duration);
+	}
+	
 	public void Start()
 	{
         setAsCurrentArena();
@@ -329,20 +358,17 @@ public class arena : MonoBehaviour
         #endif
         
 	    paused = false;
+	    if (global.clashMode) showText("round " + (global.clashRoundsPlayed + 1), 3f);
         
 		findReferencePoints();		
 		setUpModeElements();
-		setMusicVolume();
+		setSoundVolume();
 	    if (modeHasObjects) startModeObjectsCycle();
 	    
 	    activePlayersCount = global.playersCount();
 	    //ranking = new string[activePlayersCount];
 	    
 	    global.ongoingGame = true;
-	    
-	    // BEGIN : GAMBIARRA
-	    //secretsHandler.editorTrick1(true);
-	    // END : GAMBIARRA
 	}
 	
 	private void removeExpiredTexts()
@@ -389,23 +415,9 @@ public class arena : MonoBehaviour
 	    else if ((!global.ongoingGame)) secretsHandler.readSecretCode();
 	}
 	
-	public void showText( string text, float duration, bool useDeathText = false )
-	{
-	    if (useDeathText)
-	    {
-	        roundText.text = "";
-	        deathText.text = text;
-	    }
-	    else
-	    {
-	        deathText.text = "";
-	        roundText.text = text;
-	    }
-        textExpiration = global.now.AddSeconds(duration);
-	}
-	
 	private void exitArena()
 	{
+	    if (global.clashMode) global.clashRoundsPlayed++;
 	    if (global.clashRoundsPlayed >= global.clashRounds) global.restart();
 	    else if (exitAction == "end") global.restart();
 	    else if (exitAction == "next") global.advanceCampaign();
@@ -462,7 +474,8 @@ public class arena : MonoBehaviour
         playerController winner;
         for (int i = 0; i < 4; i++)
         {
-            if (players[i].activeInHierarchy)
+            if (players[i].activeInHierarchy && 
+                isInsideArenaLimits(players[i].transform.position))
             {
                 winner = players[i].GetComponent<playerController>();
 	            //ranking[0] = winner.playerName;

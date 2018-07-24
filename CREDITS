@@ -115,6 +115,11 @@ Banana Slap [http://soundbible.com/2047-Banana-Slap.html]
 Assets/Audio/Collisions/bananaSlap.wav
 
 
+Button Press 3 [http://soundbible.com/1689-Button-Press-3.html]
+
+Assets/Audio/Collisions/hardButton.wav
+
+
 Classic Chess Set [https://assetstore.unity.com/packages/3d/classic-chess-set-93014]
 
 Assets/Materials/blackestMarble.mat
@@ -153,6 +158,16 @@ Assets/Prefabs/Players/chess/whiteQueen.prefab
 Assets/Prefabs/Players/chess/whiteRook.prefab
 
 
+End FX [http://soundbible.com/2017-End-Fx.html]
+
+Assets/Audio/Collisions/energy.wav
+
+
+Fire Burning [http://soundbible.com/1902-Fire-Burning.html]
+
+Assets/Audio/fireBurning.wav
+
+
 First Order [https://www.dafont.com/first-order.font]
 
 Assets/Fonts/FirstOrder.ttf
@@ -161,6 +176,11 @@ Assets/Fonts/FirstOrderExpanded.ttf
 Assets/Fonts/FirstOrderItalic.ttf
 Assets/Fonts/FirstOrderLight.ttf
 Assets/Fonts/FirstOrderShadow.ttf
+
+
+Fizzle [http://soundbible.com/1308-Fizzle.html]
+
+Assets/Audio/fizzle.wav
 
 
 Free Snow Mountain [https://assetstore.unity.com/packages/3d/environments/landscapes/free-snow-mountain-63002]
@@ -246,6 +266,11 @@ Strong Punch [http://soundbible.com/1773-Strong-Punch.html]
 Assets/Audio/Collisions/strongPunch.wav
 
 
+Ting [http://soundbible.com/1628-Ting.html]
+
+Assets/Audio/Collisions/ting.wav
+
+
 Yughues Free Pillars & Columns [https://assetstore.unity.com/packages/3d/environments/yughues-free-pillars-columns-13103]
 
 Assets/Materials/blackMarblePillar.mat
@@ -279,5 +304,10 @@ Assets/Prefabs/greekPillar.prefab
 Assets/Prefabs/metalPillar.prefab
 Assets/Prefabs/obelisk.prefab
 Assets/Prefabs/woodenPillar.prefab
+
+
+Zen Temple Bell [http://soundbible.com/1477-Zen-Temple-Bell.html]
+
+Assets/Audio/deathBell.wav
 
 

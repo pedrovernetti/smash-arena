@@ -178,6 +178,10 @@ public class UIController : MonoBehaviour
     
     public void goToClashModePanel()
     {
+        global.setPlayers();
+        global.playerTypes = new global.playerType[] 
+                    { global.playerType.Human, global.playerType.Human, 
+                      global.playerType.Human, global.playerType.Human };
         global.goToClashModePanel();
     }
     
