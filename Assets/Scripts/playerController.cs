@@ -152,6 +152,8 @@ public class playerController : MonoBehaviour
 	        
 	    burningUntil = global.now.AddSeconds(-1);
 	    
+	    Debug.Log(playerName + ": " + playerType + ", " + (GetComponent<AI>() != null));
+	    
 	    ready = true;
 	}
 	
@@ -165,8 +167,7 @@ public class playerController : MonoBehaviour
 	private void carControl( float horizontal, float vertical )
 	{
 	    if (vertical < 0.0f) horizontal *= -1.0f;
-	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);
-        if (groundless) return;
+	    if (isMoving) transform.Rotate(Vector3.up, horizontal * speed * Time.deltaTime);'
         if (vertical != 0.0f) vertical = (vertical > 0.0f) ? 0.25f : -0.25f;
         body.velocity = transform.forward * speed * vertical;
 		if (isTryingToDash() && isMoving && (vertical > 0.0f))

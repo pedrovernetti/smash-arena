@@ -22,9 +22,9 @@ public static class global
     {
         Normal = 1,     // OK // nothing special
         Inverted = 2,   // arena has a hole in its center and walls by the sides
-        Frozen = 3,     // ice objects - briefly slow characters down
+        Frozen = 3,     // OK // ice objects - briefly slow characters down
         Burning = 4,    // fire objects - characters go briefly out of control
-        Electric = 5,   // paralyzing shock objects
+        Electric = 5,   // OK // paralyzing shock objects
         Meteors = 6,    // stones fall randomly on the arena
         Unstable = 7,   // arena can tilt and fall
         Teleport = 8,   // teleporter objects (like Bomberman holes)

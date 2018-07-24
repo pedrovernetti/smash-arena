@@ -249,7 +249,7 @@ public class arena : MonoBehaviour
 	private void setUpModeElements()
 	{
 		if (global.mode == global.arenaMode.Inverted)
-		    frozenModeChanges();
+		    invertedModeChanges();
 		else if (global.mode == global.arenaMode.Frozen)
 		    frozenModeChanges();
 		else if (global.mode == global.arenaMode.Burning)
