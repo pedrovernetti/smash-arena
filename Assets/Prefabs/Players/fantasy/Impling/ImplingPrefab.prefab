@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 455730}
   - component: {fileID: 9503558}
   m_Layer: 0
-  m_Name: Impling
+  m_Name: ImplingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
