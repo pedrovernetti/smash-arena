@@ -249,12 +249,14 @@ public class playerController : MonoBehaviour
     	else dashing = false;
 	}
 	
+	
+	
 	public void control( float horizontal = 0.0f, float vertical = 0.0f )
 	{
 	    float h = global.noiseFreeValue(((horizontal != 0.0f) || isMachine) ? 
-	                horizontal : Input.GetAxis("horizontal" + ABCD));
+	                horizontal : global.horizontalInput(ABCD));
 	    float v = global.noiseFreeValue(((vertical != 0.0f) || isMachine) ? 
-	                vertical : Input.GetAxis("vertical" + ABCD));
+	                vertical : global.verticalInput(ABCD));
 	    
 	    if ((h == 0.0f) && (v == 0.0f)) return;
 	    else if (movements == movementStyle.Creature) creatureControl(h, v);
@@ -341,6 +343,7 @@ public class playerController : MonoBehaviour
             if (other.collider.GetComponent<playerController>().isDashing)
                 body.mass /= 2;
         }
+        else Debug.Log("collides with " + other.collider.name);
     }
     
     public void die()

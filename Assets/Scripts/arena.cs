@@ -154,8 +154,10 @@ public class arena : MonoBehaviour
 		else
 		{
 		    position = referencePoint;
-		    position += (Vector3)(Random.insideUnitCircle * arenaRadius);
-		    position.y = y;
+		    position += new Vector3(
+		        Random.Range(-arenaRadius, arenaRadius), 
+		        y, 
+		        Random.Range(-arenaRadius, arenaRadius));
 		}
 		return ((isInsideArenaLimits(position)) ? position : randomArenaPosition(y));
 	}

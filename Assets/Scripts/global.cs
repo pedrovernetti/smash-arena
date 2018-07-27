@@ -326,8 +326,23 @@ public static class global
     {
         return new Color(rgbaColor.r, rgbaColor.g, rgbaColor.b, transparency);
     }
+
+    static string capitalized( string s )
+    {
+        if (string.IsNullOrEmpty(s)) return s;
+        return (char.ToUpper(s[0]) + s.Substring(1));
+    }
     
-    // Audio functions
+    public static float noiseFreeValue( float x )
+    {
+        if ((x < 0.05f) && (x > -0.05f)) x = 0.0f;
+        return x;
+    }
+    
+    public static bool chance( float percent )
+    {
+        return (Random.Range(0.0f, 100.0f) < percent);
+    }
     
     public static void playClip( AudioClip clip )
     {
@@ -340,18 +355,32 @@ public static class global
         AudioSource.PlayClipAtPoint(clip, where, volume * audioVolume);
     }
     
+    public static float meanOfNonZeroes( float x, float y )
+    {
+        if (x == 0) return y;
+        if (y == 0) return x;
+        return ((x + y) / 2.0f);
+    }
+    
+    public static float horizontalInput( char playerID )
+    {
+        return meanOfNonZeroes
+            (
+                Input.GetAxis("horizontal" + playerID), 
+                Input.GetAxis("horizontalJoystick" + playerID)
+            );
+    }
+    
+    public static float verticalInput( char playerID )
+    {
+        return meanOfNonZeroes
+            (
+                Input.GetAxis("vertical" + playerID), 
+                Input.GetAxis("verticalJoystick" + playerID)
+            );
+    }
+    
     // Game control functions
-    
-    public static bool chance( float percent )
-    {
-        return (Random.Range(0.0f, 100.0f) < percent);
-    }
-    
-    public static float noiseFreeValue( float x )
-    {
-        if ((x < 0.05f) && (x > -0.05f)) x = 0.0f;
-        return x;
-    }
     
     public static int playersCount()
     {
@@ -479,7 +508,7 @@ public static class global
         {
             if (bossEncounter)
             {
-                global.playerCharacters[0] = global.mainCharacter();
+                global.playerCharacters[0] = mainCharacter();
                 global.playerCharacters[1] = "boss";
                 playerTypes = new playerType[] 
                     { playerType.Human, playerType.Machine, 
@@ -493,13 +522,16 @@ public static class global
                 playerTypes = new playerType[] 
                     { playerType.Human, playerType.Machine, 
                       playerType.Machine, playerType.Machine };
-                playerNames = playerCharacters;
+                for (int i = 1; i < 4; i++) playerNames[i] = playerCharacters[i];
 	        }
             playerNames[0] = "Newton";
 	    }
-	    for (int i = 0; i < 4; i++) 
+	    for (int i = 0; i < 4; i++)
+	    {
+	        playerNames[i] = capitalized(playerNames[i]);
 	        Debug.Log("Player " + (i + 1) + " = \"" + playerNames[i] + "\" : " +
 	                  playerCharacters[i] + " [" + playerTypes[i] + "]");
+	    }
     }
     
     public static void loadProperArenaScene()
