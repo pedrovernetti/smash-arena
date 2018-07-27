@@ -10,28 +10,41 @@ public class UIController : MonoBehaviour
     public static int whichMode = 0;
     public static int[] whichCharacter = new int[] { 0, 0, 0, 0 };
     
+    public void funnyMess( bool complete = false )
+    {
+        GameObject gameLogo = global.getByName("gameLogo");
+        if ((gameLogo != null) && (gameLogo.GetComponent<Rigidbody>() != null))
+            gameLogo.GetComponent<Rigidbody>().useGravity = true;
+    }
+    
     public void Start()
     {
-        if (SceneManager.GetActiveScene().name == "mainMenu")
+        string scene = SceneManager.GetActiveScene().name;
+        GameObject UIElement;
+        if (scene == "mainMenu")
         {
             global.getByName("mainMenuPanel").SetActive(true);
             
             global.getByName("clashThemePanel").SetActive(true);
             global.getByName("clashMode").SetActive(false);
             
-            GameObject tempToggle;
             for (int i = 1; i <= 4; i++)
             {
-                tempToggle = global.getByName("difficulty" + i.ToString());
+                UIElement = global.getByName("difficulty" + i.ToString());
                 if (global.difficulty != (global.difficultyLevel)(i))
-                    tempToggle.GetComponent<Toggle>().isOn = false;
-                else tempToggle.GetComponent<Toggle>().isOn = true;
+                    UIElement.GetComponent<Toggle>().isOn = false;
+                else UIElement.GetComponent<Toggle>().isOn = true;
             }
             global.getByName("musicVolumeSlider").GetComponent<Slider>().value =
                 global.musicVolume;
             global.getByName("audioVolumeSlider").GetComponent<Slider>().value =
                 global.audioVolume;
             global.getByName("options").SetActive(false);
+            if (global.cheated) Invoke("funnyMess", 1.0f);
+        }
+        else if ((scene == "cars") || (scene == "humanoids") || (scene == "fantasy") ||
+                 (scene == "chess") || (scene == "abstract") || (scene == "secret"))
+        {
         }
     }
     
@@ -88,7 +101,7 @@ public class UIController : MonoBehaviour
         else if (direction == "next") whichTheme = (whichTheme + 1) % (allowedCount + 1);
         
         global.theme = global.allowedArenaTheme(whichTheme);        
-        Debug.Log(global.theme.ToString() + " theme selected");
+        Debug.Log(((whichTheme != 0) ? global.theme.ToString() : "Random") + " theme selected");
     }
         
     public void changeMode( string direction )
@@ -97,8 +110,10 @@ public class UIController : MonoBehaviour
         if (direction == "previous") whichMode -= (whichMode != 0) ? 1 : -allowedCount;
         else if (direction == "next") whichMode = (whichMode + 1) % (allowedCount + 1);
         
-        global.mode = global.allowedArenaMode(whichMode);        
-        Debug.Log(global.mode.ToString() + " mode selected");
+        global.mode = global.allowedArenaMode(whichMode);
+        if (whichMode != 0) global.modeWasAChoice = true;
+        else global.modeWasAChoice = false;      
+        Debug.Log(((whichMode != 0) ? global.mode.ToString() : "Random") + " mode selected");
     }
     
     public void changeCharacter( string direction, int whichPlayer )
@@ -193,6 +208,30 @@ public class UIController : MonoBehaviour
     public void startGame()
     { 
         global.loadProperArenaScene();
+    }
+    
+    public void switchSecondButton()
+    {
+        if (global.currentArena == null) return;
+        if ((global.getByName("quitButton") != null) &&
+            (global.getByName("mainMenuButton") != null))
+        {
+            if (global.currentArena.isPaused)
+            {
+                global.getByName("mainMenuButton").SetActive(false);
+                global.getByName("quitButton").SetActive(true);
+            }
+            else
+            {
+                global.getByName("quitButton").SetActive(false);
+                global.getByName("mainMenuButton").SetActive(true);
+            }
+        }
+    }
+    
+    public void playPauseGame()
+    { 
+        if (global.currentArena != null) global.currentArena.PlayPause();
     }
     
     public void quit()

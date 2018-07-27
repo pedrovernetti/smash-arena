@@ -37,6 +37,7 @@ public class arena : MonoBehaviour
     private System.DateTime lastPlayPauseTime;
     private bool paused;
     public bool isPaused { get { return paused; } }
+    private Text playPauseButtonText;
     
     private string exitAction;
     
@@ -49,7 +50,9 @@ public class arena : MonoBehaviour
     #if UNITY_EDITOR
     private void editorModeWorkaround()
     {
+        if (!quickTest) return;        
         Debug.Log("#QuickTesting");
+        
         if (global.currentScene == "cars") 
             global.theme = global.arenaTheme.Cars;
         else if (global.currentScene == "humanoids")
@@ -59,7 +62,10 @@ public class arena : MonoBehaviour
         else if (global.currentScene == "chess")
             global.theme = global.arenaTheme.Chess;
         
-        if (!global.bossEncounter) global.mode = global.randomArenaMode();
+        if (!global.bossEncounter && !global.clashMode)
+            global.mode = global.randomArenaMode();
+            
+        Debug.Log("(" + global.mode + ")");
         
         quickTest = false;
     }
@@ -152,6 +158,13 @@ public class arena : MonoBehaviour
 		    position.y = y;
 		}
 		return ((isInsideArenaLimits(position)) ? position : randomArenaPosition(y));
+	}
+	
+	private void findPlayPauseButton()
+	{
+	    GameObject button = global.getByName("playPauseButtonText");
+	    if (button != null) playPauseButtonText = button.GetComponent<Text>();
+	    else playPauseButtonText = null;
 	}
     
     public void setLightingColor( Color color )
@@ -354,11 +367,14 @@ public class arena : MonoBehaviour
 	{
         setAsCurrentArena();
         #if UNITY_EDITOR
-        if (quickTest) editorModeWorkaround();
+        editorModeWorkaround();
         #endif
         
 	    paused = false;
-	    if (global.clashMode) showText("round " + (global.clashRoundsPlayed + 1), 3f);
+	    findPlayPauseButton();
+	    
+	    if (global.clashMode) 
+	        showText("round " + (global.clashRoundsPlayed + 1), 3f);
         
 		findReferencePoints();		
 		setUpModeElements();
@@ -389,6 +405,8 @@ public class arena : MonoBehaviour
             if (global.ongoingGame) global.ongoingGame = false;
             paused = true;
             global.getByName("pauseScreenBackground").SetActive(true);
+            if (playPauseButtonText != null) playPauseButtonText.text = "Play";
+            GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Paused");
 	    }
 	    else if (paused && (!global.ongoingGame))
@@ -396,6 +414,8 @@ public class arena : MonoBehaviour
             if (!global.ongoingGame) global.ongoingGame = true;
             paused = false;
             global.getByName("pauseScreenBackground").SetActive(false);
+            if (playPauseButtonText != null) playPauseButtonText.text = "Resume";
+            GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Resumed");
 	    }
 	}
@@ -472,7 +492,7 @@ public class arena : MonoBehaviour
 	{
         GameObject[] players = global.getByTag("Player");
         playerController winner;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < activePlayersCount; i++)
         {
             if (players[i].activeInHierarchy && 
                 isInsideArenaLimits(players[i].transform.position))

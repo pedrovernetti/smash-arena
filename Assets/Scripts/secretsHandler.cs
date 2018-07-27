@@ -11,6 +11,8 @@ public static class secretsHandler
     
     private static int timeLimit = 1000 / (int)(global.difficulty);
     
+    private static bool waitingSecondCode = false;
+    
     public static string code
     {
         get { return secretCode; }
@@ -18,15 +20,10 @@ public static class secretsHandler
     }
     
     // Recarrega a arena atual
-    // BEGIN : GAMBIARRA
-    public static int editorTrickUseCounter = 0;
-    public static void editorTrick1( bool avoidRecursion = false )
+    public static void editorTrick1()
     {
-        editorTrickUseCounter++;
-        if (avoidRecursion && (editorTrickUseCounter > 1)) return;
-        SceneManager.LoadScene(global.currentScene);
+        if (global.cheated) SceneManager.LoadScene(global.currentScene);
     }
-    // END : GAMBIARRA
     
     // Recarrega a arena atual num modo aleatório
     public static void secretTrick1()
@@ -35,8 +32,19 @@ public static class secretsHandler
         global.loadProperArenaScene();
     }
     
-    public static void secretTrick2()
+    public static void secretTrick2( string secondCode = "" )
     {
+        if (waitingSecondCode)
+        {
+            waitingSecondCode = false;
+            int codeValue = Int32.Parse(secondCode);
+            if ((codeValue > 0) && (codeValue < 15))
+            {
+                global.mode = (global.arenaMode)(codeValue);
+                global.loadProperArenaScene();
+            }
+        }
+        else waitingSecondCode = true;
     }
     
     public static void secretTrick3()
@@ -79,6 +87,19 @@ public static class secretsHandler
         global.playerCharacters =  new string[] 
             { "missingNo1", "missingNo2", "missingNo3", "missingNo4" };
         global.currentArena.showText("WTF???", 2f, true);
+        
+        Transform[] players = 
+            GameObject.Find("Players").GetComponentsInChildren<Transform>(true);
+        foreach (Transform player in players)
+        {
+            if (player.gameObject.CompareTag("Player") && 
+               (player.gameObject.GetComponent<playerController>() != null))
+            {
+                player.gameObject.GetComponent<playerController>().Awake();
+                if (player.gameObject.activeInHierarchy)
+                    player.gameObject.GetComponent<playerController>().Start();
+            }
+        }
     }
 
     public static void readSecretCode()
@@ -110,10 +131,12 @@ public static class secretsHandler
                 lastSecretInput = lastSecretInputRead;
                 Debug.Log("secret: " + secretCode);
             }
-               
             
+            if (waitingSecondCode) secretTrick2(secretCode);            
             #if UNITY_EDITOR
             if (secretCode.EndsWith("11")) editorTrick1();
+            #else
+            if (secretCode.EndsWith("11DD")) editorTrick1();
             #endif
             if (secretCode.EndsWith("RULDL")) secretTrick1();
             if (secretCode.EndsWith("LLUU")) secretTrick2();

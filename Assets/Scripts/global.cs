@@ -80,8 +80,9 @@ public static class global
     public static difficultyLevel difficulty = difficultyLevel.Normal;
     public static int difficultyFactor { get { return (int)(difficulty); } }
     
-    public static arenaMode mode = (arenaMode)(1);
     public static arenaTheme theme = (arenaTheme)(1);
+    public static arenaMode mode = (arenaMode)(1);
+    public static bool modeWasAChoice = false;
     
     public static bool bossEncounter = false;
     
@@ -270,7 +271,7 @@ public static class global
             new Tuple<string, float>("whiteQueen", 1.0f)
         };
         
-    // Functions to manipulate things using tags or names
+    // Utility functions
     
     public static GameObject getByName( string name )
     {
@@ -285,6 +286,7 @@ public static class global
     }
     public static GameObject getChildByName( GameObject parent, string childName )
     {
+        if (parent == null) return null;
         Transform[] all = parent.GetComponentsInChildren<Transform>(true);
         foreach (Transform transform in all)
         {
@@ -318,6 +320,11 @@ public static class global
     {
         playerController controller = player.GetComponent<playerController>();
         return isMachineControlled(controller.playerNumber);
+    }
+    
+    public static Color changedTransparency( Color rgbaColor, float transparency )
+    {
+        return new Color(rgbaColor.r, rgbaColor.g, rgbaColor.b, transparency);
     }
     
     // Audio functions
@@ -444,6 +451,7 @@ public static class global
         bossEncounter = false;
         theme = (arenaTheme)(1);
         mode = (arenaMode)(1);
+        modeWasAChoice = false;
         clashMode = false;
         currentArena = null;
     }
@@ -476,6 +484,7 @@ public static class global
                 playerTypes = new playerType[] 
                     { playerType.Human, playerType.Machine, 
                       playerType.Disabled, playerType.Disabled };
+                playerNames[1] = "Death";
             }
             else
             {
@@ -484,12 +493,13 @@ public static class global
                 playerTypes = new playerType[] 
                     { playerType.Human, playerType.Machine, 
                       playerType.Machine, playerType.Machine };
+                playerNames = playerCharacters;
 	        }
+            playerNames[0] = "Newton";
 	    }
-	    Debug.Log("Players: " + playerCharacters[0] + ":" + playerTypes[0] + ", " + 
-	                playerCharacters[1] + ":" + playerTypes[1] + ", " + 
-	                playerCharacters[2] + ":" + playerTypes[2] + ", " + 
-	                playerCharacters[3] + ":" + playerTypes[3]);
+	    for (int i = 0; i < 4; i++) 
+	        Debug.Log("Player " + (i + 1) + " = \"" + playerNames[i] + "\" : " +
+	                  playerCharacters[i] + " [" + playerTypes[i] + "]");
     }
     
     public static void loadProperArenaScene()
@@ -497,7 +507,7 @@ public static class global
         string scene = "mainMenu";
         
         if (bossEncounter) mode = arenaMode.Normal;
-        else mode = randomArenaMode();
+        else if (!modeWasAChoice) mode = randomArenaMode();
         
         if (theme == arenaTheme.Cars) scene = "cars";
         else if (theme == arenaTheme.Humanoids) scene = "humanoids";

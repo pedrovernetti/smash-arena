@@ -21,6 +21,8 @@ public class playerController : MonoBehaviour
     private int number;
     public int playerNumber { get { return number; } set { number = value; } }
     private char ABCD;
+    private Image portrait;
+    private Text portraitText;
     
     public bool isCampaignHero
     { 
@@ -59,6 +61,11 @@ public class playerController : MonoBehaviour
     { 
         get { return groundless; }
         set { groundless = value; }
+    }
+    
+    public bool isTerminallyGroundless
+    {
+        get { return (isGroundless && (!isMoving)); }
     }
     
     public bool isStanding
@@ -112,15 +119,22 @@ public class playerController : MonoBehaviour
             body.constraints |= RigidbodyConstraints.FreezeRotationY;
     }
     
-    public void tryAnimate( string animation, string animationBool = "" )
+    private void findPortraitAndSignIt()
     {
-	    if (hasAnimator) 
+        GameObject UIElement = global.getByName("player" + playerNumber + "Name");
+	    if ((UIElement != null) && (UIElement.GetComponent<Text>() != null))
 	    {
-	        if (lastAnimationBool != "") animator.SetBool(lastAnimationBool, false);
-	        lastAnimationBool = animationBool;
-            animator.Play(animation);
-	        if (animationBool != "") animator.SetBool(animationBool, true);
+	        portraitText = UIElement.GetComponent<Text>();
+	        portraitText.text = playerName;	   
 	    }
+	    else portraitText = null;
+        
+	    UIElement = global.getByName("player" + playerNumber + "Portrait");
+        UIElement = global.getChildByName(UIElement, global.playerCharacters[playerNumber - 1]);
+        if (UIElement == null) UIElement = global.getChildByName(UIElement, "missing");
+        if ((UIElement != null) && (UIElement.GetComponent<Image>() != null))
+            portrait = UIElement.GetComponent<Image>();
+        else portrait = null;
     }
     
 	public void Start() 
@@ -146,9 +160,22 @@ public class playerController : MonoBehaviour
 	    burningUntil = global.now.AddSeconds(-1);
 	    
 	    Debug.Log(playerName + ": " + playerType + ", " + (GetComponent<AI>() != null));
+	         
+	    findPortraitAndSignIt();
 	    
 	    ready = true;
 	}
+    
+    public void tryAnimate( string animation, string animationBool = "" )
+    {
+	    if (hasAnimator) 
+	    {
+	        if (lastAnimationBool != "") animator.SetBool(lastAnimationBool, false);
+	        lastAnimationBool = animationBool;
+            animator.Play(animation);
+	        if (animationBool != "") animator.SetBool(animationBool, true);
+	    }
+    }
 	
 	private bool isTryingToDash()
 	{
@@ -222,9 +249,6 @@ public class playerController : MonoBehaviour
 	                horizontal : Input.GetAxis("horizontal" + ABCD));
 	    float v = global.noiseFreeValue(((vertical != 0.0f) || isMachine) ? 
 	                vertical : Input.GetAxis("vertical" + ABCD));
-	                
-	    if ((playerType == global.playerType.Human) && (h != 0.0f) && (v != 0.0f))
-	        Debug.Log("h:" + h + "|v:" + v + " (" + horizontal + "|" + vertical + ")");
 	    
 	    if ((h == 0.0f) && (v == 0.0f)) return;
 	    else if (movements == movementStyle.Creature) creatureControl(h, v);
@@ -313,16 +337,22 @@ public class playerController : MonoBehaviour
         }
     }
     
+    public void die()
+    {
+        Debug.Log(playerName + " died");
+        gameObject.SetActive(false);
+        global.currentArena.setDead(this);
+        if (hasIntelligence) Object.Destroy(GetComponent<AI>());
+        if (portrait != null) 
+            portrait.color = global.changedTransparency(portrait.color, 0.33f);
+        if (portraitText != null) 
+            portraitText.color = global.changedTransparency(portraitText.color, 0.33f);
+    }
+    
     public void OnTriggerEnter( Collider other )
     {
         
-        if (other.CompareTag("deathPlane"))
-        {
-            Debug.Log(playerName + " died");
-            gameObject.SetActive(false);
-            global.currentArena.setDead(this);
-            if (hasIntelligence) Object.Destroy(GetComponent<AI>());
-        }
+        if (other.CompareTag("deathPlane")) die();
         else if (!global.ongoingGame) return;
         else if (other.CompareTag("fire")) 
         {

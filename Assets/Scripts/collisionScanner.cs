@@ -18,13 +18,13 @@ public class collisionScanner : MonoBehaviour
 
     public void OnTriggerEnter( Collider other )
     {
-        if (other.gameObject.layer != 8)
-            collidingObjectsList.Add(other.gameObject);
+        if ((other.gameObject.layer != 8) && (!other.gameObject.CompareTag("ground")))
+            collidingObjectsList.Add(other);
     }
     
     public void OnTriggerExit( Collider other )
     {
         if (other.gameObject.layer != 8)
-            collidingObjectsList.Remove(other.gameObject);
+            collidingObjectsList.Remove(other);
     }
 }

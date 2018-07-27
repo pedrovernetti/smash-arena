@@ -1,34 +1,34 @@
- using System.Collections;
- using UnityEngine;
+using System.Collections;
+using UnityEngine;
  
- public class AI : MonoBehaviour
- {
-     private static float LOSMultiplier = ((int)(global.difficulty) / 2);
-     private static Vector3[] scannersDefaultPosition = 
-         new Vector3[] 
-         {
-             new Vector3(2.0f, 0.0f, 0.0f) * LOSMultiplier,
-             new Vector3(1.5f, 0.0f, 1.5f) * LOSMultiplier,
-             new Vector3(0.0f, 0.0f, 2.0f) * LOSMultiplier,
-             new Vector3(-1.5f, 0.0f, 1.5f) * LOSMultiplier,
-             new Vector3(-2.0f, 0.0f, 0.0f) * LOSMultiplier,
-             new Vector3(-1.5f, 0.0f, -1.5f) * LOSMultiplier,
-             new Vector3(0.0f, 0.0f, -2.0f) * LOSMultiplier,
-             new Vector3(1.5f, 0.0f, -1.5f) * LOSMultiplier
-         };
+public class AI : MonoBehaviour
+{
+    private static float LOSMultiplier = ((int)(global.difficulty) / 2);
+    private static Vector3[] scannersDefaultPosition = 
+        new Vector3[] 
+        {
+            new Vector3(2.0f, 0.0f, 0.0f) * LOSMultiplier,
+            new Vector3(1.5f, 0.0f, 1.5f) * LOSMultiplier,
+            new Vector3(0.0f, 0.0f, 2.0f) * LOSMultiplier,
+            new Vector3(-1.5f, 0.0f, 1.5f) * LOSMultiplier,
+            new Vector3(-2.0f, 0.0f, 0.0f) * LOSMultiplier,
+            new Vector3(-1.5f, 0.0f, -1.5f) * LOSMultiplier,
+            new Vector3(0.0f, 0.0f, -2.0f) * LOSMultiplier,
+            new Vector3(1.5f, 0.0f, -1.5f) * LOSMultiplier
+        };
      
-     private Rigidbody body;    
-     private playerController controller; 
-     private playerController.movementStyle movements;
-     private collisionScanner[] scanners;
-     private GameObject currentTarget;
+    private Rigidbody body;    
+    private playerController controller; 
+    private playerController.movementStyle movements;
+    private collisionScanner[] scanners;
+    private GameObject currentTarget;
      
-     public bool wantsToDash = false;
+    public bool wantsToDash = false;
      
-     private bool isMoving
-     { 
-         get { return (body.velocity.magnitude > 0.1); }
-     }
+    private bool isMoving
+    { 
+        get { return (body.velocity.magnitude > 0.1); }
+    }
  	private bool movesLikeACreature
  	{
      	get { return (movements == playerController.movementStyle.Creature); }
@@ -65,7 +65,7 @@
          }
      }
  	
- 	private GameObject closestEnemy()
+ 	private GameObject closestEnemy( bool forceChanging = false )
  	{
          GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
          GameObject closest = null;
@@ -76,6 +76,7 @@
          {
              difference = player.transform.position - transform.position;
              currentDistance = difference.sqrMagnitude;
+             if (forceChanging && (player == currentTarget)) continue;
              if (!(global.difficulty > global.difficultyLevel.Normal) ||
                  !(global.isMachineControlled(player)))
              {
@@ -115,9 +116,11 @@
          }
  	}
  	
- 	private void chase()
+ 	private bool chase()
  	{
- 	    if (currentTarget.GetComponent<playerController>().isGroundless) return;
+ 	    if (currentTarget == null) return false;
+ 	    if (currentTarget.GetComponent<playerController>() == null) return false;
+ 	    if (currentTarget.GetComponent<playerController>().isGroundless) return false;
  	    if (movesLikeAChessPiece)
  	    {
  	        Vector3 nextPosition = 
@@ -126,18 +129,18 @@
  	    }
  	    else
  	    {
-             turnToTarget();
+            turnToTarget();
  	        controller.control(0.0f, 1.0f);
  	    }
-         //controller.control(, );
- 	}
-     
-     public void FixedUpdate()
-     {
+        return true;
+    }
+
+    public void FixedUpdate()
+    {
         if (controller.isGroundless) return;
-         currentTarget = closestEnemy();
-         chase();
-         
-         //Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
-     }
+        currentTarget = closestEnemy();
+        if (!chase()) currentTarget = closestEnemy(true);
+
+        //Debug.Log(gameObject.name + " is now chasing " + currentTarget.name);
+    }
  }
