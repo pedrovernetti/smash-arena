@@ -405,7 +405,7 @@ public class arena : MonoBehaviour
             if (global.ongoingGame) global.ongoingGame = false;
             paused = true;
             global.getByName("pauseScreenBackground").SetActive(true);
-            if (playPauseButtonText != null) playPauseButtonText.text = "Play";
+            if (playPauseButtonText != null) playPauseButtonText.text = "Resume";
             GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Paused");
 	    }
@@ -414,7 +414,7 @@ public class arena : MonoBehaviour
             if (!global.ongoingGame) global.ongoingGame = true;
             paused = false;
             global.getByName("pauseScreenBackground").SetActive(false);
-            if (playPauseButtonText != null) playPauseButtonText.text = "Resume";
+            if (playPauseButtonText != null) playPauseButtonText.text = "Pause";
             GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Resumed");
 	    }

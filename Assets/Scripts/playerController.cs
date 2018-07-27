@@ -130,11 +130,17 @@ public class playerController : MonoBehaviour
 	    else portraitText = null;
         
 	    UIElement = global.getByName("player" + playerNumber + "Portrait");
-        UIElement = global.getChildByName(UIElement, global.playerCharacters[playerNumber - 1]);
-        if (UIElement == null) UIElement = global.getChildByName(UIElement, "missing");
-        if ((UIElement != null) && (UIElement.GetComponent<Image>() != null))
-            portrait = UIElement.GetComponent<Image>();
-        else portrait = null;
+	    portrait = null;
+        if (UIElement != null)
+        {
+            Transform[] all = UIElement.GetComponentsInChildren<Transform>(true);
+            foreach (Transform transform in all)
+            {
+                if (transform.gameObject.activeInHierarchy && 
+                    (transform.gameObject.GetComponent<Image>() != null)) 
+                    portrait = transform.gameObject.GetComponent<Image>();
+            }
+        }
     }
     
 	public void Start() 
