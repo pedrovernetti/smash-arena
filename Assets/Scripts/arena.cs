@@ -12,6 +12,15 @@ public class arena : MonoBehaviour
         Square = 2
     }
     
+    public class rankingBuilder : IComparer
+    {
+        public int Compare( object A, object B )
+        {
+            return (((global.Tuple<string, int>)A).Item2.
+                        CompareTo(((global.Tuple<string, int>)B).Item2));
+        }
+    }
+    
     #if UNITY_EDITOR
     public static bool quickTest = true;
     #endif
@@ -440,10 +449,34 @@ public class arena : MonoBehaviour
 	private void exitArena()
 	{
 	    if (global.clashMode) global.clashRoundsPlayed++;
-	    if (global.clashRoundsPlayed >= global.clashRounds) global.restart();
-	    else if (exitAction == "end") global.restart();
+	    if (global.clashRoundsPlayed >= global.clashRounds)
+	    {
+	    
+	        exitAction = "end";
+	    }
+	    
+	    if (exitAction == "end") 
+	    {
+	        global.restart();
+	        global.goToMainMenu();
+	    }
 	    else if (exitAction == "next") global.advanceCampaign();
 	    else global.loadProperArenaScene();
+	}
+	
+	public void showClashRanking()
+	{
+	    ArrayList ranking = new ArrayList();
+	    for (int i = 0, victories; i < 4; i++)
+	    {
+	        victories = global.clashVictories[i];
+	        ranking.Add(new global.Tuple<string, int>(global.playerNames[i], victories));
+	    }
+	    ranking.Sort(new rankingBuilder());
+	    showText(("1. " + ((global.Tuple<string, int>)(ranking[0])).Item1 + 
+	             "\n2. " + ((global.Tuple<string, int>)(ranking[1])).Item1 + 
+	             "\n3. " + ((global.Tuple<string, int>)(ranking[2])).Item1 + 
+	             "\n4. " + ((global.Tuple<string, int>)(ranking[3])).Item1), 5);
 	}
 	
 	public void invokeOnTextExpiration( string methodName )
@@ -462,8 +495,14 @@ public class arena : MonoBehaviour
 	        if (global.clashMode)
 	        {
 	            showText(winner.playerName + "\nWINS", 4, true);
-	            global.clashVictories[winner.playerNumber - 1]++;
-	            exitAction = "repeat";
+                global.clashVictories[winner.playerNumber - 1]++;
+	            if (global.clashRoundsPlayed < global.clashRounds)
+	                exitAction = "repeat";
+	            else
+	            {
+	                exitAction = "end";
+	                invokeOnTextExpiration("showClashRanking");
+	            }
 	        }
 	        else 
 	        {

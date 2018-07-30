@@ -11,7 +11,7 @@ public static class global
         public type1 Item1 { get; private set; }
         public type2 Item2 { get; private set; }
 
-        public Tuple(type1 item1, type2 item2)
+        public Tuple( type1 item1, type2 item2 )
         {
             Item1 = item1;
             Item2 = item2;
@@ -376,7 +376,7 @@ public static class global
         return meanOfNonZeroes
             (
                 Input.GetAxis("vertical" + playerID), 
-                Input.GetAxis("verticalJoystick" + playerID)
+                (Input.GetAxis("verticalJoystick" + playerID) * -1.0f)
             );
     }
     
@@ -560,6 +560,7 @@ public static class global
         Debug.Log("Reseting the game");
         
         mode = (arenaMode)(1);
+        modeWasAChoice = false;
         theme = (arenaTheme)(1);
         bossEncounter = false;
         ongoingGame = false;
@@ -570,8 +571,6 @@ public static class global
         clashRoundsPlayed = 0;
         clashVictories[0] = clashVictories[1] = 
                 clashVictories[2] = clashVictories[3] = 0;
-                
-        goToMainMenu();
     }
     
     public static void quit()
@@ -583,8 +582,27 @@ public static class global
         #endif
     }
     
+    private static void checkForNewStuffToAllow()
+    {
+        if (difficulty == difficultyLevel.Easy) return;
+        if (!allowedArenaThemes.Contains(theme)) 
+        {
+            Debug.Log("New theme unlocked: " + theme);
+            allowedArenaThemes.Add(theme);
+        }
+        for (int i = playersCount() - 1; i >= 0; i--)
+        {
+            if (!allowedCharacters.Contains(playerCharacters[i]))
+            {
+                Debug.Log("New character unlocked: " + playerCharacters[i]);
+                allowedCharacters.Add(playerCharacters[i]);
+            }
+        }
+    }
+    
     public static void advanceCampaign()
     {
+        checkForNewStuffToAllow();
         if (theme == arenaTheme.Chess)
         {
             if (!bossEncounter) bossEncounter = true;
@@ -638,8 +656,6 @@ public static class global
     
     private static void beatTheGame()
     {
-        // chamar cutscene final.. mais alguma coisa
-        
         overallFinishedCampaigns++;
         
         if (difficulty == difficultyLevel.Normal)

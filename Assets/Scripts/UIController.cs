@@ -205,8 +205,9 @@ public class UIController : MonoBehaviour
         global.goToMainMenu();
     }
     
-    public void startGame()
+    public void startGame( bool campaign = false )
     { 
+        if (campaign) global.restart();
         global.loadProperArenaScene();
     }
     

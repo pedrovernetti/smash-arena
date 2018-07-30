@@ -370,12 +370,12 @@ public class playerController : MonoBehaviour
         }
         else if (other.CompareTag("ice"))
         {
-            StartCoroutine(freeze());
+            StartCoroutine(freeze()); //TODO CRASHES
             global.currentArena.hideObject(other.gameObject);
         }
         else if (other.CompareTag("shock"))
         {
-            StartCoroutine(paralyze());
+            StartCoroutine(paralyze()); //TODO CRASHES
             global.currentArena.hideObject(other.gameObject);
         }
     }
