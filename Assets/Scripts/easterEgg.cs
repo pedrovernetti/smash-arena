@@ -20,7 +20,7 @@ public class easterEgg : MonoBehaviour
         else if ((which == easterEggType.Bridge) && (other.collider.CompareTag("Player")) &&
                  (GetComponent<Rigidbody>() != null))
         {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().mass = 10;
         }
         else if ((which == easterEggType.Bridge) && (other.collider.CompareTag("deathPlane")))
         {

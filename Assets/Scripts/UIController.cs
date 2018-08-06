@@ -10,6 +10,10 @@ public class UIController : MonoBehaviour
     public static int whichMode = 0;
     public static int[] whichCharacter = new int[] { 0, 0, 0, 0 };
     
+    private static string scene;
+    private static System.DateTime nextInputTime;
+    private static bool showingClashCharactersPanel = false;
+    
     public void funnyMess( bool complete = false )
     {
         GameObject gameLogo = global.getByName("gameLogo");
@@ -19,12 +23,14 @@ public class UIController : MonoBehaviour
     
     public void Start()
     {
-        string scene = SceneManager.GetActiveScene().name;
+        scene = SceneManager.GetActiveScene().name;
+        nextInputTime = global.now;
         GameObject UIElement;
         if (scene == "mainMenu")
         {
             global.getByName("mainMenuPanel").SetActive(true);
             
+            showingClashCharactersPanel = false;
             global.getByName("clashThemePanel").SetActive(true);
             global.getByName("clashMode").SetActive(false);
             
@@ -171,33 +177,35 @@ public class UIController : MonoBehaviour
         Debug.Log("Player " + whichPlayer + " set as " + global.playerTypes[whichPlayer]);
     }
     
-    public void changePlayerType1( Text dropdownLabel )
+    public void changePlayerType1( Text dropdownLabel = null )
     {
-        changePlayerType(dropdownLabel.GetComponent<Text>().text, 0);
+        changePlayerType(dropdownLabel.text, 0);
     }
     
-    public void changePlayerType2( Text dropdownLabel )
+    public void changePlayerType2( Text dropdownLabel = null )
     {
-        changePlayerType(dropdownLabel.GetComponent<Text>().text, 1);
+        changePlayerType(dropdownLabel.text, 1);
     }
     
-    public void changePlayerType3( Text dropdownLabel )
+    public void changePlayerType3( Text dropdownLabel = null )
     {
-        changePlayerType(dropdownLabel.GetComponent<Text>().text, 2);
+        changePlayerType(dropdownLabel.text, 2);
     }
     
-    public void changePlayerType4( Text dropdownLabel )
+    public void changePlayerType4( Text dropdownLabel = null )
     {
-        changePlayerType(dropdownLabel.GetComponent<Text>().text, 3);
+        changePlayerType(dropdownLabel.text, 3);
     }
     
     public void goToClashModePanel()
     {
-        global.setPlayers();
-        global.playerTypes = new global.playerType[] 
-                    { global.playerType.Human, global.playerType.Human, 
-                      global.playerType.Human, global.playerType.Human };
         global.goToClashModePanel();
+        global.setStartingClashPlayers();
+    }
+    
+    public void showClashCharactersPanel( bool show )
+    {
+        showingClashCharactersPanel = show;
     }
     
     public void goToMainMenu()
@@ -238,5 +246,34 @@ public class UIController : MonoBehaviour
     public void quit()
     {
         global.quit();
+    }
+    
+    public void Update()
+    {
+        if (scene != "mainMenu") return;
+        if (global.now < nextInputTime) return;
+        
+        if (global.clashMode)
+        {
+            if (showingClashCharactersPanel)
+            {
+                if (global.verticalInput('A') > 0.0f) changeCharacter1("next");
+                else if (global.verticalInput('A') < 0.0f) changeCharacter1("previous");
+                if (global.verticalInput('B') > 0.0f) changeCharacter2("next");
+                else if (global.verticalInput('B') < 0.0f) changeCharacter2("previous");
+                if (global.verticalInput('C') > 0.0f) changeCharacter3("next");
+                else if (global.verticalInput('C') < 0.0f) changeCharacter3("previous");
+                if (global.verticalInput('D') > 0.0f) changeCharacter4("next");
+                else if (global.verticalInput('D') < 0.0f) changeCharacter4("previous");
+            }
+            else
+            {
+                float h = global.horizontalInput();
+                float v = global.verticalInput();
+                if (h != 0.0f) changeTheme((h > 0.0f) ? "next" : "previous");
+                if (v != 0.0f) changeMode((v > 0.0f) ? "next" : "previous");
+            }
+        }
+        nextInputTime = global.now.AddSeconds(0.2f);
     }
 }

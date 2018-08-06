@@ -23,7 +23,7 @@ public static class global
         Normal = 1,     // OK // nothing special
         Inverted = 2,   // arena has a hole in its center and walls by the sides
         Frozen = 3,     // OK // ice objects - briefly slow characters down
-        Burning = 4,    // fire objects - characters go briefly out of control
+        Burning = 4,    // OK // fire objects - characters go briefly out of control
         Electric = 5,   // OK // paralyzing shock objects
         Meteors = 6,    // stones fall randomly on the arena
         Unstable = 7,   // arena can tilt and fall
@@ -108,7 +108,7 @@ public static class global
             playerType.Human,
             #if UNITY_EDITOR
             playerType.Machine,
-            playerType.Machine,
+            playerType.Human,
             playerType.Machine
             #else
             playerType.Human,
@@ -333,12 +333,6 @@ public static class global
         return (char.ToUpper(s[0]) + s.Substring(1));
     }
     
-    public static float noiseFreeValue( float x )
-    {
-        if ((x < 0.05f) && (x > -0.05f)) x = 0.0f;
-        return x;
-    }
-    
     public static bool chance( float percent )
     {
         return (Random.Range(0.0f, 100.0f) < percent);
@@ -362,22 +356,40 @@ public static class global
         return ((x + y) / 2.0f);
     }
     
+    private static float noiseFreeValue( float x )
+    {
+        if ((x < 0.05f) && (x > -0.05f)) x = 0.0f;
+        return x;
+    }
+    
     public static float horizontalInput( char playerID )
     {
         return meanOfNonZeroes
             (
-                Input.GetAxis("horizontal" + playerID), 
-                Input.GetAxis("horizontalJoystick" + playerID)
+                noiseFreeValue(Input.GetAxis("horizontal" + playerID)), 
+                noiseFreeValue(Input.GetAxis("horizontalJoystick" + playerID))
             );
+    }
+    
+    public static float horizontalInput()
+    {
+        return (horizontalInput('A') + horizontalInput('B') + 
+                horizontalInput('C') + horizontalInput('D'));
     }
     
     public static float verticalInput( char playerID )
     {
         return meanOfNonZeroes
             (
-                Input.GetAxis("vertical" + playerID), 
-                (Input.GetAxis("verticalJoystick" + playerID) * -1.0f)
+                noiseFreeValue(Input.GetAxis("vertical" + playerID)), 
+                noiseFreeValue(Input.GetAxis("verticalJoystick" + playerID) * -1.0f)
             );
+    }
+    
+    public static float verticalInput()
+    {
+        return (verticalInput('A') + verticalInput('B') + 
+                verticalInput('C') + verticalInput('D'));
     }
     
     // Game control functions
@@ -454,10 +466,20 @@ public static class global
         else return randomCharacter();
     }
     
-    public static string reallyRandomCharacter()
+    public static string reallyRandomCharacter( string whichOneToAvoid = "" )
     {
         int which = Random.Range(0, (allowedCharacters.Count - 1));
-        return (string)(allowedCharacters[which]);
+        
+        if (((string)(allowedCharacters[which]) != lastPickedEnemy) &&
+            ((string)(allowedCharacters[which]) != secondlastPickedEnemy) &&
+                ((whichOneToAvoid.Length < 2) || 
+                ((string)(allowedCharacters[which]) != whichOneToAvoid)))
+        {
+            secondlastPickedEnemy = lastPickedEnemy;
+            lastPickedEnemy = (string)(allowedCharacters[which]);
+            return (string)(allowedCharacters[which]);
+        }
+        else return reallyRandomCharacter(whichOneToAvoid);
     }
     
     public static string allowedCharacter( int which )
@@ -470,12 +492,14 @@ public static class global
     public static void goToMainMenu()
     {
         Debug.Log("Main Menu");
-        if (SceneManager.GetActiveScene().name != "mainMenu")
-            SceneManager.LoadScene("mainMenu");
+        if (currentScene != "mainMenu") SceneManager.LoadScene("mainMenu");
         
-        getByName("mainMenuPanel").SetActive(true);
-        getByName("clashMode").SetActive(false);
-        getByName("options").SetActive(false);
+        GameObject UIElement = getByName("mainMenuPanel");
+        if (UIElement != null) UIElement.SetActive(true);
+        UIElement = getByName("clashMode");
+        if (UIElement != null) UIElement.SetActive(false);
+        UIElement = getByName("options");
+        if (UIElement != null) UIElement.SetActive(false);
             
         bossEncounter = false;
         theme = (arenaTheme)(1);
@@ -500,6 +524,23 @@ public static class global
         getByName("mainMenu").GetComponent<UIController>().changeMode("clash");
         clashMode = true;
         currentArena = null;
+    }
+    
+    public static void setStartingClashPlayers()
+    {
+        for (int i = 0; i < 4; i++) 
+            playerCharacters[i] = reallyRandomCharacter();
+        while (playerCharacters[3] == playerCharacters[0])
+            playerCharacters[3] = reallyRandomCharacter(playerCharacters[0]);
+        global.playerTypes = new global.playerType[] 
+                    { global.playerType.Human, global.playerType.Human, 
+                      global.playerType.Human, global.playerType.Human };
+	    for (int i = 0; i < 4; i++)
+	    {
+	        playerNames[i] = capitalized(playerCharacters[i]);
+	        Debug.Log("Player " + (i + 1) + " = \"" + playerNames[i] + "\" : " +
+	                  playerCharacters[i] + " [" + playerTypes[i] + "]");
+	    }
     }
     
     public static void setPlayers()

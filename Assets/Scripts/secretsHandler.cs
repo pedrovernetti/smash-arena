@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 public static class secretsHandler
 {
     private static string secretCode = "";
+    private static int superCodeCount = 0;
     private static DateTime lastSecretInput; 
     private static DateTime lastSecretInputRead; 
     
     private static int timeLimit = 1000 / (int)(global.difficulty);
-    
-    private static bool waitingSecondCode = false;
     
     public static string code
     {
@@ -19,41 +18,38 @@ public static class secretsHandler
         set { secretCode = value; }
     }
     
-    // Recarrega a arena atual
-    public static void editorTrick1()
+    public static void reload()
     {
         if (global.cheated) SceneManager.LoadScene(global.currentScene);
     }
     
-    // Recarrega a arena atual num modo aleatório
-    public static void secretTrick1()
+    public static void reloadWithRandomMode()
     {
         global.bossEncounter = false;
         global.loadProperArenaScene();
     }
     
-    public static void secretTrick2( string secondCode = "" )
+    public static void unlockBossForClash()
     {
-        if (waitingSecondCode)
-        {
-            waitingSecondCode = false;
-            int codeValue = Int32.Parse(secondCode);
-            if ((codeValue > 0) && (codeValue < 15))
-            {
-                global.mode = (global.arenaMode)(codeValue);
-                global.loadProperArenaScene();
-            }
-        }
-        else waitingSecondCode = true;
+        if (global.allowedCharacters.Contains("boss")) return;
+        
+        global.allowedCharacters.Add("boss");
+        global.currentArena.showText(
+            "Now you are become Death,\nthe destroyer of worlds...", 2f, true);
     }
     
-    public static void secretTrick3()
+    public static void specialTrick()
     {
+        if (superCodeCount == 0)
+            global.currentArena.showText("What do you expect?", 2f, true);
+        else if (superCodeCount == 1)
+            global.currentArena.showText("...", 2f, true);
     }
     
-    // Libera tudo
-    public static void secretTrick4()
+    public static void unlockEverything()
     {
+        if (global.cheated) return;
+        
         global.allowedArenaModes = new ArrayList(new global.arenaMode[]
             { global.arenaMode.Normal, global.arenaMode.Inverted, 
               global.arenaMode.Frozen, global.arenaMode.Burning,
@@ -82,14 +78,15 @@ public static class secretsHandler
         global.currentArena.showText("Everything is now unlocked", 2f, true);
     }
     
-    private static void secretTrick5()
+    // Libera MissingNo.
+    private static void fightWithMissingNo()
     {
         global.playerCharacters =  new string[] 
             { "missingNo1", "missingNo2", "missingNo3", "missingNo4" };
         global.currentArena.showText("WTF???", 2f, true);
         
         Transform[] players = 
-            GameObject.Find("Players").GetComponentsInChildren<Transform>(true);
+            GameObject.Find("players").GetComponentsInChildren<Transform>(true);
         foreach (Transform player in players)
         {
             if (player.gameObject.CompareTag("Player") && 
@@ -101,6 +98,32 @@ public static class secretsHandler
             }
         }
     }
+    
+    private static void getInput()
+    {
+        if (Input.GetKey(KeyCode.Alpha0) || Input.GetKey(KeyCode.JoystickButton0)) 
+            secretCode += '0';
+        else if (Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.JoystickButton1))
+            secretCode += '1';
+        else if (Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.JoystickButton2))
+            secretCode += '2';
+        else if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.JoystickButton3)) 
+            secretCode += '3';
+        else if (Input.GetKey(KeyCode.Alpha4) || Input.GetKey(KeyCode.JoystickButton4)) 
+            secretCode += '4';            
+        else if (Input.GetKey(KeyCode.Alpha5) || Input.GetKey(KeyCode.JoystickButton5)) 
+            secretCode += '5';
+            
+        else if (Input.GetKey(KeyCode.Alpha6)) secretCode += '6';
+        else if (Input.GetKey(KeyCode.Alpha7)) secretCode += '7';
+        else if (Input.GetKey(KeyCode.Alpha8)) secretCode += '8';
+        else if (Input.GetKey(KeyCode.Alpha9)) secretCode += '9';
+        
+        else if (global.verticalInput() > 0.0f) secretCode += 'U';
+        else if (global.verticalInput() < 0.0f) secretCode += 'D';
+        else if (global.horizontalInput() > 0.0f) secretCode += 'R';
+        else if (global.horizontalInput() < 0.0f) secretCode += 'L';
+    }
 
     public static void readSecretCode()
     {
@@ -111,20 +134,7 @@ public static class secretsHandler
             int formerLength = secretCode.Length;
             lastSecretInputRead = global.now;
             
-            if (Input.GetKey(KeyCode.Alpha0)) secretCode += '0';
-            else if (Input.GetKey(KeyCode.Alpha1)) secretCode += '1';
-            else if (Input.GetKey(KeyCode.Alpha2)) secretCode += '2';
-            else if (Input.GetKey(KeyCode.Alpha3)) secretCode += '3';
-            else if (Input.GetKey(KeyCode.Alpha4)) secretCode += '4';
-            else if (Input.GetKey(KeyCode.Alpha5)) secretCode += '5';
-            else if (Input.GetKey(KeyCode.Alpha6)) secretCode += '6';
-            else if (Input.GetKey(KeyCode.Alpha7)) secretCode += '7';
-            else if (Input.GetKey(KeyCode.Alpha8)) secretCode += '8';
-            else if (Input.GetKey(KeyCode.Alpha9)) secretCode += '9';
-            else if (Input.GetKey(KeyCode.UpArrow)) secretCode += 'U';
-            else if (Input.GetKey(KeyCode.DownArrow)) secretCode += 'D';
-            else if (Input.GetKey(KeyCode.LeftArrow)) secretCode += 'L';
-            else if (Input.GetKey(KeyCode.RightArrow)) secretCode += 'R';
+            getInput();
             
             if (secretCode.Length > formerLength) 
             {
@@ -132,17 +142,14 @@ public static class secretsHandler
                 Debug.Log("secret: " + secretCode);
             }
             
-            if (waitingSecondCode) secretTrick2(secretCode);            
-            #if UNITY_EDITOR
-            if (secretCode.EndsWith("11")) editorTrick1();
-            #else
-            if (secretCode.EndsWith("11DD")) editorTrick1();
-            #endif
-            if (secretCode.EndsWith("RULDL")) secretTrick1();
-            if (secretCode.EndsWith("LLUU")) secretTrick2();
-            if (secretCode.EndsWith("UUDDLRLR12")) secretTrick3();
-            if (secretCode.EndsWith("1RDL")) secretTrick4();
-            if (secretCode.EndsWith("6655321")) secretTrick5();
+            if (secretCode.EndsWith("UUDDLRLR21")) specialTrick();
+            else if (superCodeCount > 0) global.currentArena.showText(":(", 2f, true);
+            else superCodeCount = 0;            
+            if (secretCode.EndsWith("11")) reload();
+            if (secretCode.EndsWith("RULDL")) reloadWithRandomMode();
+            if (secretCode.EndsWith("28064212")) unlockBossForClash();
+            if (secretCode.EndsWith("1RDL")) unlockEverything();
+            if (secretCode.EndsWith("6655321")) fightWithMissingNo();
         }
     }
 }

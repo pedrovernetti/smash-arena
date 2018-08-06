@@ -46,7 +46,6 @@ public class arena : MonoBehaviour
     private System.DateTime lastPlayPauseTime;
     private bool paused;
     public bool isPaused { get { return paused; } }
-    private Text playPauseButtonText;
     
     private string exitAction;
     
@@ -61,6 +60,8 @@ public class arena : MonoBehaviour
     {
         if (!quickTest) return;        
         Debug.Log("#QuickTesting");
+        
+        secretsHandler.unlockEverything();
         
         if (global.currentScene == "cars") 
             global.theme = global.arenaTheme.Cars;
@@ -150,32 +151,30 @@ public class arena : MonoBehaviour
 	    else return isInsideRoundArenaArea(position);
 	}
 	
-	public Vector3 randomArenaPosition( float y )
+	public Vector3 unsafeRandomArenaPosition( float y )
 	{
-	    Vector3 position;
+    	float x, z;
 		if (arenaShape == arenaGroundShape.Square)
 		{
-    	    float x, z;
 		    x = Random.Range(referencePoint.x, (referencePoint.x + arenaSizeX));
 		    z = Random.Range(referencePoint.z, (referencePoint.z + arenaSizeZ));
-		    position = new Vector3(x, y, z);
 		}
 		else
 		{
-		    position = referencePoint;
-		    position += new Vector3(
-		        Random.Range(-arenaRadius, arenaRadius), 
-		        y, 
-		        Random.Range(-arenaRadius, arenaRadius));
+		    x = referencePoint.x + (Random.Range(-arenaRadius, arenaRadius) * 0.9f);
+		    z = referencePoint.z + (Random.Range(-arenaRadius, arenaRadius) * 0.9f);
 		}
-		return ((isInsideArenaLimits(position)) ? position : randomArenaPosition(y));
+		return (new Vector3(x, y, z));
 	}
 	
-	private void findPlayPauseButton()
+	public Vector3 randomArenaPosition( float y )
 	{
-	    GameObject button = global.getByName("playPauseButtonText");
-	    if (button != null) playPauseButtonText = button.GetComponent<Text>();
-	    else playPauseButtonText = null;
+	    Vector3 position = unsafeRandomArenaPosition(y);
+	    while (!isInsideArenaLimits(position))
+	    {
+	        position = unsafeRandomArenaPosition(y);
+	    }
+		return position;
 	}
     
     public void setLightingColor( Color color )
@@ -326,7 +325,7 @@ public class arena : MonoBehaviour
 	        {
 	            modeObject.SetActive(true);
 	            modeObject.transform.position = 
-	                randomArenaPosition(modeObject.transform.position.y);
+	                unsafeRandomArenaPosition(objectsRestingPlace.y);
 	            if (modeObject.GetComponent<AudioSource>() != null)
 	                modeObject.GetComponent<AudioSource>().Play();
 	        }
@@ -374,7 +373,7 @@ public class arena : MonoBehaviour
         textExpiration = global.now.AddSeconds(duration);
 	}
 	
-	public void Start()
+	public void Awake()
 	{
         setAsCurrentArena();
         #if UNITY_EDITOR
@@ -382,8 +381,10 @@ public class arena : MonoBehaviour
         #endif
         
 	    paused = false;
-	    findPlayPauseButton();
-	    
+	}
+	
+	public void Start()
+	{
 	    if (global.clashMode) 
 	        showText("round " + (global.clashRoundsPlayed + 1), 3f);
         
@@ -393,7 +394,6 @@ public class arena : MonoBehaviour
 	    if (modeHasObjects) startModeObjectsCycle();
 	    
 	    activePlayersCount = global.playersCount();
-	    //ranking = new string[activePlayersCount];
 	    
 	    global.ongoingGame = true;
 	}
@@ -416,8 +416,6 @@ public class arena : MonoBehaviour
             if (global.ongoingGame) global.ongoingGame = false;
             paused = true;
             global.getByName("pauseScreenBackground").SetActive(true);
-            if (playPauseButtonText != null) playPauseButtonText.text = "Resume";
-            GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Paused");
 	    }
 	    else if (paused && (!global.ongoingGame))
@@ -425,8 +423,6 @@ public class arena : MonoBehaviour
             if (!global.ongoingGame) global.ongoingGame = true;
             paused = false;
             global.getByName("pauseScreenBackground").SetActive(false);
-            if (playPauseButtonText != null) playPauseButtonText.text = "Pause";
-            GetComponent<UIController>().switchSecondButton();
 	        Debug.Log("Resumed");
 	    }
 	}
@@ -442,8 +438,12 @@ public class arena : MonoBehaviour
 	        else if (global.now > nextModeObjectsSwitch) modeObjectsSwitch();
 	    }
 	        
-	    if (Input.GetKeyUp(KeyCode.Return)) PlayPause();    
-	    else if ((!global.ongoingGame)) secretsHandler.readSecretCode();
+	    if (Input.GetButton("PlayPause")) PlayPause();    
+	    else if ((!global.ongoingGame) && 
+	             (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.JoystickButton6))) 
+	        global.goToMainMenu();
+	    else if ((!global.ongoingGame)) 
+	        secretsHandler.readSecretCode();
 	}
 	
 	private void exitArena()
@@ -539,7 +539,6 @@ public class arena : MonoBehaviour
                 isInsideArenaLimits(players[i].transform.position))
             {
                 winner = players[i].GetComponent<playerController>();
-	            //ranking[0] = winner.playerName;
                 if (winner.isGroundless) finish(global.gameResult.DRAW);
                 else finish(global.gameResult.WIN, winner);
                 return;
@@ -550,7 +549,6 @@ public class arena : MonoBehaviour
 	
 	public void setDead( playerController player )
 	{
-	    //ranking[activePlayersCount - 1] = player.playerName;
 	    activePlayersCount--;
 	    
 	    if (global.clashMode)

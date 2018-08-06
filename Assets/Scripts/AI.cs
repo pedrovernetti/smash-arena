@@ -103,17 +103,16 @@ public class AI : MonoBehaviour
  	
  	private void turnToTarget()
  	{
- 	    if (((movesLikeACar) && (isMoving)) || (!movesLikeACar))
- 	    {
-             float rate = 1f;
-             
-             Transform target = currentTarget.transform;
-             Quaternion targetRotation = 
-                 Quaternion.LookRotation(target.position - transform.position);
-             rate = Mathf.Min(rate * Time.deltaTime, 1);
-             transform.rotation = 
-                 Quaternion.Lerp(transform.rotation, targetRotation, rate);
-         }
+ 	    if (movesLikeACar && (!isMoving)) return;
+ 	    
+        float rate = 1f;
+         
+        Transform target = currentTarget.transform;
+        Quaternion targetRotation = 
+            Quaternion.LookRotation(target.position - transform.position);
+        rate = Mathf.Min(rate * Time.deltaTime, 1);
+        transform.rotation = 
+            Quaternion.Lerp(transform.rotation, targetRotation, rate);
  	}
  	
  	private bool chase()
