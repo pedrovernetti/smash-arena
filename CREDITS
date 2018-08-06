@@ -110,6 +110,16 @@ CREDITS
 README.md
 
 
+3D Tire [https://assetstore.unity.com/packages/3d/props/3d-tire-102580]
+
+Assets/Materials/Textures/tireAlbedo.png
+Assets/Materials/Textures/
+Assets/Materials/Textures/tireNormal.png
+Assets/Materials/tire.mat
+Assets/Meshes/tire.fbx
+Assets/Prefabs/tire.prefab
+
+
 Banana Slap [http://soundbible.com/2047-Banana-Slap.html]
 
 Assets/Audio/Collisions/bananaSlap.wav
@@ -183,6 +193,11 @@ Fizzle [http://soundbible.com/1308-Fizzle.html]
 Assets/Audio/fizzle.wav
 
 
+Forklift [https://free3d.com/3d-model/forklift-21058.html]
+
+Assets/Prefabs/Players #TODO
+
+
 Free Snow Mountain [https://assetstore.unity.com/packages/3d/environments/landscapes/free-snow-mountain-63002]
 
 Assets/Materials/snowyMountain.mat
@@ -220,6 +235,11 @@ Metal Impact Hollow [http://soundbible.com/346-Metal-Impact-Hollow.html]
 Assets/Audio/Collisions/hollowMetalImpact.wav
 
 
+Old Car [https://free3d.com/3d-model/old-car-80440.html]
+
+Assets/Prefabs/Players/ #TODO
+
+
 Punch [http://soundbible.com/721-Punch.html]
 
 Assets/Audio/Collisions/punch.wav
@@ -245,6 +265,11 @@ Assets/Materials/Textures/groundNormal.tga
 Assets/Meshes/ruinedTower.fbx
 
 
+Russian T-90 Tank [https://free3d.com/3d-model/russian-t-90-tank-32782.html]
+
+Assets/Prefabs/Players #TODO
+
+
 Simple Vector Icons [https://assetstore.unity.com/packages/2d/gui/icons/simple-vector-icons-101218]
 
 Assets/Images/Modes/0.png
@@ -266,9 +291,27 @@ Strong Punch [http://soundbible.com/1773-Strong-Punch.html]
 Assets/Audio/Collisions/strongPunch.wav
 
 
+Taxi [https://free3d.com/3d-model/taxi-61820.html]
+
+Assets/Prefabs/Players #TODO
+
+
 Ting [http://soundbible.com/1628-Ting.html]
 
 Assets/Audio/Collisions/ting.wav
+
+
+TinyFire VFX 1.0 [https://assetstore.unity.com/packages/vfx/particles/fire-explosions/tinyfire-vfx-1-0-97898]
+
+Assets/Materials/Textures/sphereParticle.png
+Assets/Materials/Textures/triangleParticle.png
+Assets/Materials/sphereParticle.mat
+Assets/Materials/triangleParticle.mat
+
+
+Van Kendo [https://free3d.com/3d-model/van-kendo-34383.html]
+
+Assets/Prefabs/Players #TODO
 
 
 Yughues Free Pillars & Columns [https://assetstore.unity.com/packages/3d/environments/yughues-free-pillars-columns-13103]
